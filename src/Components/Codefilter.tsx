@@ -8,7 +8,7 @@ export default function CodeFilter(props: {
   ChangeHandler: React.Dispatch<SetStateAction<string>>;
 }) {
   console.log(economicCodes);
-  //linje 9: lager et nytt array med elementer som har property med id og label.viktig å endre item.property som er i
+  //linje 9: lager et nytt array med elementer som har property med id og label.viktig å endre item.property som er i item.
   // const options = data.map((item) => ({
   //   id: item.bedrift_id,
   //   label: item.målbedrift,
