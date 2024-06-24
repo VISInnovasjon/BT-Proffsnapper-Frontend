@@ -21,6 +21,13 @@ type YearlyValues = Record<string, CollectedValues | number>;
 
 type KeyedValues = Record<string, YearlyValueObject[]>;
 
+type RadialEventTarget = {
+  target: {
+    value: string | undefined | null;
+    defaultValue: string;
+  };
+} & React.ChangeEvent<Element>;
+
 type ValueObject = {
   Value: number;
   Delta: number;
@@ -52,7 +59,7 @@ const TestPage: React.FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch("mockData.json");
+      const response = await fetch("http://192.168.9.78:5000/query/getall");
       const data = await response.json();
       setData(data);
     };
@@ -212,7 +219,7 @@ const TestPage: React.FC = () => {
           />
           <div className=" flex flex-col items-center text-lg ">
             <UseRadioGroup
-              onChange={(e) => {
+              onChange={(e: RadialEventTarget) => {
                 setMonetaryKey(
                   e.target.value ? e.target.value : e.target.defaultValue
                 );

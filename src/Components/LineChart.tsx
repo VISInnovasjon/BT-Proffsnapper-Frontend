@@ -1,17 +1,9 @@
 import React from "react";
 import { economicCodes } from "../data/economicCodes";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-  Label,
-  ReferenceLine,
-} from "recharts";
+import { Line } from "react-chartjs-2";
+import { Chart, registerables } from "chart.js";
+
+Chart.register(...registerables);
 
 type ValueRecord = Record<string, number | string>;
 
@@ -25,6 +17,7 @@ type ValueObject = {
   Value: number;
   Delta: number;
   Description: string;
+  UniqueCompanyCount: number;
 } & ValueRecord;
 type CodeValueObject = {
   [key: string]: ValueObject;
@@ -62,7 +55,8 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
     ...selectedBrands,
   ];
 
-  const ageGroupColors = [
+  const colors = [
+    "#000111",
     "#FF5733",
     "#332006",
     "#3357FF",
@@ -70,16 +64,12 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
     "#A133FF",
     "#47100D",
     "#053D40",
-  ];
-  const faseColors = [
     "#800000",
     "#FF00FF",
     "#008080",
     "#0000FF",
     "#620E22",
     "#91770C",
-  ];
-  const brandColors = [
     "#4F4507",
     "#0A2E27",
     "#4B0082",
@@ -88,10 +78,6 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
     "#1F2176",
     "#8A2BE2",
   ];
-
-  const years = Array.from({ length: 10 }, (_, idx) => 2014 + idx);
-  const defaultData = years.map((year, idx) => ({ year, Default: idx * 10 }));
-
   const SelectedValue = economicCodes[ecoKey]; //Setter verdien i SelectedValue (H2)
 
   const chartData = //lage en metode som bygger om JSON til linechartData.
@@ -115,84 +101,98 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
                 ? null
                 : entry.values[ecoKey][monetaryKey];
             dataPoint[key] = point === null ? point : (point as number) / 1000;
+            dataPoint.AntallCompanies =
+              entry?.values[ecoKey].UniqueCompanyCount ?? null;
           });
           console.log(dataPoint);
           return dataPoint;
         })
-      : defaultData;
+      : undefined;
+  console.log(chartData);
+  console.log(selectedKeys);
+  const labels = chartData?.map((item) => item.year);
+  const currentYear = new Date().getFullYear();
+  const datasets = selectedKeys.map((key, index) => {
+    return {
+      label: `${key}`,
+      tension: 0.4,
+      data: chartData?.map((item) => ({
+        x: item.year,
+        y: item[key],
+        AntallCompanies: item.AntallCompanies,
+      })),
+      borderColor: colors[index % colors.length],
+      segment: {
+        borderDash: (ctx: any) => {
+          const isLastSegment =
+            ctx.p0.raw.x === currentYear - 2 &&
+            ctx.p1.raw.x === currentYear - 1;
+          console.log(isLastSegment);
+          return isLastSegment ? [6, 6] : [];
+        },
+      },
+      spanGaps: true,
+    };
+  });
+
+  const dataComponents = {
+    labels,
+    datasets,
+  };
+
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top",
+      },
+      tooltip: {
+        callbacks: {
+          label: function (context: any) {
+            const label = context.dataset.label || "";
+            const value = context.raw.y;
+            const antallCompanies = context.raw.AntallCompanies;
+            return `${label}: ${value} (Antall bedrifter: ${antallCompanies})`;
+          },
+        },
+      },
+    },
+    scales: {
+      y: {
+        title: {
+          display: true,
+          text: "I mill NOK.",
+          color: "#000111",
+          font: {
+            family: "SystemUi",
+            size: 20,
+            weight: "bold",
+            lineHeight: 1.2,
+          },
+          padding: { top: 20, left: 0, right: 0, bottom: 0 },
+        },
+        grid: {
+          color: (context: any) => {
+            if (context.tick.value === 0) {
+              return "#000111";
+            }
+            return "#e0e0e0";
+          },
+          lineWidth: (context: any) => {
+            if (context.tick.value === 0) {
+              return 2;
+            }
+            return 1;
+          },
+        },
+      },
+    },
+  };
 
   return (
     <div className="text-1vw text-xs sm:text-sm md:text-base lg:text-lg font-medium text-[#1e2222]">
-      <h2 className="">{SelectedValue}</h2>
-      <ResponsiveContainer width="100%" height={400}>
-        <LineChart
-          data={chartData}
-          margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" stroke="#1e2222" />
-          <XAxis dataKey="year" />
-          <YAxis>
-            <Label
-              value="MILL. NOK"
-              angle={-90}
-              position="insideLeft"
-              style={{ textAnchor: "middle" }}
-              fill="#1e2222"
-            />
-          </YAxis>
-          <Tooltip />
-          <Legend />
-          <ReferenceLine y={0} stroke="#010101" strokeWidth={2} />
-          {selectedKeys.length === 0 && (
-            <Line type="monotone" dataKey="Default" stroke="#c48484" />
-          )}
-
-          <Line
-            key={"Total Gjennomsnitt"}
-            strokeWidth={3}
-            type="monotone"
-            animationDuration={500}
-            dataKey={"Total Gjennomsnitt"}
-            stroke="#013B02"
-          />
-
-          {selectedAgeGroups.map((key, index) => (
-            <Line
-              strokeWidth={3}
-              key={key}
-              type="monotone"
-              animationDuration={500}
-              dataKey={key}
-              stroke={ageGroupColors[index % brandColors.length]}
-            />
-          ))}
-          {selectedFases.map((key, index) => (
-            <Line
-              strokeWidth={3}
-              key={key}
-              type="monotone"
-              animationDuration={500}
-              dataKey={key}
-              stroke={faseColors[index % brandColors.length]}
-            />
-          ))}
-          {selectedBrands.map((key, index) => (
-            <Line
-              strokeWidth={3}
-              key={key}
-              type="monotone"
-              animationDuration={500}
-              dataKey={key}
-              stroke={brandColors[index % brandColors.length]}
-            />
-          ))}
-        </LineChart>
-      </ResponsiveContainer>
+      <h2>{SelectedValue}</h2>
+      <Line data={dataComponents} options={options} />
     </div>
   );
 };
