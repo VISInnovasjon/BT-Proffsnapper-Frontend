@@ -23,7 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 
-*.json
+
 Alle.json
 data.json
 economicCodes.ts
