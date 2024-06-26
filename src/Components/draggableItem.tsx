@@ -1,20 +1,27 @@
 import React from "react";
 
-// Define the DraggableItem component
 const DraggableItem: React.FC = () => {
-  // Function to handle the drag start event
-  const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
-    const mockData = "Recived Data: 123"; // Define the mock data
-    e.dataTransfer.setData("text", mockData); // Set the drag data
+  const handleDragStart = (e: React.DragEvent) => {
+    const mockFile = new File(["Sample content"], "mockfile.txt", {
+      type: "text/plain",
+    });
+    e.dataTransfer.setData(
+      "application/json",
+      JSON.stringify({
+        name: mockFile.name,
+        type: mockFile.type,
+        content: "Sample content",
+      })
+    );
   };
 
   return (
     <div
       draggable
       onDragStart={handleDragStart}
-      className="inline-block p-4 m-4 bg-cyan-900 text-white rounded-lg shadow-md cursor-pointer"
+      className="p-4 bg-[#AED9E0] text-[#060316] rounded-md shadow-md cursor-pointer hover:bg-[#2e5f65] hover:text-[#FAFFFB] transition-all duration-300 ease-in-out transform"
     >
-      Drag Me
+      Drag Me (mockfile.txt)
     </div>
   );
 };
