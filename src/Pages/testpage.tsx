@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import AgeGroupSelect from "../Components/AgeGroupSelect";
 import FaseSelect from "../Components/FaseSelect";
 import BrandSelect from "../Components/BrandSelect";
-import LineChartComponent from "../Components/LineChart";
+import LineChartComponent, { KeyedValues } from "../Components/LineChart";
 import { Button, Menu, MenuItem, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import YearRangeSlider from "../Components/YearRangeSlider";
@@ -13,37 +13,15 @@ import UseRadioGroup from "../Components/UseRadioGroup";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { DataGridComponent } from "../Components/Table";
 
-type ValueRecord = Record<string, number | string>;
-
-type CollectedValues = Record<string, ValueRecord>;
-
-type YearlyValues = Record<string, CollectedValues | number>;
-
-type KeyedValues = Record<string, YearlyValueObject[]>;
-
+type ButtonTarget = {
+  value: string;
+};
 type RadialEventTarget = {
   target: {
     value: string | undefined | null;
     defaultValue: string;
   };
 } & React.ChangeEvent<Element>;
-
-type ValueObject = {
-  Value: number;
-  Delta: number;
-  Description: string;
-} & ValueRecord;
-type CodeValueObject = {
-  [key: string]: ValueObject;
-} & CollectedValues;
-
-type YearlyValueObject = {
-  Year: number;
-  values: CodeValueObject;
-} & YearlyValues;
-type ButtonTarget = {
-  value: string;
-};
 
 const TestPage: React.FC = () => {
   const [selectedAgeGroups, setSelectedAgeGroups] = useState<string[]>([]);
@@ -59,7 +37,7 @@ const TestPage: React.FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch("http://192.168.9.78:5000/query/getall");
+      const response = await fetch("http://localhost:5000/query/getall");
       const data = await response.json();
       setData(data);
     };
@@ -225,7 +203,7 @@ const TestPage: React.FC = () => {
                 );
               }}
             />
-            <div className="bg-[#AED9E0] text-[#060316] ">
+            <div className="bg-[#AED9E0] text-[#060316]">
               <DataGridComponent ecoCode={ecoKey} />
             </div>
           </div>

@@ -5,15 +5,15 @@ import { Chart, registerables } from "chart.js";
 
 Chart.register(...registerables);
 
-type ValueRecord = Record<string, number | string>;
+export type ValueRecord = Record<string, number | string>;
 
-type CollectedValues = Record<string, ValueRecord>;
+export type CollectedValues = Record<string, ValueRecord>;
 
-type YearlyValues = Record<string, CollectedValues | number>;
+export type YearlyValues = Record<string, CollectedValues | number>;
 
-type KeyedValues = Record<string, YearlyValueObject[]>;
+export type KeyedValues = Record<string, YearlyValueObject[]>;
 
-type ValueObject = {
+export type ValueObject = {
   Value: number;
   Delta: number;
   Description: string;
@@ -23,12 +23,12 @@ type CodeValueObject = {
   [key: string]: ValueObject;
 } & CollectedValues;
 
-type YearlyValueObject = {
+export type YearlyValueObject = {
   Year: number;
   values: CodeValueObject;
 } & YearlyValues;
 
-interface LineChartComponentProps {
+export interface LineChartComponentProps {
   //lage en interface som er både lik som JSON ser ut og en som er lik linechartData.
   data: KeyedValues;
   selectedAgeGroups: string[];
@@ -38,6 +38,23 @@ interface LineChartComponentProps {
   monetaryKey: string;
   yearRange: number[];
 }
+type DataPoint = {
+  year: number;
+  [key: string]:
+    | {
+        value: number | null;
+        numberOfCompanies: number | null;
+      }
+    | number;
+};
+
+const objectVerifier = (
+  obj: any
+): obj is { value: number; numberOfCompanies: number } => {
+  return (
+    typeof obj === "object" && "value" in obj && "numberOfCompanies" in obj
+  );
+};
 
 const LineChartComponent: React.FC<LineChartComponentProps> = ({
   data,
@@ -83,13 +100,14 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
   const chartData = //lage en metode som bygger om JSON til linechartData.
     data[selectedKeys[0]] != undefined //selectedKeys.length > 0
       ? yearRange.map((_, idx) => {
-          const dataPoint: { [key: string]: number | string | null } = {
+          const dataPoint: DataPoint = {
             year: yearRange[idx],
           };
           selectedKeys.forEach((key) => {
-            const entry = data[key].find(
+            const entry = data[key]?.find(
               (entry) => entry.Year === yearRange[idx]
             );
+
             const point =
               entry == undefined
                 ? null
@@ -100,34 +118,39 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
                 : entry.values[ecoKey][monetaryKey] == undefined
                 ? null
                 : entry.values[ecoKey][monetaryKey];
-            dataPoint[key] = point === null ? point : (point as number) / 1000;
-            dataPoint.AntallCompanies =
-              entry?.values[ecoKey].UniqueCompanyCount ?? null;
+            const value = point === null ? point : (point as number) / 1000;
+            const numberOfCompanies =
+              entry?.values[ecoKey]?.UniqueCompanyCount ?? 0;
+            dataPoint[key] = {
+              value: value,
+              numberOfCompanies: numberOfCompanies,
+            };
           });
-          console.log(dataPoint);
           return dataPoint;
         })
       : undefined;
   console.log(chartData);
-  console.log(selectedKeys);
   const labels = chartData?.map((item) => item.year);
   const currentYear = new Date().getFullYear();
   const datasets = selectedKeys.map((key, index) => {
     return {
       label: `${key}`,
       tension: 0.4,
-      data: chartData?.map((item) => ({
-        x: item.year,
-        y: item[key],
-        AntallCompanies: item.AntallCompanies,
-      })),
+      data: chartData?.map((item) => {
+        let obj = item[key];
+        if (objectVerifier(obj))
+          return {
+            x: item.year,
+            y: obj.value,
+            AntallCompanies: obj.numberOfCompanies,
+          };
+      }),
       borderColor: colors[index % colors.length],
       segment: {
         borderDash: (ctx: any) => {
           const isLastSegment =
             ctx.p0.raw.x === currentYear - 2 &&
             ctx.p1.raw.x === currentYear - 1;
-          console.log(isLastSegment);
           return isLastSegment ? [6, 6] : [];
         },
       },
@@ -142,9 +165,26 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
 
   const options = {
     responsive: true,
+    aspectRatio: 3,
+    animation: {
+      duration: 500,
+    },
+    elements: {
+      point: {
+        borderWidth: 4,
+      },
+    },
     plugins: {
       legend: {
-        position: "top",
+        position: "top" as "top",
+        labels: {
+          font: {
+            family: "system-ui",
+            size: 14,
+          },
+          usePointStyle: true,
+          pointStyle: "circle",
+        },
       },
       tooltip: {
         callbacks: {
@@ -164,9 +204,9 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
           text: "I mill NOK.",
           color: "#000111",
           font: {
-            family: "SystemUi",
+            family: "System-ui",
             size: 20,
-            weight: "bold",
+            weight: "bold" as "bold",
             lineHeight: 1.2,
           },
           padding: { top: 20, left: 0, right: 0, bottom: 0 },
@@ -190,9 +230,11 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
   };
 
   return (
-    <div className="text-1vw text-xs sm:text-sm md:text-base lg:text-lg font-medium text-[#1e2222]">
-      <h2>{SelectedValue}</h2>
-      <Line data={dataComponents} options={options} />
+    <div className="text-1vw text-xs sm:text-sm md:text-base lg:text-lg font-medium text-[#1e2222] flex flex-col justify-center item">
+      <div>
+        <h2>{SelectedValue}</h2>
+        <Line data={dataComponents} options={options} />
+      </div>
     </div>
   );
 };

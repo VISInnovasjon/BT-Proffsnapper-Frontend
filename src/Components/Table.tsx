@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
-import { DataGrid } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  DEFAULT_GRID_AUTOSIZE_OPTIONS,
+  useGridApiRef,
+} from "@mui/x-data-grid";
 
 type gridProps = {
   ecoCode: string;
@@ -14,6 +18,11 @@ type TableData = {
   ValidYear: number;
   EcoCode: string;
 } & Record<string, string | number>;
+const autosizeOptions = {
+  includeHeaders: true,
+  includeOutliers: true,
+  expand: true,
+};
 
 export const DataGridComponent = ({ ecoCode }: gridProps) => {
   const [tableData, setTableData] = useState<TableData[] | null>(null);
@@ -21,7 +30,7 @@ export const DataGridComponent = ({ ecoCode }: gridProps) => {
     const FetchData = async () => {
       const searchParams = new URLSearchParams({ EcoCode: ecoCode });
       try {
-        const url = ""; //Denne må endres på når siden går live.
+        const url = "http://localhost:5000/tabledata?"; //Denne må endres på når siden går live.
 
         const response = await fetch(url + searchParams.toString());
         if (response.status === 400) {
@@ -37,20 +46,20 @@ export const DataGridComponent = ({ ecoCode }: gridProps) => {
   }, [ecoCode]);
 
   const columns = [
-    { field: "Name", headerName: "Bedriftnavn", width: 250 },
-    { field: "OrgNumber", headerName: "Orgnummer", width: 150 },
-    { field: "Branch", headerName: "Bransje", width: 150 },
-    { field: "Value", headerName: "Verdi", width: 150 },
-    { field: "Delta", headerName: "Delta", width: 150 },
-    { field: "Accumulated", headerName: "Akkumulert", width: 150 },
-    { field: "ValidYear", headerName: "Gjeldende år", width: 150 },
-    { field: "EcoCode", headerName: "Øko kode", width: 150 },
+    { field: "Name", headerName: "Bedriftnavn", minWidth: 200 },
+    { field: "OrgNumber", headerName: "Orgnummer", minWidth: 150 },
+    { field: "Branch", headerName: "Bransje", minWidth: 150 },
+    { field: "Value", headerName: "Verdi", minWidth: 150 },
+    { field: "Delta", headerName: "Delta", minWidth: 150 },
+    { field: "Accumulated", headerName: "Akkumulert", minWidth: 150 },
+    { field: "ValidYear", headerName: "Gjeldende år", minWidth: 150 },
+    { field: "EcoCode", headerName: "Øko kode", minWidth: 150 },
   ];
 
   return (
     <>
       {tableData != null ? (
-        <div style={{ height: 400, width: "100%" }}>
+        <div style={{ width: "100%" }}>
           <DataGrid
             rows={tableData.map((row, idx) => ({ ...row, id: idx }))}
             columns={columns}
@@ -59,6 +68,7 @@ export const DataGridComponent = ({ ecoCode }: gridProps) => {
                 paginationModel: { page: 0, pageSize: 5 },
               },
             }}
+            autosizeOptions={autosizeOptions}
             getRowId={(row) => row.id}
             pageSizeOptions={[5, 10]}
           />

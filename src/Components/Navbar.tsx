@@ -14,7 +14,7 @@ const Navbar: React.FC = () => {
 
   const fetchFile = async () => {
     try {
-      const response = await fetch("");
+      const response = await fetch("http://192.168.9.78:5000/fullmodel");
 
       const disposition = response.headers.get("Content-Disposition");
       let filename = "FullView";
