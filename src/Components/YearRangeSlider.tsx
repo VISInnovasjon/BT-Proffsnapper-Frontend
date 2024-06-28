@@ -1,7 +1,7 @@
 // YearRangeSlider.tsx
 
 import React, { useState, useEffect, SetStateAction } from "react";
-import { Slider, Typography } from "@mui/material";
+import { Slider, Typography, Tooltip } from "@mui/material";
 import { useGlobalState } from "../Components/GlobalState";
 
 const YearRangeSlider = (props: {
@@ -32,15 +32,15 @@ const YearRangeSlider = (props: {
   }, [yearRange, dispatch]);
 
   return (
-    <div className="m-4 !text-[#1e2222] ">
+    <div className="">
       <Typography id="year-range-slider" gutterBottom>
-        Velg År
+        Velg år
       </Typography>
       <Slider
         value={yearRange}
         className="w-auto"
         onChange={handleSliderChange}
-        valueLabelDisplay="auto"
+        valueLabelDisplay="on"
         aria-labelledby="year-range-slider"
         min={2014}
         max={new Date().getFullYear() - 1}

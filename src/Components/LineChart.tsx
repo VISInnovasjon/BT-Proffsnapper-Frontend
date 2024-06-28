@@ -2,6 +2,7 @@ import React from "react";
 import { economicCodes } from "../data/economicCodes";
 import { Line } from "react-chartjs-2";
 import { Chart, registerables } from "chart.js";
+import Skeleton from "@mui/material/Skeleton";
 
 Chart.register(...registerables);
 
@@ -28,8 +29,8 @@ export type YearlyValueObject = {
   values: CodeValueObject;
 } & YearlyValues;
 
-export interface LineChartComponentProps {
-  //lage en interface som er både lik som JSON ser ut og en som er lik linechartData.
+interface LineChartComponentProps {
+  //lage en interface som er bÃ¥de lik som JSON ser ut og en som er lik linechartData.
   data: KeyedValues;
   selectedAgeGroups: string[];
   selectedFases: string[];
@@ -37,6 +38,7 @@ export interface LineChartComponentProps {
   ecoKey: string;
   monetaryKey: string;
   yearRange: number[];
+  loading: boolean;
 }
 type DataPoint = {
   year: number;
@@ -58,6 +60,7 @@ const objectVerifier = (
 
 const LineChartComponent: React.FC<LineChartComponentProps> = ({
   data,
+  loading,
   selectedAgeGroups,
   selectedFases,
   selectedBrands,
@@ -73,7 +76,7 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
   ];
 
   const colors = [
-    "#000111",
+    "#2E5F65",
     "#FF5733",
     "#332006",
     "#3357FF",
@@ -202,7 +205,7 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
         title: {
           display: true,
           text: "I mill NOK.",
-          color: "#000111",
+          color: "#2E5F65",
           font: {
             family: "System-ui",
             size: 20,
@@ -230,11 +233,14 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
   };
 
   return (
-    <div className="text-1vw text-xs sm:text-sm md:text-base lg:text-lg font-medium text-[#1e2222] flex flex-col justify-center item">
-      <div>
-        <h2>{SelectedValue}</h2>
-        <Line data={dataComponents} options={options} />
-      </div>
+    <div className=" relative w-full shadow-lg rounded-lg text-[#2E5F65]">
+      <h2 className="pb-4">{SelectedValue}</h2>
+      {loading && (
+        <div className="absolute inset-0 flex justify-center items-center bg-[#AED9E0] bg-opacity-75 z-10">
+          <Skeleton variant="rectangular" width="100%" height="100%" />
+        </div>
+      )}
+      <Line data={dataComponents} options={options} />
     </div>
   );
 };

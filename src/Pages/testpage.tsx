@@ -1,4 +1,3 @@
-import "tailwindcss/tailwind.css";
 import React, { useState, useEffect } from "react";
 import AgeGroupSelect from "../Components/AgeGroupSelect";
 import FaseSelect from "../Components/FaseSelect";
@@ -12,6 +11,7 @@ import ToggleButton from "../Components/ToggleButton";
 import UseRadioGroup from "../Components/UseRadioGroup";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { DataGridComponent } from "../Components/Table";
+import "../index.css";
 
 type ButtonTarget = {
   value: string;
@@ -24,6 +24,7 @@ type RadialEventTarget = {
 } & React.ChangeEvent<Element>;
 
 const TestPage: React.FC = () => {
+  const [loading, setLoading] = useState(true);
   const [selectedAgeGroups, setSelectedAgeGroups] = useState<string[]>([]);
   const [selectedFases, setSelectedFases] = useState<string[]>([]);
   const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
@@ -37,9 +38,16 @@ const TestPage: React.FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch("http://localhost:5000/query/getall");
-      const data = await response.json();
-      setData(data);
+      setLoading(true);
+      try {
+        const response = await fetch("http://localhost:5000/query/getall");
+        const data = await response.json();
+        setData(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
     };
     fetchData();
   }, []);
@@ -73,26 +81,35 @@ const TestPage: React.FC = () => {
     setEcoKey(target.value);
   };
 
+  useEffect(() => {
+    // Simulate data loading
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000); // Simulate a 2 second data fetch
+
+    return () => clearTimeout(timer); // Clean up the timer
+  }, []);
+
   const [activeButton, setActiveButton] = useState<string | null>("option1");
 
   return (
     <div className="pt-32 container mx-auto !text-[#1e2222] text-2vw sm:text-base md:text-lg lg:text-lg xl:text-xl ">
-      <div className=" flex flex-col justify-evenly lg:flex-row mr-4">
-        <div className="container flex flex-col text-start ml-8 ">
-          <h3 className=" font-semibold mb-2 mt-1">
+      <div className=" flex flex-col justify-evenly lg:flex-row ">
+        <div className="container flex flex-col  pl-4">
+          <h3 className=" font-semibold my-2  text-center sm:text-start">
             Choose filters to display data:
           </h3>
-          <p className="mb-4">
+          <p className="mb-4 text-center sm:text-start">
             Use the button below to select and add filters<br></br> for Age
             Group, Fase, and Brand.<br></br>You can remove filters by clicking
             the X button next to each <br></br>filter.
           </p>
-          <div className="">
+          <div className="flex justify-center sm:justify-start">
             <Button
               style={{
                 backgroundColor: "#2E5F65",
                 color: "#FAFFFB",
-                padding: 6,
+                padding: 5,
               }}
               variant="contained"
               onClick={handleClick}
@@ -126,9 +143,9 @@ const TestPage: React.FC = () => {
             )}
           </Menu>
 
-          <div className="mt-6 flex justify-start ">
+          <div className="mt-6 flex justify-center sm:justify-start ">
             {filters.map((filter) => (
-              <div key={filter} className="flex items-center mb-4">
+              <div key={filter} className="flex items-center mb-2">
                 {filter === "Age Group" && (
                   <AgeGroupSelect onChange={setSelectedAgeGroups} />
                 )}
@@ -149,8 +166,8 @@ const TestPage: React.FC = () => {
             ))}
           </div>
         </div>
-        <div className="flex flex-col  sm:flex-row ">
-          <div className="flex justify-center">
+        <div className="flex flex-col ml-4  sm:flex-row ">
+          <div className="flex justify-center sm:justify-start ">
             <div className="m-2 ">
               <ToggleButton
                 label="Driftsresultat"
@@ -178,16 +195,19 @@ const TestPage: React.FC = () => {
               />
             </div>
           </div>
-          <div className="flex m-2 justify-center">
+          <div className="flex justify-center m-2  ">
             <CodeFilter ChangeHandler={setEcoKey} />
           </div>
         </div>
       </div>
-      <div className="">
-        <div className="m-4 !text-2vw !sm:text-base !md:text-lg !lg:text-lg !xl:text-xl">
-          <YearRangeSlider updateValue={setYearRange} />
+      <div className="m-4">
+        <div className="w-full container ">
+          <div className="mx-6 mt-10">
+            <YearRangeSlider updateValue={setYearRange} />
+          </div>
           <LineChartComponent
             data={data}
+            loading={loading}
             selectedAgeGroups={selectedAgeGroups}
             selectedFases={selectedFases}
             selectedBrands={selectedBrands}
@@ -195,7 +215,7 @@ const TestPage: React.FC = () => {
             monetaryKey={monetaryKey}
             yearRange={yearRange}
           />
-          <div className=" flex flex-col items-center text-lg ">
+          <div className="inline-flex sm:flex sm:justify-center mt-1  ">
             <UseRadioGroup
               onChange={(e: RadialEventTarget) => {
                 setMonetaryKey(
@@ -203,10 +223,10 @@ const TestPage: React.FC = () => {
                 );
               }}
             />
-            <div className="bg-[#AED9E0] text-[#060316]">
+          </div>
+          <div className="bg-[#AED9E0] text-[#060316]">
               <DataGridComponent ecoCode={ecoKey} />
             </div>
-          </div>
         </div>
       </div>
     </div>

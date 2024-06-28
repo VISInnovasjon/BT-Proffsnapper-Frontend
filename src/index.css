@@ -8,9 +8,9 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
+  color: #1e2222;
   background: rgb(2, 0, 36);
-  background: #dffbf5;
+  background: #e9fffb;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -20,21 +20,14 @@
 
 body {
   margin: 0;
-  min-width: 320px;
   min-height: 100vh;
-  color: #1e2222;
-}
-
-h1 {
-  font-size: 3vw;
-  line-height: 1.1;
 }
 
 .MuiSlider-thumb {
   color: #2e5f65;
 }
 .MuiSlider-rail {
-  color: #2e5f65;
+  color: #aed9e0;
 }
 .MuiSlider-track {
   color: #2e5f65;
@@ -50,4 +43,39 @@ h1 {
 }
 #brand-select-label {
   color: #1e2222;
+}
+
+/* index.css */
+.MuiAutocomplete-root {
+  width: 300px;
+  height: 10px;
+}
+
+.MuiInputBase-root {
+  color: #1e2222;
+}
+
+.MuiInputBase-root.Mui-focused {
+}
+
+.MuiOutlinedInput-notchedOutline {
+}
+
+.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+}
+
+.MuiAutocomplete-clearIndicator {
+}
+
+.MuiAutocomplete-popupIndicator {
+}
+
+.MuiAutocomplete-option {
+}
+
+.MuiAutocomplete-option[data-focus="true"] {
+}
+
+.MuiAutocomplete-option[aria-selected="true"] {
+  background-color: #aed9e0;
 }
