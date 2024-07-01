@@ -3,9 +3,12 @@ import CircularProgress from "@mui/material/CircularProgress";
 
 interface DropboxProps {
   onFileUpdate: (file: File) => void;
+
+  name: string;
+  fetchEndpoint: string;
 }
 
-const Dropbox: React.FC<DropboxProps> = ({ onFileUpdate }) => {
+const Dropbox: React.FC<DropboxProps> = ({ onFileUpdate, name }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [updatedFile, setUpdatedFile] = useState<File | null>(null);
@@ -174,62 +177,21 @@ const Dropbox: React.FC<DropboxProps> = ({ onFileUpdate }) => {
                   Drop files here or select a file
                 </p>
                 <p className="text-gray-500 text-sm mb-4">
-                  Accepted file types: .txt, .pdf, .docx
+                  Accepted file types: .xls, .xlsx
                 </p>
-                <div className="text-left mb-4">
-                  <p className="text-[#1e2222] text-center text-base">
-                    Template for Excel Sheet:
-                  </p>
-                  <table className="text-[#1e2222] border-collapse border border-gray-400 w-full mt-2">
-                    <thead>
-                      <tr>
-                        <th className="border border-gray-300 px-4 py-2">A</th>
-                        <th className="border border-gray-300 px-4 py-2">B</th>
-                        <th className="border border-gray-300 px-4 py-2">C</th>
-                      </tr>
-                    </thead>
-                    <tbody className="">
-                      <tr>
-                        <td className="border border-gray-300 px-4 py-2">
-                          Orgnummer
-                        </td>
-                        <td className="border border-gray-300 px-4 py-2">
-                          Data 2
-                        </td>
-                        <td className="border border-gray-300 px-4 py-2">
-                          Data 3
-                        </td>
-                      </tr>
-                      <tr className="text-sm">
-                        <td className="border border-gray-300 px-4 py-2">
-                          Data 4
-                        </td>
-                        <td className="border border-gray-300 px-4 py-2">
-                          Data 5
-                        </td>
-                        <td className="border border-gray-300 px-4 py-2">
-                          Data 6
-                        </td>
-                      </tr>
-                      <tr className="text-sm">
-                        <td className="border border-gray-300 px-4 py-2">
-                          Data 7
-                        </td>
-                        <td className="border border-gray-300 px-4 py-2">
-                          Data 8
-                        </td>
-                        <td className="border border-gray-300 px-4 py-2">
-                          Data 9
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+
                 <input
                   type="file"
+                  className="hidden"
+                  id={`fileInput-${name}`}
                   onChange={handleFileChange}
-                  className="mt-4 mx-auto bg-[#AED9E0] text-[#060316] rounded-md border border-black"
                 />
+                <label
+                  htmlFor={`fileInput-${name}`}
+                  className="block text-center bg-[#3b747b]  text-[white] py-2 px-4 rounded cursor-pointer hover:bg-[#2E5F65]  hover:text-[#FAFFFB] transition-all duration-300"
+                >
+                  Choose File
+                </label>
               </>
             )}
           </>

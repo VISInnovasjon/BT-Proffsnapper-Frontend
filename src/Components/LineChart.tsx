@@ -6,15 +6,15 @@ import Skeleton from "@mui/material/Skeleton";
 
 Chart.register(...registerables);
 
-type ValueRecord = Record<string, number | string>;
+export type ValueRecord = Record<string, number | string>;
 
-type CollectedValues = Record<string, ValueRecord>;
+export type CollectedValues = Record<string, ValueRecord>;
 
-type YearlyValues = Record<string, CollectedValues | number>;
+export type YearlyValues = Record<string, CollectedValues | number>;
 
-type KeyedValues = Record<string, YearlyValueObject[]>;
+export type KeyedValues = Record<string, YearlyValueObject[]>;
 
-type ValueObject = {
+export type ValueObject = {
   Value: number;
   Delta: number;
   Description: string;
@@ -24,7 +24,7 @@ type CodeValueObject = {
   [key: string]: ValueObject;
 } & CollectedValues;
 
-type YearlyValueObject = {
+export type YearlyValueObject = {
   Year: number;
   values: CodeValueObject;
 } & YearlyValues;
@@ -40,6 +40,24 @@ interface LineChartComponentProps {
   yearRange: number[];
   loading: boolean;
 }
+type DataPoint = {
+  year: number;
+  [key: string]:
+    | {
+        value: number | null;
+        numberOfCompanies: number | null;
+      }
+    | number;
+};
+
+const objectVerifier = (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  obj: any
+): obj is { value: number; numberOfCompanies: number } => {
+  return (
+    typeof obj === "object" && "value" in obj && "numberOfCompanies" in obj
+  );
+};
 
 const LineChartComponent: React.FC<LineChartComponentProps> = ({
   data,
@@ -86,13 +104,14 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
   const chartData = //lage en metode som bygger om JSON til linechartData.
     data[selectedKeys[0]] != undefined //selectedKeys.length > 0
       ? yearRange.map((_, idx) => {
-          const dataPoint: { [key: string]: number | string | null } = {
+          const dataPoint: DataPoint = {
             year: yearRange[idx],
           };
           selectedKeys.forEach((key) => {
-            const entry = data[key].find(
+            const entry = data[key]?.find(
               (entry) => entry.Year === yearRange[idx]
             );
+
             const point =
               entry == undefined
                 ? null
@@ -103,30 +122,36 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
                 : entry.values[ecoKey][monetaryKey] == undefined
                 ? null
                 : entry.values[ecoKey][monetaryKey];
-            dataPoint[key] = point === null ? point : (point as number) / 1000;
-            dataPoint.AntallCompanies =
-              entry?.values[ecoKey].UniqueCompanyCount ?? null;
+            const value = point === null ? point : (point as number) / 1000;
+            const numberOfCompanies =
+              entry?.values[ecoKey]?.UniqueCompanyCount ?? 0;
+            dataPoint[key] = {
+              value: value,
+              numberOfCompanies: numberOfCompanies,
+            };
           });
-          console.log(dataPoint);
           return dataPoint;
         })
       : undefined;
   console.log(chartData);
-  console.log(selectedKeys);
   const labels = chartData?.map((item) => item.year);
   const currentYear = new Date().getFullYear();
   const datasets = selectedKeys.map((key, index) => {
     return {
       label: `${key}`,
-      tension: 0.5,
-
-      data: chartData?.map((item) => ({
-        x: item.year,
-        y: item[key],
-        AntallCompanies: item.AntallCompanies,
-      })),
+      tension: 0.4,
+      data: chartData?.map((item) => {
+        const obj = item[key];
+        if (objectVerifier(obj))
+          return {
+            x: item.year,
+            y: obj.value,
+            AntallCompanies: obj.numberOfCompanies,
+          };
+      }),
       borderColor: colors[index % colors.length],
       segment: {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         borderDash: (ctx: any) => {
           const isLastSegment =
             ctx.p0.raw.x === currentYear - 2 &&
@@ -146,6 +171,7 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
 
   const options = {
     responsive: true,
+    aspectRatio: 3,
     plugins: {
       legend: {
         display: true,
@@ -154,10 +180,13 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
           font: {
             size: 14,
           },
+          usePointStyle: true,
+          pointStyle: "circle",
         },
       },
       tooltip: {
         callbacks: {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           label: function (context: any) {
             const label = context.dataset.label || "";
             const value = context.raw.y;
@@ -171,13 +200,14 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
     elements: {
       point: {
         radius: 5,
+        borderWidth: 3,
         backgroundColor: "#DFFBF5",
-        borderColor: "rgba(75, 192, 192, 0.5)",
+        borderColor: "#2E5F65",
       },
       line: {
-        tension: 0.4,
+        tension: 0.5,
         borderWidth: 3,
-        borderColor: "rgba(54, 162, 235, 1)",
+        borderColor: "#2E5F65",
         backgroundColor: "#DFFBF5",
       },
     },
@@ -187,22 +217,24 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
         title: {
           display: true,
           text: "Mill. NOK.",
-          color: "#2E5F65",
+          color: "#1e2222",
           font: {
             family: "SystemUi",
-            size: 18,
-            weight: "bold",
+            size: 16,
+            weight: "normal",
             lineHeight: 1.2,
           },
           padding: { top: 20, left: 0, right: 0, bottom: 10 },
         },
         grid: {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           color: (context: any) => {
             if (context.tick.value === 0) {
               return "#2E5F65";
             }
             return "#e0e0e0";
           },
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           lineWidth: (context: any) => {
             if (context.tick.value === 0) {
               return 2;
@@ -215,7 +247,7 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
   };
 
   return (
-    <div className=" relative w-full shadow-lg rounded-lg text-[#2E5F65]">
+    <div className=" relative w-full shadow-lg rounded-lg text-[#1e2222]">
       <h2 className="pb-4">{SelectedValue}</h2>
       {loading && (
         <div className="absolute inset-0 flex justify-center items-center bg-[#AED9E0] bg-opacity-75 z-10">

@@ -2,14 +2,13 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import MainPage from "./Pages/mainpage";
 import Layout from "./Components/layout";
-import AddCompany from "./Pages/addCompany";
-import HentRapport from "./Pages/hentRapport";
+import CompanyFlow from "./Pages/companyFlow";
+import YearlyReport from "./Pages/getYearlyReport";
 import Testpage from "./Pages/testpage";
 import "./index.css";
 import { GlobalStateProvider } from "./Components/GlobalState";
 [];
 
-// import { GlobalStateProvider } from "./Components/GlobalState";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 const router = createBrowserRouter([
@@ -25,12 +24,12 @@ const router = createBrowserRouter([
       },
 
       {
-        path: "/addcompany",
-        element: <AddCompany />,
+        path: "/companyflow",
+        element: <CompanyFlow />,
       },
       {
         path: "/rapport",
-        element: <HentRapport />,
+        element: <YearlyReport />,
       },
       {
         path: "/test",
