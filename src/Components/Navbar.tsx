@@ -102,13 +102,13 @@ const Navbar: React.FC = () => {
           <div className="hidden md:flex md:items-center md:ml-6">
             <div className="flex text-1vw sm:text-sm md:text-base lg:text-lg font-medium text-[#1e2222]">
               <Link to="/" className="px-3 py-2  hover:underline">
-                Hjem
+                Home
               </Link>
               <Link to="/rapport" className="px-3 py-2 hover:underline">
-                Hent årsrapport
+                Yearly Rapport
               </Link>
-              <Link to="/addcompany" className="px-3 py-2  hover:underline">
-                Legg til bedrift
+              <Link to="/companyflow" className="px-3 py-2  hover:underline">
+                Company Flow
               </Link>
 
               <Link to="/test" className="px-3 py-2  hover:underline">
@@ -118,7 +118,7 @@ const Navbar: React.FC = () => {
                 onClick={fetchFile}
                 className="px-3 py-2  hover:underline"
               >
-                Hent full view
+                Get full view
               </button>
             </div>
           </div>
@@ -143,13 +143,13 @@ const Navbar: React.FC = () => {
             to="/rapport"
             className="flex justify-center items-center px-3 py-2 rounded-md hover:underline"
           >
-            Hent årsrapport
+            Yearly Rapport
           </Link>
           <Link
-            to="/addcompany"
+            to="/companyflow"
             className="flex justify-center items-center px-3 py-2  rounded-md hover:underline"
           >
-            Legg til bedrift
+            Company flow
           </Link>
           <Link
             to="/test"
@@ -158,7 +158,7 @@ const Navbar: React.FC = () => {
             Testside
           </Link>
           <button onClick={fetchFile} className="px-3 py-2  hover:underline">
-            Hent full view
+            Get full view
           </button>
         </div>
       </div>
