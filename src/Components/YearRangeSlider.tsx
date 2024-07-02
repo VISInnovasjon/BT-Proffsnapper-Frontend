@@ -1,13 +1,13 @@
 // YearRangeSlider.tsx
 
 import React, { useState, useEffect, SetStateAction } from "react";
-import { Slider, Typography, Tooltip } from "@mui/material";
+import { Slider, Typography } from "@mui/material";
 import { useGlobalState } from "../Components/GlobalState";
 
 const YearRangeSlider = (props: {
   updateValue: React.Dispatch<SetStateAction<number[]>>;
 }) => {
-  const { state, dispatch } = useGlobalState();
+  const { dispatch } = useGlobalState();
   const [yearRange, setYearRange] = useState<number[]>([
     2014,
     new Date().getFullYear() - 1,

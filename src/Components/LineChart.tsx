@@ -138,7 +138,7 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
   const datasets = selectedKeys.map((key, index) => {
     return {
       label: `${key}`,
-      tension: 0.4,
+      tension: 0.5,
       data: chartData?.map((item) => {
         let obj = item[key];
         if (objectVerifier(obj))
@@ -174,7 +174,7 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
     },
     elements: {
       point: {
-        borderWidth: 4,
+        borderWidth: 6,
       },
     },
     plugins: {
@@ -236,7 +236,7 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
     <div className=" relative w-full shadow-lg rounded-lg text-[#2E5F65]">
       <h2 className="pb-4">{SelectedValue}</h2>
       {loading && (
-        <div className="absolute inset-0 flex justify-center items-center bg-[#AED9E0] bg-opacity-75 z-10">
+        <div className="absolute inset-0 flex justify-center items-center bg-[#AED9E0] bg-opacity-50 z-10">
           <Skeleton variant="rectangular" width="100%" height="100%" />
         </div>
       )}

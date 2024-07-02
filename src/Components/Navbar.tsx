@@ -15,7 +15,7 @@ const Navbar: React.FC = () => {
   const fetchFile = async () => {
     try {
       const response = await fetch("http://192.168.9.78:5000/fullmodel");
-
+      /* Herfra og ned kan brukes på nytt i årsrapport.  */
       const disposition = response.headers.get("Content-Disposition");
       let filename = "FullView";
       if (disposition && disposition.includes("attachment")) {
