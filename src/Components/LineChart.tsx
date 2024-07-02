@@ -247,7 +247,7 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
   };
 
   return (
-    <div className=" relative w-full shadow-lg rounded-lg text-[#1e2222]">
+    <div className="p-2 relative w-full shadow-lg rounded-lg text-[#1e2222]">
       <h2 className="pb-4">{SelectedValue}</h2>
       {loading && (
         <div className="absolute inset-0 flex justify-center items-center bg-[#AED9E0] bg-opacity-75 z-10">
