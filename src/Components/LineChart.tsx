@@ -51,6 +51,7 @@ type DataPoint = {
 };
 
 const objectVerifier = (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   obj: any
 ): obj is { value: number; numberOfCompanies: number } => {
   return (
@@ -150,6 +151,7 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
       }),
       borderColor: colors[index % colors.length],
       segment: {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         borderDash: (ctx: any) => {
           const isLastSegment =
             ctx.p0.raw.x === currentYear - 2 &&
@@ -169,14 +171,7 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
   const options = {
     responsive: true,
     aspectRatio: 3,
-    animation: {
-      duration: 500,
-    },
-    elements: {
-      point: {
-        borderWidth: 6,
-      },
-    },
+
     plugins: {
       legend: {
         position: "top" as "top",
@@ -191,6 +186,7 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
       },
       tooltip: {
         callbacks: {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           label: function (context: any) {
             const label = context.dataset.label || "";
             const value = context.raw.y;
@@ -200,6 +196,22 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
         },
       },
     },
+
+    elements: {
+      point: {
+        radius: 5,
+        borderWidth: 3,
+        backgroundColor: "#DFFBF5",
+        borderColor: "#2E5F65",
+      },
+      line: {
+        tension: 0.5,
+        borderWidth: 3,
+        borderColor: "#2E5F65",
+        backgroundColor: "#DFFBF5",
+      },
+    },
+
     scales: {
       y: {
         title: {
@@ -215,12 +227,14 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
           padding: { top: 20, left: 0, right: 0, bottom: 0 },
         },
         grid: {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           color: (context: any) => {
             if (context.tick.value === 0) {
               return "#000111";
             }
             return "#e0e0e0";
           },
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           lineWidth: (context: any) => {
             if (context.tick.value === 0) {
               return 2;
@@ -233,7 +247,7 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
   };
 
   return (
-    <div className=" relative w-full shadow-lg rounded-lg text-[#2E5F65]">
+    <div className=" relative w-full shadow-lg rounded-lg text-[#1e2222]">
       <h2 className="pb-4">{SelectedValue}</h2>
       {loading && (
         <div className="absolute inset-0 flex justify-center items-center bg-[#AED9E0] bg-opacity-50 z-10">

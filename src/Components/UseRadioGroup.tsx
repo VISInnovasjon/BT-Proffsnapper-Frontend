@@ -39,6 +39,7 @@ export default function UseRadioGroup(props: {
   return (
     <RadioGroup
       sx={{
+        marginTop: 2,
         "& .MuiSvgIcon-root": {
           fontSize: {
             xs: 16, // small screen
