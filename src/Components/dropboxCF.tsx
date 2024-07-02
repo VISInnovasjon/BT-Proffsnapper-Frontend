@@ -121,7 +121,7 @@ const Dropbox: React.FC<DropboxProps> = ({ name, fetchEndpoint }) => {
         />
         <label
           htmlFor={`fileInput-${name}`}
-          className="block text-center bg-[#3b747b]  text-[white] py-2 px-4 rounded cursor-pointer hover:bg-[#2E5F65]  hover:text-[#FAFFFB] transition-all duration-300"
+          className="block text-center bg-[#2E5F65] text-white py-2 px-4 mx-4 rounded hover:bg-[#3b747b] transition-all duration-300 cursor-pointer"
         >
           Choose File
         </label>

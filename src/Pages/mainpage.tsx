@@ -108,7 +108,7 @@ const MainPage: React.FC = () => {
   const [activeButton, setActiveButton] = useState<string | null>("option1");
 
   return (
-    <div className="pt-32 container mx-auto text-[#1e2222] text-2vw sm:text-base md:text-lg lg:text-lg xl:text-xl ">
+    <div className="pt-32 p-4 container mx-auto text-[#1e2222] text-2vw sm:text-base md:text-lg lg:text-lg xl:text-xl ">
       <div className=" flex flex-col justify-evenly lg:flex-row ">
         <div className="container flex flex-col  pl-4">
           <h3 className=" font-semibold my-2  text-center sm:text-start">
