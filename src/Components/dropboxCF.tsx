@@ -104,55 +104,75 @@ const Dropbox: React.FC<DropboxProps> = ({ name, fetchEndpoint }) => {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto">
-      <div
-        className={`border-4 p-4 rounded transition-all duration-300 ${
-          isDragging ? "border-[#2E5F65] bg-[#AED9E0]" : "border-gray-300"
-        }`}
-        onDragOver={handleDragOver}
-        onDragLeave={handleDragLeave}
-        onDrop={handleDrop}
-      >
-        <input
-          type="file"
-          className="hidden"
-          id={`fileInput-${name}`}
-          onChange={handleFileChange}
-        />
-        <label
-          htmlFor={`fileInput-${name}`}
-          className="block text-center bg-[#2E5F65] text-white py-2 px-4 mx-4 rounded hover:bg-[#3b747b] transition-all duration-300 cursor-pointer"
-        >
-          Choose File
-        </label>
-        <p className="text-center text-sm mt-2">or drag and drop a file here</p>
-        <p className="text-center text-sm mt-2">
-          Accepted file types: .xls, .xlsx
-        </p>
-        {isLoading && <CircularProgress className="block mx-auto mt-4" />}
-        {updatedFile && (
-          <div className="mt-4 p-4 bg-white text-center rounded-md shadow-md">
-            <p className="text-[#2E5F65] text-xl font-semibold text-center mb-2">
-              Upload completed
-            </p>
-            <p className="mb-2">{updatedFile}</p>
-            <button
-              className="bg-green-900 text-white py-1 px-2 rounded mr-2"
-              onClick={handleSaveFile}
-            >
-              Save updated file
-            </button>
-            <button
-              className="bg-red-500 text-white py-1 px-2 rounded"
-              onClick={() => {
-                if (window.confirm("Delete updated file?")) handleRemoveFile();
-              }}
-            >
-              X
-            </button>
+    <div
+      className={`w-full max-w-md mx-auto relative border-solid border-4 p-8 rounded-lg transition-all duration-300 ease-in-out transform ${
+        isDragging
+          ? "border-[#2e5f65] bg-[#AED9E0] "
+          : "border-gray-300 bg-transparent"
+      }`}
+      onDragLeave={handleDragLeave}
+      onDragOver={handleDragOver}
+      onDrop={handleDrop}
+    >
+      <div className="text-center">
+        {isLoading ? (
+          <div className="flex flex-col items-center ">
+            <CircularProgress className="mb-4" />
+            <p className="text-[#333333]">Updating file...</p>
           </div>
+        ) : (
+          <>
+            {error && <p className="text-red-500 mb-4">{error}</p>}
+            {updatedFile ? (
+              <>
+                <p className="text-green-500 text-xl mb-2 animate-bounce">
+                  Upload completed
+                </p>
+                <p className="text-[#333333] my-4 flex justify-center items-center">
+                  {updatedFile}
+                </p>
+                <div className="flex justify-center space-x-4 ">
+                  <button
+                    onClick={handleSaveFile}
+                    className="bg-[#2E5F65] text-white py-2 px-4 mt-4 rounded hover:bg-[#3b747b] transition-all duration-300"
+                  >
+                    Save updated file
+                  </button>
+                  <button
+                    className="bg-[#ac3535] text-white py-1 px-2 mt-4 rounded hover:bg-[#b14c4c]  transition-all duration-300"
+                    onClick={() => {
+                      if (window.confirm("Delete updated file?"))
+                        handleRemoveFile();
+                    }}
+                  >
+                    Delete
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                <input
+                  type="file"
+                  className="hidden"
+                  id={`fileInput-${name}`}
+                  onChange={handleFileChange}
+                />
+                <label
+                  htmlFor={`fileInput-${name}`}
+                  className="block text-center bg-[#2E5F65] text-white py-2 px-4 mx-4 rounded hover:bg-[#3b747b] transition-all duration-300 cursor-pointer"
+                >
+                  Choose File
+                </label>
+                <p className="text-center text-sm mt-2">
+                  or drag and drop a file here
+                </p>
+                <p className="text-center text-sm mt-2">
+                  Accepted file types: .xls, .xlsx
+                </p>
+              </>
+            )}
+          </>
         )}
-        {error && <p className="text-red-500 mt-2 text-center">{error}</p>}
       </div>
     </div>
   );

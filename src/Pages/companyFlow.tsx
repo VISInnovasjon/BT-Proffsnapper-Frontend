@@ -14,7 +14,7 @@ const invalidMockFile = new File(
   { type: "image/jpeg" }
 );
 
-const App: React.FC = () => {
+const CompanyFlowPage: React.FC = () => {
   const [view, setView] = useState<
     "Update Company Data Flow" | "dropbox1" | "dropbox2"
   >("Update Company Data Flow");
@@ -86,6 +86,12 @@ const App: React.FC = () => {
       {view === "dropbox1" && (
         <div className="flex flex-col items-center w-full">
           <Dropbox name="Dropbox 1" fetchEndpoint="/api/dropbox1" />
+
+          <p className="text-[#1e2222] text-center m-4">
+            If you need a new file for the dropbox, click on "Get template"
+            button below.
+          </p>
+
           <button
             className="bg-[#2E5F65] text-white py-2 mt-4 px-4 mx-4 rounded hover:bg-[#3b747b] transition-all duration-300"
             onClick={() => handleTemplateFetch("dropbox1")}
@@ -202,4 +208,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default CompanyFlowPage;

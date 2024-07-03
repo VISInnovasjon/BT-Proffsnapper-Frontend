@@ -1,8 +1,53 @@
-import React from "react";
+import React, { useState } from "react";
+import CircularProgress from "@mui/material/CircularProgress";
 import DraggableItem from "../Components/draggableItem";
-import DropboxYR from "../Components/DropboxYR";
+import Dropbox from "../Components/DropboxYR";
 
 const YearlyReport: React.FC = () => {
+  const [isFetchingTemplate, setIsFetchingTemplate] = useState(false);
+
+  const handleFetchTemplate = () => {
+    const confirmMessage = "Continue to fetch template?";
+    const userConfirmed = window.confirm(confirmMessage);
+
+    if (userConfirmed) {
+      setIsFetchingTemplate(true);
+
+      fetch("") // Use your actual endpoint here
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Failed to fetch template.");
+          }
+          return response.blob(); // Assuming the template is a blob (file)
+        })
+        .then((blob) => {
+          setIsFetchingTemplate(false);
+
+          // Create a URL object from the blob
+          const url = URL.createObjectURL(blob);
+
+          // Create a link element
+          const link = document.createElement("a");
+          link.href = url;
+          link.download = "template.xlsx"; // Example filename
+          document.body.appendChild(link);
+
+          // Trigger the click event to download the file
+          link.click();
+
+          // Clean up
+          URL.revokeObjectURL(url);
+          document.body.removeChild(link);
+        })
+        .catch((error) => {
+          setIsFetchingTemplate(false);
+          console.error("Error fetching template:", error);
+        });
+    } else {
+      console.log("Fetch template canceled.");
+    }
+  };
+
   const handleFileUpdate = (file: File) => {
     console.log("Updated file:", file);
   };
@@ -15,7 +60,18 @@ const YearlyReport: React.FC = () => {
       <div className="m-10 absolute left-1 bottom-1">
         <DraggableItem />
       </div>
-      <DropboxYR onFileUpdate={handleFileUpdate} name={""} fetchEndpoint={""} />
+      <Dropbox onFileUpdate={handleFileUpdate} name={""} fetchEndpoint={""} />
+      <div className="mt-4">
+        <button
+          onClick={handleFetchTemplate}
+          className="bg-[#2E5F65] text-white py-2 px-4 mt-4 rounded hover:bg-[#3b747b] transition-all duration-300"
+        >
+          Get Template
+        </button>
+      </div>
+      {isFetchingTemplate && (
+        <CircularProgress className="block mx-auto mt-4" />
+      )}
     </div>
   );
 };
