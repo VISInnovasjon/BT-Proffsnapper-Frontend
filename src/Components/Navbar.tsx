@@ -38,6 +38,17 @@ const Navbar: React.FC = () => {
     }
   };
 
+  /*  const fetchFile = async () => {
+    try {
+      const response = await fetch("http://192.168.9.78:5000/fullmodel");
+
+      await blobHandler(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+ */
+
   return (
     <nav className="bg-[#AED9E0] fixed w-full top-0  backdrop-filter backdrop-blur-lg py-4 mb-0 z-10">
       <div className="max-w-8xl mx-auto px-4">

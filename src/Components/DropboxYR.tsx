@@ -32,6 +32,46 @@ const Dropbox: React.FC<DropboxProps> = ({ onFileUpdate, name }) => {
     setIsDragging(true); // Ensure hover effect persists while dragging over
   };
 
+  /* const handleDrop = async (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+    setError(null);
+
+    const data = e.dataTransfer.items[0].getAsFile();
+    console.log(data);
+    const formData = new FormData();
+    if (data) {
+      try {
+        formData.append("file", data);
+        console.log(formData.get(data.name));
+        if (
+          [
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          ].includes(data.type)
+        ) {
+          setIsLoading(true);
+          setError(null);
+
+          const response = await fetch(
+            "http://192.168.9.78:5000/yearlyreport",
+            {
+              method: "POST",
+              body: formData,
+            }
+          );
+          if (response.status === 400) console.log(response);
+          else await blobHandler(response);
+          setIsLoading(false);
+        } else {
+          setError("Invalid file type. Please try again with a .xlsx file.");
+        }
+      } catch (error) {
+        setError("Error reading file. Please try again.");
+      }
+    }
+  }; */
+
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
