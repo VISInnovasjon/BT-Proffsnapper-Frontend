@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Dropbox from "../Components/dropboxCF";
 import { CircularProgress } from "@mui/material";
+import { blobHandler } from "../Components/BlobCreator";
 
 // Mock files for demonstration purposes
 const validMockFile = new File(
@@ -26,11 +27,12 @@ const App: React.FC = () => {
   const handleTemplateFetch = async (dropbox: "dropbox1" | "dropbox2") => {
     setIsLoading(true);
     const endpoint =
-      dropbox === "dropbox1" ? "/api/template1" : "/api/template2"; //set endpoints
+      dropbox === "dropbox1"
+        ? "/template/dbupdate" //sender tilbake en excel fil med rett format, og viser hva data som trengs for å legge til ny data i databasen.
+        : "/template/orgnummer"; //sender tilbake en excel fil med format for å vise hvordan man kan slette data basert på organisasjonsnummer i databasen.; //set endpoints
     try {
       const response = await fetch(endpoint);
-      const data = await response.text();
-      setTemplate(data);
+      await blobHandler(response);
     } catch (error) {
       setTemplate("Error fetching template.");
     } finally {
@@ -85,7 +87,7 @@ const App: React.FC = () => {
 
       {view === "dropbox1" && (
         <div className="flex flex-col items-center w-full">
-          <Dropbox name="Dropbox 1" fetchEndpoint="/api/dropbox1" />
+          <Dropbox name="Dropbox 1" fetchEndpoint="/updatedb/newdata" />
           <button
             className="bg-[#AED9E0] text-[#060316] border-[#2E5F65] border-solid border-2 py-2 px-4 mt-4 rounded hover:bg-[#8ab5bc] transition-all duration-300"
             onClick={() => handleTemplateFetch("dropbox1")}
@@ -143,7 +145,7 @@ const App: React.FC = () => {
 
       {view === "dropbox2" && (
         <div className="flex flex-col items-center w-full">
-          <Dropbox name="Dropbox 2" fetchEndpoint="/api/dropbox2" />
+          <Dropbox name="Dropbox 2" fetchEndpoint="/updatedb/deletedata" />
           <button
             className="bg-[#AED9E0] text-[#060316] border-[#2E5F65] border-solid border-2 py-2 px-4 mt-4 rounded hover:bg-[#8ab5bc] transition-all duration-300"
             onClick={() => handleTemplateFetch("dropbox2")}

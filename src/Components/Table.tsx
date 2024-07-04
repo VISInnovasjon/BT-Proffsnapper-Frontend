@@ -1,9 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  DataGrid,
-  DEFAULT_GRID_AUTOSIZE_OPTIONS,
-  useGridApiRef,
-} from "@mui/x-data-grid";
+import { DataGrid } from "@mui/x-data-grid";
 
 type gridProps = {
   ecoCode: string;
@@ -30,7 +26,7 @@ export const DataGridComponent = ({ ecoCode }: gridProps) => {
     const FetchData = async () => {
       const searchParams = new URLSearchParams({ EcoCode: ecoCode });
       try {
-        const url = "http://localhost:5000/tabledata?"; //Denne må endres på når siden går live.
+        const url = "/tabledata?"; //Denne må endres på når siden går live.
 
         const response = await fetch(url + searchParams.toString());
         if (response.status === 400) {

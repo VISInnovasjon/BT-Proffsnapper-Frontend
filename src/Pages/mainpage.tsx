@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import AgeGroupSelect from "../Components/AgeGroupSelect";
 import FaseSelect from "../Components/FaseSelect";
 import BrandSelect from "../Components/BrandSelect";
-import LineChartComponent from "../Components/LineChart";
+import LineChartComponent, { KeyedValues } from "../Components/LineChart";
 import { Button, Menu, MenuItem, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import YearRangeSlider from "../Components/YearRangeSlider";
@@ -13,29 +13,12 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { DataGridComponent } from "../Components/Table";
 import "../index.css";
 
-type ValueRecord = Record<string, number | string>;
-
-type CollectedValues = Record<string, ValueRecord>;
-
-type YearlyValues = Record<string, CollectedValues | number>;
-
-type KeyedValues = Record<string, YearlyValueObject[]>;
-
-type ValueObject = {
-  Value: number;
-  Delta: number;
-  Description: string;
-} & ValueRecord;
-type CodeValueObject = {
-  [key: string]: ValueObject;
-} & CollectedValues;
-
-type YearlyValueObject = {
-  Year: number;
-  values: CodeValueObject;
-} & YearlyValues;
 type ButtonTarget = {
   value: string;
+};
+type RadioTarget = {
+  value: string | null;
+  defaultValue: string;
 };
 
 const MainPage: React.FC = () => {
@@ -55,7 +38,7 @@ const MainPage: React.FC = () => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await fetch("mockData.json");
+        const response = await fetch("/query/getall");
         const data = await response.json();
         setData(data);
       } catch (error) {
@@ -233,14 +216,15 @@ const MainPage: React.FC = () => {
           <div className="inline-flex sm:flex sm:justify-center mt-1  ">
             <UseRadioGroup
               onChange={(e) => {
+                const target = e.target as EventTarget & Element & RadioTarget;
                 setMonetaryKey(
-                  e.target.value ? e.target.value : e.target.defaultValue
+                  target.value ? target.value : target.defaultValue
                 );
               }}
             />
-            <div className="bg-[#AED9E0] text-[#060316] ">
-              <DataGridComponent ecoCode={ecoKey} />
-            </div>
+          </div>
+          <div className="bg-[#AED9E0] text-[#060316] ">
+            <DataGridComponent ecoCode={ecoKey} />
           </div>
         </div>
       </div>

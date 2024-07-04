@@ -19,14 +19,16 @@ export default function CodeFilter(props: {
       label: item[1],
     })
   );
+
+  const handleChange = (option: AutoCompleteOptions | null) => {
+    option === null ? null : props.ChangeHandler(option.id);
+  };
   return (
     <Autocomplete
       disablePortal
       id="combo-box-demo"
       size="small"
-      onChange={(event, option) =>
-        option === null ? null : props.ChangeHandler(option.id)
-      }
+      onChange={(_, option) => handleChange(option)}
       options={options}
       sx={{ width: 300 }}
       style={{ backgroundColor: "transparent" }}

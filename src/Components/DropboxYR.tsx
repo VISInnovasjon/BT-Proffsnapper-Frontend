@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { blobHandler } from "./BlobCreator";
 import CircularProgress from "@mui/material/CircularProgress";
 
 interface DropboxProps {
@@ -33,35 +34,40 @@ const Dropbox: React.FC<DropboxProps> = ({ onFileUpdate, name }) => {
     setIsDragging(true); // Ensure hover effect persists while dragging over
   };
 
-  const handleDrop = (e: React.DragEvent) => {
+  const handleDrop = async (e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
     setIsDragging(false);
     setError(null);
 
-    try {
-      const fileData = e.dataTransfer.getData("application/json");
-      const parsedData = JSON.parse(fileData);
-      const file = new File([parsedData.content], parsedData.name, {
-        type: parsedData.type,
-      });
-      if (
-        file &&
-        (file.type === "text/plain" ||
-          file.type === "application/pdf" ||
-          file.type ===
-            "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
-      ) {
-        handleFileUpdate(file);
-      } else {
-        setError(
-          "Invalid file type. Please try again with a .txt, .pdf, or .docx file."
-        );
+    const data = e.dataTransfer.items[0].getAsFile();
+    console.log(data);
+    const formData = new FormData();
+    if (data) {
+      try {
+        formData.append("file", data);
+        console.log(formData.get(data.name));
+        if (
+          [
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          ].includes(data.type)
+        ) {
+          setIsLoading(true);
+          setError(null);
+
+          const response = await fetch("/yearlyreport", {
+            method: "POST",
+            body: formData,
+          });
+          if (response.status === 400) console.log(response);
+          else await blobHandler(response);
+          setIsLoading(false);
+        } else {
+          setError("Invalid file type. Please try again with a .xlsx file.");
+        }
+      } catch (error) {
+        setError("Error reading file. Please try again.");
       }
-    } catch (error) {
-      setError(
-        "Invalid file type. Please try again with a .txt, .pdf, or .docx file."
-      );
     }
   };
 

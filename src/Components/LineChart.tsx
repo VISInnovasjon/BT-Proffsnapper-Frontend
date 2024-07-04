@@ -174,7 +174,7 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
 
     plugins: {
       legend: {
-        position: "top" as "top",
+        position: "top" as const,
         labels: {
           font: {
             family: "system-ui",
@@ -221,7 +221,7 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
           font: {
             family: "System-ui",
             size: 20,
-            weight: "bold" as "bold",
+            weight: "normal" as const,
             lineHeight: 1.2,
           },
           padding: { top: 20, left: 0, right: 0, bottom: 0 },

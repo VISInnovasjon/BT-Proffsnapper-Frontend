@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import myImage from "../Images/Logosta2.png";
+import { blobHandler } from "./BlobCreator";
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -14,25 +15,9 @@ const Navbar: React.FC = () => {
 
   const fetchFile = async () => {
     try {
-      const response = await fetch("http://192.168.9.78:5000/fullmodel");
-      /* Herfra og ned kan brukes på nytt i årsrapport.  */
-      const disposition = response.headers.get("Content-Disposition");
-      let filename = "FullView";
-      if (disposition && disposition.includes("attachment")) {
-        const filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
-        const matches = filenameRegex.exec(disposition);
-        if (matches != null && matches[1]) {
-          filename = matches[1].replace(/['"]/g, "");
-        }
-      }
-      const blob = await response.blob();
-      const link = document.createElement("a");
-      link.href = URL.createObjectURL(blob);
-      link.download = filename;
-      document.body.append(link);
-      link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(link.href);
+      const response = await fetch("/fullmodel");
+
+      await blobHandler(response);
     } catch (error) {
       console.log(error);
     }

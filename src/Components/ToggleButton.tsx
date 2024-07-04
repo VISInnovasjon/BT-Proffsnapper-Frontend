@@ -11,7 +11,7 @@ export interface ToggleButtonProps {
 }
 
 const StyledButton = styled(Button)<{ active: boolean }>(({ active }) => ({
-  backgroundColor: active ? "#2E5F65" : "#DFFBF5",
+  backgroundColor: active ? "#2E5F65" : "#e9fffb",
   color: active ? "#FAFFFB" : "#1e2222",
   "&:hover": {
     color: active ? "#FAFFFB" : "#FAFFFB",

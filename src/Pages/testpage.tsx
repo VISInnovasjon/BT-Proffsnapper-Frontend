@@ -201,7 +201,7 @@ const TestPage: React.FC = () => {
         </div>
       </div>
       <div className="m-4">
-        <div className="w-full container text-center ">
+        <div className="w-full container text-center flex flex-col justify-center items-center">
           <div className="mx-6 mt-10">
             <YearRangeSlider updateValue={setYearRange} />
           </div>
@@ -215,7 +215,7 @@ const TestPage: React.FC = () => {
             monetaryKey={monetaryKey}
             yearRange={yearRange}
           />
-          <div className="inline-flex sm:flex sm:justify-center mt-1  ">
+          <div className="sm:flex sm:justify-center mt-1  ">
             <UseRadioGroup
               onChange={(e: RadialEventTarget) => {
                 setMonetaryKey(
@@ -224,9 +224,9 @@ const TestPage: React.FC = () => {
               }}
             />
           </div>
-          <div className="bg-[#AED9E0] text-[#060316]">
-              <DataGridComponent ecoCode={ecoKey} />
-            </div>
+          <div className="bg-[#AED9E0] text-[#060316] w-full">
+            <DataGridComponent ecoCode={ecoKey} />
+          </div>
         </div>
       </div>
     </div>

@@ -27,33 +27,34 @@ const Dropbox: React.FC<DropboxProps> = ({ name, fetchEndpoint }) => {
   const handleDrop = async (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(false);
-    const data = e.dataTransfer.getData("application/json");
+    const data = e.dataTransfer.items[0].getAsFile();
+    console.log(data);
+    const formData = new FormData();
     if (data) {
       try {
-        const fileData = JSON.parse(data);
+        formData.append("file", data);
         if (
-          ["text/plain", "application/pdf", "application/msword"].includes(
-            fileData.type
-          )
+          [
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          ].includes(data.type)
         ) {
           setIsLoading(true);
           setError(null);
 
           const response = await fetch(fetchEndpoint, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ content: fileData.content }),
+            body: formData,
           });
-          const result = await response.text();
-
-          setUpdatedFile(`${fileData.name}\n${result}`);
+          if (response.status === 400)
+            setError(
+              `Something went wrong on the server, ${response.statusText}`
+            );
           setIsLoading(false);
         } else {
-          setError(
-            "Invalid file type. Please try again with a .xls, .xlsx file."
-          );
+          setError("Invalid file type. Please try again with a .xlsx file.");
         }
       } catch (error) {
+        console.log(error);
         setError("Error reading file. Please try again.");
       }
     }
@@ -61,30 +62,35 @@ const Dropbox: React.FC<DropboxProps> = ({ name, fetchEndpoint }) => {
 
   // Handle file input change event
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      if (
-        ["text/plain", "application/pdf", "application/msword"].includes(
-          file.type
-        )
-      ) {
-        setIsLoading(true);
-        setError(null);
+    const dataList = e.target.files;
+    if (dataList === null) return;
+    const data = dataList[0];
+    if (data) {
+      try {
+        const formData = new FormData();
+        formData.append("file", data);
+        if (
+          [
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          ].includes(data.type)
+        ) {
+          setIsLoading(true);
+          setError(null);
 
-        const content = await file.text();
-        const response = await fetch(fetchEndpoint, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ content }),
-        });
-        const result = await response.text();
-
-        setUpdatedFile(`${file.name}\n${result}`);
-        setIsLoading(false);
-      } else {
-        setError(
-          "Invalid file type. Please try again with a .xls, .xlsx file."
-        );
+          const response = await fetch(fetchEndpoint, {
+            method: "POST",
+            body: formData,
+          });
+          if (response.status === 400)
+            setError(
+              `Something went wrong on the server, ${response.statusText}`
+            );
+          setIsLoading(false);
+        } else {
+          setError("Invalid file type. Please try again with a .xlsx file.");
+        }
+      } catch (error) {
+        setError("Error reading file. Please try again.");
       }
     }
   };
