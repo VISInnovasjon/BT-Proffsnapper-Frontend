@@ -38,21 +38,22 @@ const CompanyFlowPage: React.FC = () => {
     }
   };
 
-  /*  const handleTemplateFetch = async (dropbox: "dropbox1" | "dropbox2") => {
+  // Fetch template based on dropbox
+  /*const handleTemplateFetch = async (dropbox: "dropbox1" | "dropbox2") => {
     setIsLoading(true);
     const endpoint =
       dropbox === "dropbox1"
-        ? "http://192.168.9.78:5000/template/dbupdate" //sender tilbake en excel fil med rett format, og viser hva data som trengs for å legge til ny data i databasen.
-        : "http://192.168.9.78:5000/template/orgnummer"; //sender tilbake en excel fil med format for å vise hvordan man kan slette data basert på organisasjonsnummer i databasen.; //set endpoints
+        ? "/api/dbupdatetemplate" //sender tilbake en excel fil med rett format, og viser hva data som trengs for å legge til ny data i databasen.
+        : "/api/orgnummertemplate"; //sender tilbake en excel fil med format for å vise hvordan man kan slette data basert på organisasjonsnummer i databasen.; //set endpoints
     try {
-      const response = await fetch(endpoint);
+      const response = await fetch("http://192.168.9.78:5000" + endpoint);
       await blobHandler(response);
     } catch (error) {
       setTemplate("Error fetching template.");
     } finally {
       setIsLoading(false);
     }
-  }; */
+  };*/
 
   // Handle back button click
   const handleBack = () => {

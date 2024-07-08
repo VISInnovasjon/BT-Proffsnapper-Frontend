@@ -59,7 +59,8 @@ const Dropbox: React.FC<DropboxProps> = ({ name, fetchEndpoint }) => {
     }
   };
 
-  /*   const handleDrop = async (e: React.DragEvent<HTMLDivElement>) => {
+  // Handle file drop event
+  /*const handleDrop = async (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(false);
     const data = e.dataTransfer.items[0].getAsFile();
@@ -76,11 +77,11 @@ const Dropbox: React.FC<DropboxProps> = ({ name, fetchEndpoint }) => {
           setIsLoading(true);
           setError(null);
 
-          const response = await fetch(fetchEndpoint, {
+          const response = await fetch("http://192.168.9.78:5000" + fetchEndpoint, {
             method: "POST",
             body: formData,
           });
-          if (response.status === 400)
+          if (response.status != 200)
             setError(
               `Something went wrong on the server, ${response.statusText}`
             );
@@ -93,7 +94,7 @@ const Dropbox: React.FC<DropboxProps> = ({ name, fetchEndpoint }) => {
         setError("Error reading file. Please try again.");
       }
     }
-  }; */
+  };*/
 
   // Handle file input change event
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -125,7 +126,8 @@ const Dropbox: React.FC<DropboxProps> = ({ name, fetchEndpoint }) => {
     }
   };
 
-  /* const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  // Handle file input change event
+  /*const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const dataList = e.target.files;
     if (dataList === null) return;
     const data = dataList[0];
@@ -145,7 +147,7 @@ const Dropbox: React.FC<DropboxProps> = ({ name, fetchEndpoint }) => {
             method: "POST",
             body: formData,
           });
-          if (response.status === 400)
+          if (response.status != 200)
             setError(
               `Something went wrong on the server, ${response.statusText}`
             );

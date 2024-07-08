@@ -40,8 +40,7 @@ const Navbar: React.FC = () => {
 
   /*  const fetchFile = async () => {
     try {
-      const response = await fetch("http://192.168.9.78:5000/fullmodel");
-
+      const response = await fetch("http://192.168.9.78:5000" + "/api/excelfullview");
       await blobHandler(response);
     } catch (error) {
       console.log(error);
@@ -61,14 +60,15 @@ const Navbar: React.FC = () => {
                   src={myImage}
                   style={{
                     objectFit: "cover",
-                    width: "60px",
-                    borderRadius: "50%",
+                    width: "80px",
+                    height: "80px",
+                    borderRadius: "10%",
                   }}
                   className="md:block my-2"
                   alt="logo"
                 />
                 <div className="fixed top-2 text-lg text-teal-900 font-medium">
-                  AxioSynth
+                  Axiosynth
                 </div>
               </div>
             </a>

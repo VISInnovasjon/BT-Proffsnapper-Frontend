@@ -6,15 +6,19 @@ import Dropbox from "../Components/DropboxYR";
 const YearlyReport: React.FC = () => {
   const [isFetchingTemplate, setIsFetchingTemplate] = useState(false);
 
-  /* const handleTemplateFetch = async () => {
-    const endpoint = "http://192.168.9.78:5000/template/orgnummer"; //set endpoints
+  // Fetch template based on dropbox
+  /*const handleTemplateFetch = async () => {
+    const endpoint = ("http://192.168.9.78:5000" + "api/orgnummertemplate");
     try {
+      setIsFetchingTemplate(true);
       const response = await fetch(endpoint);
       await blobHandler(response);
+      setIsFetchingTemplate(false);
     } catch (error) {
-      console.log(error);
+      setIsFetchingTemplate(false);
+      console.log("Something went wrong fetching template", error);
     }
-  }; */
+  };*/
 
   const handleFetchTemplate = () => {
     const confirmMessage = "Continue to fetch template?";

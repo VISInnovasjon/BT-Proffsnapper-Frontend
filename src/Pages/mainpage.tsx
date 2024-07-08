@@ -47,7 +47,7 @@ const MainPage: React.FC = () => {
   const [ecoKey, setEcoKey] = useState<string>("DR");
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [filters, setFilters] = useState<string[]>([]);
-  const [monetaryKey, setMonetaryKey] = useState<string>("Value");
+  const [monetaryKey, setMonetaryKey] = useState<string>("Accumulated");
   const [yearRange, setYearRange] = useState<number[]>([]);
   console.log(yearRange);
 
@@ -66,6 +66,22 @@ const MainPage: React.FC = () => {
     };
     fetchData();
   }, []);
+
+  /*useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch("/api/graphdata");
+        const data = await response.json();
+        setData(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);*/
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
