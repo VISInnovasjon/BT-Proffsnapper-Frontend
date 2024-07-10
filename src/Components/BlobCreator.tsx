@@ -11,6 +11,9 @@ export const blobHandler = async (res: Response) => {
       }
     }
     const blob = await res.blob();
+    const confirmMessage = `Are you sure you want to download the file ${filename}?`;
+    const userConfirmed = window.confirm(confirmMessage);
+    if (!userConfirmed) return;
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
     link.download = filename;

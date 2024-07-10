@@ -1,21 +1,66 @@
-import React from "react";
+import React, { useState } from "react";
+import CircularProgress from "@mui/material/CircularProgress";
 import DraggableItem from "../Components/draggableItem";
-import DropboxYR from "../Components/DropboxYR";
+import Dropbox from "../Components/DropboxYR";
 import { blobHandler } from "../Components/BlobCreator";
 
 const YearlyReport: React.FC = () => {
+  const [isFetchingTemplate, setIsFetchingTemplate] = useState(false);
+
+  /* const handleFetchTemplate = () => {
+    if (userConfirmed) {
+      setIsFetchingTemplate(true);
+
+      fetch("") // Use your actual endpoint here
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Failed to fetch template.");
+          }
+          return response.blob(); // Assuming the template is a blob (file)
+        })
+        .then((blob) => {
+          setIsFetchingTemplate(false);
+
+          // Create a URL object from the blob
+          const url = URL.createObjectURL(blob);
+
+          // Create a link element
+          const link = document.createElement("a");
+          link.href = url;
+          link.download = "template.xlsx"; // Example filename
+          document.body.appendChild(link);
+
+          // Trigger the click event to download the file
+          link.click();
+
+          // Clean up
+          URL.revokeObjectURL(url);
+          document.body.removeChild(link);
+        })
+        .catch((error) => {
+          setIsFetchingTemplate(false);
+          console.error("Error fetching template:", error);
+        });
+    } else {
+      console.log("Fetch template canceled.");
+    }
+  }; */
+
   const handleFileUpdate = (file: File) => {
     console.log("Updated file:", file);
   };
 
   // Fetch template based on dropbox
   const handleTemplateFetch = async () => {
-    const endpoint = "http://192.168.9.78:5000/template/orgnummer"; //set endpoints
+    const endpoint = "http://192.168.9.78:5000/api/orgnummertemplate";
     try {
+      setIsFetchingTemplate(true);
       const response = await fetch(endpoint);
       await blobHandler(response);
+      setIsFetchingTemplate(false);
     } catch (error) {
-      console.log(error);
+      setIsFetchingTemplate(false);
+      console.log("Something went wrong fetching template", error);
     }
   };
   return (
@@ -26,13 +71,18 @@ const YearlyReport: React.FC = () => {
       <div className="m-10 absolute left-1 bottom-1">
         <DraggableItem />
       </div>
-      <DropboxYR onFileUpdate={handleFileUpdate} name={""} fetchEndpoint={""} />
-      <button
-        className="bg-[#AED9E0] text-[#060316] border-[#2E5F65] border-solid border-2 py-2 px-4 mt-4 rounded hover:bg-[#8ab5bc] transition-all duration-300"
-        onClick={() => handleTemplateFetch()}
-      >
-        Get Template
-      </button>
+      <Dropbox onFileUpdate={handleFileUpdate} name={""} fetchEndpoint={""} />
+      <div className="mt-4">
+        <button
+          onClick={handleTemplateFetch}
+          className="bg-[#2E5F65] text-white py-2 px-4 mt-4 rounded hover:bg-[#3b747b] transition-all duration-300"
+        >
+          Get Template
+        </button>
+      </div>
+      {isFetchingTemplate && (
+        <CircularProgress className="block mx-auto mt-4" />
+      )}
     </div>
   );
 };

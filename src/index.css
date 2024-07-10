@@ -6,10 +6,7 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
-  color-scheme: light dark;
   color: #1e2222;
-  background: rgb(2, 0, 36);
   background: #e9fffb;
 
   font-synthesis: none;
@@ -47,7 +44,6 @@ body {
 
 /* index.css */
 .MuiAutocomplete-root {
-  width: 300px;
   height: 10px;
 }
 
@@ -56,26 +52,11 @@ body {
 }
 
 .MuiInputBase-root.Mui-focused {
-}
-
-.MuiOutlinedInput-notchedOutline {
-}
-
-.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
-}
-
-.MuiAutocomplete-clearIndicator {
-}
-
-.MuiAutocomplete-popupIndicator {
+  background-color: #aed9e0;
+  color: #060316;
 }
 
 .MuiAutocomplete-option {
-}
-
-.MuiAutocomplete-option[data-focus="true"] {
-}
-
-.MuiAutocomplete-option[aria-selected="true"] {
   background-color: #aed9e0;
+  color: #060316;
 }

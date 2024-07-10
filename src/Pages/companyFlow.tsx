@@ -15,7 +15,7 @@ const invalidMockFile = new File(
   { type: "image/jpeg" }
 );
 
-const App: React.FC = () => {
+const CompanyFlowPage: React.FC = () => {
   const [view, setView] = useState<
     "Update Company Data Flow" | "dropbox1" | "dropbox2"
   >("Update Company Data Flow");
@@ -28,8 +28,8 @@ const App: React.FC = () => {
     setIsLoading(true);
     const endpoint =
       dropbox === "dropbox1"
-        ? "/template/dbupdate" //sender tilbake en excel fil med rett format, og viser hva data som trengs for å legge til ny data i databasen.
-        : "/template/orgnummer"; //sender tilbake en excel fil med format for å vise hvordan man kan slette data basert på organisasjonsnummer i databasen.; //set endpoints
+        ? "/api/dbupdatetemplate" //sender tilbake en excel fil med rett format, og viser hva data som trengs for å legge til ny data i databasen.
+        : "/api/orgnummertemplate"; //sender tilbake en excel fil med format for å vise hvordan man kan slette data basert på organisasjonsnummer i databasen.; //set endpoints
     try {
       const response = await fetch(endpoint);
       await blobHandler(response);
@@ -60,7 +60,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="p-4 flex flex-col items-center justify-center min-h-screen ">
+    <div className="p-4 flex flex-col items-center justify-center min-h-screen text-[#1e2222] text-2vw sm:text-base md:text-lg lg:text-lg xl:text-xl ">
       <h1 className="text-2xl font-bold mb-4">{title}</h1>
       {view === "Update Company Data Flow" && (
         <div className="block items-center justify-center m-10">
@@ -87,9 +87,15 @@ const App: React.FC = () => {
 
       {view === "dropbox1" && (
         <div className="flex flex-col items-center w-full">
-          <Dropbox name="Dropbox 1" fetchEndpoint="/updatedb/newdata" />
+          <Dropbox name="Dropbox 1" fetchEndpoint="/api/updatewithnewdata" />
+
+          <p className="text-[#1e2222] text-center m-4">
+            If you need a new file for the dropbox, click on "Get template"
+            button below.
+          </p>
+
           <button
-            className="bg-[#AED9E0] text-[#060316] border-[#2E5F65] border-solid border-2 py-2 px-4 mt-4 rounded hover:bg-[#8ab5bc] transition-all duration-300"
+            className="bg-[#2E5F65] text-white py-2 mt-4 px-4 mx-4 rounded hover:bg-[#3b747b] transition-all duration-300"
             onClick={() => handleTemplateFetch("dropbox1")}
           >
             Get Template
@@ -145,9 +151,9 @@ const App: React.FC = () => {
 
       {view === "dropbox2" && (
         <div className="flex flex-col items-center w-full">
-          <Dropbox name="Dropbox 2" fetchEndpoint="/updatedb/deletedata" />
+          <Dropbox name="Dropbox 2" fetchEndpoint="/api/deletedata" />
           <button
-            className="bg-[#AED9E0] text-[#060316] border-[#2E5F65] border-solid border-2 py-2 px-4 mt-4 rounded hover:bg-[#8ab5bc] transition-all duration-300"
+            className="bg-[#2E5F65] text-white py-2 px-4 mt-4 rounded hover:bg-[#3b747b] transition-all duration-300"
             onClick={() => handleTemplateFetch("dropbox2")}
           >
             Get Template
@@ -204,4 +210,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default CompanyFlowPage;

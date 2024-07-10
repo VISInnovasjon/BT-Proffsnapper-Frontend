@@ -15,8 +15,7 @@ const Navbar: React.FC = () => {
 
   const fetchFile = async () => {
     try {
-      const response = await fetch("/fullmodel");
-
+      const response = await fetch("/api/excelfullview");
       await blobHandler(response);
     } catch (error) {
       console.log(error);

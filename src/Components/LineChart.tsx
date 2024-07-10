@@ -174,6 +174,7 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
 
     plugins: {
       legend: {
+        display: true,
         position: "top" as const,
         labels: {
           font: {
@@ -219,8 +220,8 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
           text: "I mill NOK.",
           color: "#2E5F65",
           font: {
-            family: "System-ui",
-            size: 20,
+            family: "SystemUi",
+            size: 16,
             weight: "normal" as const,
             lineHeight: 1.2,
           },
@@ -247,7 +248,7 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
   };
 
   return (
-    <div className=" relative w-full shadow-lg rounded-lg text-[#1e2222]">
+    <div className="p-2 relative w-full shadow-lg rounded-lg text-[#1e2222]">
       <h2 className="pb-4">{SelectedValue}</h2>
       {loading && (
         <div className="absolute inset-0 flex justify-center items-center bg-[#AED9E0] bg-opacity-50 z-10">

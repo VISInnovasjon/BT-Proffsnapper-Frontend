@@ -9,12 +9,11 @@ interface DropboxProps {
   fetchEndpoint: string;
 }
 
-const Dropbox: React.FC<DropboxProps> = ({ onFileUpdate, name }) => {
+const Dropbox: React.FC<DropboxProps> = ({ name }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [updatedFile, setUpdatedFile] = useState<File | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [showFileContent, setShowFileContent] = useState(false);
 
   const handleDragEnter = (e: React.DragEvent) => {
     e.preventDefault();
@@ -55,12 +54,17 @@ const Dropbox: React.FC<DropboxProps> = ({ onFileUpdate, name }) => {
           setIsLoading(true);
           setError(null);
 
-          const response = await fetch("/yearlyreport", {
+          const response = await fetch("/api/yearlyreport", {
             method: "POST",
             body: formData,
           });
-          if (response.status === 400) console.log(response);
-          else await blobHandler(response);
+          if (response.status != 200) {
+            console.log(response);
+            setError(
+              `something went wrong during filetransfer, errorcode: ${response.status}.`
+            );
+            return;
+          } else await blobHandler(response);
           setIsLoading(false);
         } else {
           setError("Invalid file type. Please try again with a .xlsx file.");
@@ -71,25 +75,44 @@ const Dropbox: React.FC<DropboxProps> = ({ onFileUpdate, name }) => {
     }
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setError(null);
-    const file = e.target.files?.[0];
-    if (
-      file &&
-      (file.type === "text/plain" ||
-        file.type === "application/pdf" ||
-        file.type ===
-          "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
-    ) {
-      handleFileUpdate(file);
-    } else {
-      setError(
-        "Invalid file type. Please try again with a .txt, .pdf, or .docx file."
-      );
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const dataList = e.target.files;
+    if (dataList === null) return;
+    const data = dataList[0];
+    if (data) {
+      try {
+        const formData = new FormData();
+        formData.append("file", data);
+        if (
+          [
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          ].includes(data.type)
+        ) {
+          setIsLoading(true);
+          setError(null);
+
+          const response = await fetch("/api/yearlyreport", {
+            method: "POST",
+            body: formData,
+          });
+          if (response.status != 200) {
+            console.log(response);
+            setError(
+              `something went wrong during filetransfer, errorcode: ${response.status}.`
+            );
+            return;
+          } else await blobHandler(response);
+          setIsLoading(false);
+        } else {
+          setError("Invalid file type. Please try again with a .xlsx file.");
+        }
+      } catch (error) {
+        setError("Error reading file. Please try again.");
+      }
     }
   };
 
-  const handleFileUpdate = (file: File) => {
+  /* const handleFileUpdate = (file: File) => {
     setIsLoading(true);
 
     // Simulate file update process
@@ -102,7 +125,7 @@ const Dropbox: React.FC<DropboxProps> = ({ onFileUpdate, name }) => {
       onFileUpdate(updatedFile);
       setIsLoading(false);
     }, 2000);
-  };
+  }; */
 
   const handleSaveFile = () => {
     const link = document.createElement("a");
@@ -116,15 +139,14 @@ const Dropbox: React.FC<DropboxProps> = ({ onFileUpdate, name }) => {
   const handleDeleteFile = () => {
     setUpdatedFile(null);
     setError(null);
-    setShowFileContent(false);
   };
 
   return (
     <div
-      className={`relative border-dashed border-4 p-8 rounded-lg transition-all duration-300 ease-in-out transform ${
+      className={`w-full max-w-md mx-auto relative border-solid border-4 p-8 rounded-lg transition-all duration-300 ease-in-out transform ${
         isDragging
-          ? "border-[#2e5f65] bg-[#AED9E0] scale-105"
-          : "border-gray-300 bg-white"
+          ? "border-[#2e5f65] bg-[#AED9E0] "
+          : "border-gray-300 bg-transparent"
       }`}
       onDragEnter={handleDragEnter}
       onDragLeave={handleDragLeave}
@@ -133,59 +155,41 @@ const Dropbox: React.FC<DropboxProps> = ({ onFileUpdate, name }) => {
     >
       <div className="text-center">
         {isLoading ? (
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center ">
             <CircularProgress className="mb-4" />
-            <p className="text-[#333333]">Updating file...</p>
+            <p className="text-[#333333]">Updating database... </p>
           </div>
         ) : (
           <>
             {error && <p className="text-red-500 mb-4">{error}</p>}
             {updatedFile ? (
               <>
-                <p className="text-green-500 text-xl mb-2">Upload completed</p>
+                <p className="text-green-500 text-xl mb-2 animate-bounce">
+                  Upload completed
+                </p>
                 <p className="text-[#333333] my-4 flex justify-center items-center">
                   {updatedFile.name}
+                </p>
+                <div className="flex justify-center space-x-4 ">
                   <button
+                    onClick={handleSaveFile}
+                    className="bg-[#2E5F65] text-white py-2 px-4 mt-4 rounded hover:bg-[#3b747b] transition-all duration-300"
+                  >
+                    Save updated file
+                  </button>
+                  <button
+                    className="bg-[#ac3535] text-white py-1 px-2 mt-4 rounded hover:bg-[#b14c4c]  transition-all duration-300"
                     onClick={() => {
                       if (window.confirm("Delete updated file?"))
                         handleDeleteFile();
                     }}
-                    className="text-red-500 hover:text-red-700 ml-4"
                   >
-                    X
-                  </button>
-                </p>
-                <div className="flex justify-center space-x-4">
-                  <button
-                    onClick={() => setShowFileContent(!showFileContent)}
-                    className="bg-[#2e5f65] text-white px-4 py-2 rounded-md hover:bg-[#AED9E0] hover:text-[#060316] transition-all duration-300"
-                  >
-                    {showFileContent
-                      ? "Hide updated file"
-                      : "Show updated file"}
-                  </button>
-                  <button
-                    onClick={handleSaveFile}
-                    className="bg-[#2e5f65] text-white px-4 py-2 rounded-md hover:bg-[#AED9E0] hover:text-[#060316]  transition-all duration-300"
-                  >
-                    Save updated file
+                    Delete
                   </button>
                 </div>
-                {showFileContent && (
-                  <div className="mt-4 p-4 bg-[#AED9E0] text-[#060316] rounded-md">
-                    <p>{`${updatedFile.name} - updated with new data`}</p>
-                  </div>
-                )}
               </>
             ) : (
               <>
-                <p className="text-[#1e2222] font-semibold mb-2">
-                  Drop files here or select a file
-                </p>
-                <p className="text-gray-500 text-sm mb-4">
-                  Accepted file types: .xls, .xlsx
-                </p>
-
                 <input
                   type="file"
                   className="hidden"
@@ -194,10 +198,16 @@ const Dropbox: React.FC<DropboxProps> = ({ onFileUpdate, name }) => {
                 />
                 <label
                   htmlFor={`fileInput-${name}`}
-                  className="block text-center bg-[#3b747b]  text-[white] py-2 px-4 rounded cursor-pointer hover:bg-[#2E5F65]  hover:text-[#FAFFFB] transition-all duration-300"
+                  className="block text-center bg-[#2E5F65] text-white py-2 px-4 mx-4 rounded hover:bg-[#3b747b] transition-all duration-300 cursor-pointer"
                 >
                   Choose File
                 </label>
+                <p className="text-center text-sm mt-2">
+                  or drag and drop a file here
+                </p>
+                <p className="text-center text-sm mt-2">
+                  Accepted file types: .xls, .xlsx
+                </p>
               </>
             )}
           </>

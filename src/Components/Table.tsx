@@ -26,7 +26,7 @@ export const DataGridComponent = ({ ecoCode }: gridProps) => {
     const FetchData = async () => {
       const searchParams = new URLSearchParams({ EcoCode: ecoCode });
       try {
-        const url = "/tabledata?"; //Denne må endres på når siden går live.
+        const url = "/api/tabledata?";
 
         const response = await fetch(url + searchParams.toString());
         if (response.status === 400) {
