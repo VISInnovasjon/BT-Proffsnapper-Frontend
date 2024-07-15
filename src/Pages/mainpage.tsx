@@ -47,7 +47,7 @@ const MainPage: React.FC = () => {
   const [ecoKey, setEcoKey] = useState<string>("DR");
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [filters, setFilters] = useState<string[]>([]);
-  const [monetaryKey, setMonetaryKey] = useState<string>("Value");
+  const [monetaryKey, setMonetaryKey] = useState<string>("Accumulated");
   const [yearRange, setYearRange] = useState<number[]>([]);
   console.log(yearRange);
 
@@ -66,6 +66,22 @@ const MainPage: React.FC = () => {
     };
     fetchData();
   }, []);
+
+  /*useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch("/api/graphdata");
+        const data = await response.json();
+        setData(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);*/
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -108,7 +124,7 @@ const MainPage: React.FC = () => {
   const [activeButton, setActiveButton] = useState<string | null>("option1");
 
   return (
-    <div className="pt-32 p-4 container mx-auto text-[#1e2222] text-2vw sm:text-base md:text-lg lg:text-lg xl:text-xl ">
+    <div className="pt-32 container mx-auto text-[#1e2222] text-2vw sm:text-base md:text-lg lg:text-lg xl:text-xl ">
       <div className=" flex flex-col justify-evenly lg:flex-row ">
         <div className="container flex flex-col  pl-4">
           <h3 className=" font-semibold my-2  text-center sm:text-start">
@@ -122,7 +138,7 @@ const MainPage: React.FC = () => {
           <div className="flex justify-center sm:justify-start">
             <Button
               style={{
-                backgroundColor: "#2E5F65",
+                backgroundColor: " #de0505",
                 color: "#FAFFFB",
                 padding: 5,
               }}
@@ -181,7 +197,7 @@ const MainPage: React.FC = () => {
             ))}
           </div>
         </div>
-        <div className="flex flex-col ml-4  sm:flex-row ">
+        <div className="flex flex-col  sm:flex-row ">
           <div className="flex justify-center sm:justify-start ">
             <div className="m-2 ">
               <ToggleButton
@@ -215,21 +231,23 @@ const MainPage: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="m-4">
-        <div className="w-full container text-center ">
+      <div className="m-2">
+        <div className="w-full text-center ">
           <div className="mx-6 mt-10">
             <YearRangeSlider updateValue={setYearRange} />
           </div>
-          <LineChartComponent
-            data={data}
-            loading={loading}
-            selectedAgeGroups={selectedAgeGroups}
-            selectedFases={selectedFases}
-            selectedBrands={selectedBrands}
-            ecoKey={ecoKey}
-            monetaryKey={monetaryKey}
-            yearRange={yearRange}
-          />
+          <div className="">
+            <LineChartComponent
+              data={data}
+              loading={loading}
+              selectedAgeGroups={selectedAgeGroups}
+              selectedFases={selectedFases}
+              selectedBrands={selectedBrands}
+              ecoKey={ecoKey}
+              monetaryKey={monetaryKey}
+              yearRange={yearRange}
+            />
+          </div>
           <div className="inline-flex sm:flex sm:justify-center mt-1  ">
             <UseRadioGroup
               onChange={(e) => {

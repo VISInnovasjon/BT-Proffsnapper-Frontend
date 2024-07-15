@@ -35,7 +35,7 @@ MyFormControlLabel.propTypes = {
 export default function UseRadioGroup(props: {
   onChange: React.ChangeEventHandler;
 }) {
-  const [radioValue, setRadioValue] = useState<string>("Value");
+  const [radioValue, setRadioValue] = useState<string>("Accumulated");
   return (
     <RadioGroup
       sx={{
@@ -51,7 +51,7 @@ export default function UseRadioGroup(props: {
       }}
       row={true}
       name="use-radio-group"
-      defaultValue="Value"
+      defaultValue="Accumulated"
       value={radioValue}
       onChange={props.onChange}
     >

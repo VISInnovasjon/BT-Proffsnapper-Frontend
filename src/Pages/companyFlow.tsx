@@ -38,6 +38,23 @@ const CompanyFlowPage: React.FC = () => {
     }
   };
 
+  // Fetch template based on dropbox
+  /*const handleTemplateFetch = async (dropbox: "dropbox1" | "dropbox2") => {
+    setIsLoading(true);
+    const endpoint =
+      dropbox === "dropbox1"
+        ? "/api/dbupdatetemplate" //sender tilbake en excel fil med rett format, og viser hva data som trengs for å legge til ny data i databasen.
+        : "/api/orgnummertemplate"; //sender tilbake en excel fil med format for å vise hvordan man kan slette data basert på organisasjonsnummer i databasen.; //set endpoints
+    try {
+      const response = await fetch("http://192.168.9.78:5000" + endpoint);
+      await blobHandler(response);
+    } catch (error) {
+      setTemplate("Error fetching template.");
+    } finally {
+      setIsLoading(false);
+    }
+  };*/
+
   // Handle back button click
   const handleBack = () => {
     setView("Update Company Data Flow");
@@ -86,12 +103,6 @@ const CompanyFlowPage: React.FC = () => {
       {view === "dropbox1" && (
         <div className="flex flex-col items-center w-full">
           <Dropbox name="Dropbox 1" fetchEndpoint="/api/dropbox1" />
-
-          <p className="text-[#1e2222] text-center m-4">
-            If you need a new file for the dropbox, click on "Get template"
-            button below.
-          </p>
-
           <button
             className="bg-[#2E5F65] text-white py-2 mt-4 px-4 mx-4 rounded hover:bg-[#3b747b] transition-all duration-300"
             onClick={() => handleTemplateFetch("dropbox1")}

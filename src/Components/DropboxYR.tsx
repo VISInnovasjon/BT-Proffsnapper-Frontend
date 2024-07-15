@@ -32,6 +32,46 @@ const Dropbox: React.FC<DropboxProps> = ({ onFileUpdate, name }) => {
     setIsDragging(true); // Ensure hover effect persists while dragging over
   };
 
+  /* const handleDrop = async (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+    setError(null);
+
+    const data = e.dataTransfer.items[0].getAsFile();
+    console.log(data);
+    const formData = new FormData();
+    if (data) {
+      try {
+        formData.append("file", data);
+        console.log(formData.get(data.name));
+        if (
+          [
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          ].includes(data.type)
+        ) {
+          setIsLoading(true);
+          setError(null);
+
+          const response = await fetch(
+            "http://192.168.9.78:5000/yearlyreport",
+            {
+              method: "POST",
+              body: formData,
+            }
+          );
+          if (response.status === 400) console.log(response);
+          else await blobHandler(response);
+          setIsLoading(false);
+        } else {
+          setError("Invalid file type. Please try again with a .xlsx file.");
+        }
+      } catch (error) {
+        setError("Error reading file. Please try again.");
+      }
+    }
+  }; */
+
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -64,6 +104,48 @@ const Dropbox: React.FC<DropboxProps> = ({ onFileUpdate, name }) => {
     }
   };
 
+  /* const handleDrop = async (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+    setError(null);
+
+    const data = e.dataTransfer.items[0].getAsFile();
+    console.log(data);
+    const formData = new FormData();
+    if (data) {
+      try {
+        formData.append("file", data);
+        console.log(formData.get(data.name));
+        if (
+          [
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          ].includes(data.type)
+        ) {
+          setIsLoading(true);
+          setError(null);
+
+          const response = await fetch("http://192.168.9.78:5000" + "/api/yearlyreport", {
+            method: "POST",
+            body: formData,
+          });
+          if (response.status != 200) {
+            console.log(response);
+            setError(
+              `something went wrong during filetransfer, errorcode: ${response.status}.`
+            );
+            return;
+          } else await blobHandler(response);
+          setIsLoading(false);
+        } else {
+          setError("Invalid file type. Please try again with a .xlsx file.");
+        }
+      } catch (error) {
+        setError("Error reading file. Please try again.");
+      }
+    }
+  };*/
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setError(null);
     const file = e.target.files?.[0];
@@ -81,6 +163,43 @@ const Dropbox: React.FC<DropboxProps> = ({ onFileUpdate, name }) => {
       );
     }
   };
+
+  /*const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const dataList = e.target.files;
+    if (dataList === null) return;
+    const data = dataList[0];
+    if (data) {
+      try {
+        const formData = new FormData();
+        formData.append("file", data);
+        if (
+          [
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          ].includes(data.type)
+        ) {
+          setIsLoading(true);
+          setError(null);
+
+          const response = await fetch("/api/yearlyreport", {
+            method: "POST",
+            body: formData,
+          });
+          if (response.status != 200) {
+            console.log(response);
+            setError(
+              `something went wrong during filetransfer, errorcode: ${response.status}.`
+            );
+            return;
+          } else await blobHandler(response);
+          setIsLoading(false);
+        } else {
+          setError("Invalid file type. Please try again with a .xlsx file.");
+        }
+      } catch (error) {
+        setError("Error reading file. Please try again.");
+      }
+    }
+  };*/
 
   const handleFileUpdate = (file: File) => {
     setIsLoading(true);
