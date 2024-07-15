@@ -157,7 +157,7 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
             ctx.p0.raw.x === currentYear - 2 &&
             ctx.p1.raw.x === currentYear - 1;
           console.log(isLastSegment);
-          return isLastSegment ? [6, 6] : [];
+          return isLastSegment ? [4, 4] : [];
         },
       },
       spanGaps: true,
@@ -171,19 +171,21 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
 
   const options = {
     responsive: true,
-    aspectRatio: 3,
+    maintainAspectRatio: true, // Allow the chart to fill the container
     plugins: {
       legend: {
         display: true,
-        position: "top" as const,
+        position: "bottom" as const,
         labels: {
           font: {
-            size: 14,
+            size: 12,
           },
+
           usePointStyle: true,
           pointStyle: "circle",
         },
       },
+
       tooltip: {
         callbacks: {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -201,7 +203,7 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
       point: {
         radius: 5,
         borderWidth: 3,
-        backgroundColor: "#DFFBF5",
+        backgroundColor: "#DADDE2",
         borderColor: "#2E5F65",
       },
       line: {
@@ -224,8 +226,9 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
             weight: "normal" as const,
             lineHeight: 1.2,
           },
-          padding: { top: 20, left: 0, right: 0, bottom: 10 },
+          padding: { top: 10, left: 0, right: 0, bottom: 10 },
         },
+
         grid: {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           color: (context: any) => {
@@ -247,7 +250,7 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
   };
 
   return (
-    <div className="p-2 relative w-full shadow-lg rounded-lg text-[#1e2222]">
+    <div className="p-4  w-full shadow-md rounded-md text-[#1e2222]">
       <h2 className="pb-4">{SelectedValue}</h2>
       {loading && (
         <div className="absolute inset-0 flex justify-center items-center bg-[#AED9E0] bg-opacity-75 z-10">

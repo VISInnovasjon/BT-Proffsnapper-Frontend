@@ -7,8 +7,8 @@
   line-height: 1.5;
   font-weight: 400;
   color: #1e2222;
-  background: #e9fffb;
-
+  background: #f8f9fa;
+  margin: 0;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -31,32 +31,32 @@ body {
 }
 
 /* Styling for the select components*/
-#agegroup-select-label {
-  color: #1e2222;
+/* #agegroup-select-label {
 }
 
 #fase-select-label {
-  color: #1e2222;
 }
 #brand-select-label {
-  color: #1e2222;
-}
+} */
 
-/* index.css */
+/* Styling for the autocomplete */
 .MuiAutocomplete-root {
   height: 10px;
 }
 
-.MuiInputBase-root {
-  color: #1e2222;
-}
-
 .MuiInputBase-root.Mui-focused {
-  background-color: #aed9e0;
-  color: #060316;
+  background-color: #f8f9fa;
 }
 
 .MuiAutocomplete-option {
-  background-color: #aed9e0;
-  color: #060316;
+  background-color: #f8f9fa;
+}
+
+.MuiAutocomplete-option:hover {
+  font-weight: 600;
+}
+.app {
+  background: #f8f9fa;
+  display: flex;
+  margin: 0;
 }
