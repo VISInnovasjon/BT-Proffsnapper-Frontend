@@ -31,8 +31,6 @@ export default function CodeFilter(props: {
       onChange={(_, option) => handleChange(option)}
       options={options}
       sx={{ width: 300 }}
-      style={{ backgroundColor: "transparent" }}
-      //   style={{ background: "#64b5f6" }}
       renderInput={(params) => (
         <TextField {...params} label="Øk. Koder" className="" />
       )}

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import myImage from "../Images/Logosta2.png";
+import myImage from "../Images/vis_logo.png";
 import { blobHandler } from "./BlobCreator";
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,8 +22,18 @@ const Navbar: React.FC = () => {
     }
   };
 
+  /*  const fetchFile = async () => {
+    try {
+      const response = await fetch("http://192.168.9.78:5000" + "/api/excelfullview");
+      await blobHandler(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+ */
+
   return (
-    <nav className="bg-[#AED9E0] fixed w-full top-0  backdrop-filter backdrop-blur-lg py-4 mb-0 z-10">
+    <nav className="bg-[#de0505] fixed w-full top-0  backdrop-filter backdrop-blur-lg py-4 mb-0 z-10">
       <div className="max-w-8xl mx-auto px-4">
         <div className="flex justify-between h-16">
           {/* Logo */}
@@ -33,16 +43,13 @@ const Navbar: React.FC = () => {
                 <img
                   src={myImage}
                   style={{
-                    objectFit: "cover",
-                    width: "60px",
-                    borderRadius: "50%",
+                    objectFit: "contain",
+                    width: "100px",
+                    height: "80px",
                   }}
                   className="md:block my-2"
                   alt="logo"
                 />
-                <div className="fixed top-2 text-lg text-teal-900 font-medium">
-                  AxioSynth
-                </div>
               </div>
             </a>
           </div>
@@ -84,7 +91,7 @@ const Navbar: React.FC = () => {
 
           {/* Navbar links */}
           <div className="hidden md:flex md:items-center md:ml-6">
-            <div className="flex text-1vw sm:text-sm md:text-base lg:text-lg font-medium text-[#1e2222]">
+            <div className="flex text-1vw sm:text-sm md:text-base lg:text-lg font-medium text-white">
               <Link to="/" className="px-3 py-2  hover:underline">
                 Home
               </Link>
@@ -116,7 +123,7 @@ const Navbar: React.FC = () => {
         } md:hidden transition-all duration-300 ease-in-out`}
         onMouseLeave={closeNavbar}
       >
-        <div className="px-2 pt-2 pb-3 sm:px-3 text-base font-medium text-[#1e2222]">
+        <div className="flex flex-col justify-center px-2 pt-2 pb-3 sm:px-3 text-base font-medium text-white">
           <Link
             to="/"
             className="flex justify-center items-center px-3 py-2  rounded-md hover:underline"
@@ -141,7 +148,10 @@ const Navbar: React.FC = () => {
           >
             Testside
           </Link>
-          <button onClick={fetchFile} className="px-3 py-2  hover:underline">
+          <button
+            onClick={fetchFile}
+            className="px-3 py-2  rounded-md hover:underline"
+          >
             Get full view
           </button>
         </div>

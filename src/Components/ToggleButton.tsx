@@ -11,11 +11,11 @@ export interface ToggleButtonProps {
 }
 
 const StyledButton = styled(Button)<{ active: boolean }>(({ active }) => ({
-  backgroundColor: active ? "#2E5F65" : "#e9fffb",
-  color: active ? "#FAFFFB" : "#1e2222",
+  backgroundColor: active ? " #de0505" : "#f8f9fa",
+  color: active ? " #FAFFFB" : "#1e2222",
   "&:hover": {
     color: active ? "#FAFFFB" : "#FAFFFB",
-    backgroundColor: active ? "#2E5F65" : "#2E5F65",
+    backgroundColor: active ? "#E91414" : "#de0505",
   },
 }));
 

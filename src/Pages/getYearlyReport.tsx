@@ -7,45 +7,6 @@ import { blobHandler } from "../Components/BlobCreator";
 const YearlyReport: React.FC = () => {
   const [isFetchingTemplate, setIsFetchingTemplate] = useState(false);
 
-  /* const handleFetchTemplate = () => {
-    if (userConfirmed) {
-      setIsFetchingTemplate(true);
-
-      fetch("") // Use your actual endpoint here
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Failed to fetch template.");
-          }
-          return response.blob(); // Assuming the template is a blob (file)
-        })
-        .then((blob) => {
-          setIsFetchingTemplate(false);
-
-          // Create a URL object from the blob
-          const url = URL.createObjectURL(blob);
-
-          // Create a link element
-          const link = document.createElement("a");
-          link.href = url;
-          link.download = "template.xlsx"; // Example filename
-          document.body.appendChild(link);
-
-          // Trigger the click event to download the file
-          link.click();
-
-          // Clean up
-          URL.revokeObjectURL(url);
-          document.body.removeChild(link);
-        })
-        .catch((error) => {
-          setIsFetchingTemplate(false);
-          console.error("Error fetching template:", error);
-        });
-    } else {
-      console.log("Fetch template canceled.");
-    }
-  }; */
-
   const handleFileUpdate = (file: File) => {
     console.log("Updated file:", file);
   };

@@ -75,6 +75,7 @@ const Dropbox: React.FC<DropboxProps> = ({ name }) => {
     }
   };
 
+
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const dataList = e.target.files;
     if (dataList === null) return;
@@ -111,22 +112,6 @@ const Dropbox: React.FC<DropboxProps> = ({ name }) => {
       }
     }
   };
-
-  /* const handleFileUpdate = (file: File) => {
-    setIsLoading(true);
-
-    // Simulate file update process
-    setTimeout(() => {
-      const updatedContent = `${file.name} - updated with new data`;
-      const updatedFile = new File([updatedContent], file.name, {
-        type: file.type,
-      });
-      setUpdatedFile(updatedFile);
-      onFileUpdate(updatedFile);
-      setIsLoading(false);
-    }, 2000);
-  }; */
-
   const handleSaveFile = () => {
     const link = document.createElement("a");
     link.href = URL.createObjectURL(updatedFile as Blob);
