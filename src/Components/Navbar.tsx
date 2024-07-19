@@ -78,7 +78,7 @@ const Navbar: React.FC = () => {
             >
               <svg
                 className={`${isOpen ? "hidden" : "block"} h-6 w-6`}
-                stroke="#060316"
+                stroke="white"
                 fill="none"
                 viewBox="0 0 24 24"
               >
@@ -91,7 +91,7 @@ const Navbar: React.FC = () => {
               </svg>
               <svg
                 className={`${isOpen ? "block" : "hidden"} h-6 w-6`}
-                stroke="#060316"
+                stroke="white"
                 fill="none"
                 viewBox="0 0 24 24"
               >

@@ -171,7 +171,7 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
 
   const options = {
     responsive: true,
-    maintainAspectRatio: true, // Allow the chart to fill the container
+    aspectRatio: 3,
     plugins: {
       legend: {
         display: true,
