@@ -253,9 +253,7 @@ const Dropbox: React.FC<DropboxProps> = ({ onFileUpdate, name }) => {
             {error && <p className="text-red-500 mb-4">{error}</p>}
             {updatedFile ? (
               <>
-                <p className="text-green-500 text-xl mb-2 animate-bounce">
-                  Upload completed
-                </p>
+                <p className="text-green-500 text-xl mb-2">Upload completed</p>
                 <p className="text-[#333333] my-4 flex justify-center items-center">
                   {updatedFile.name}
                 </p>
@@ -287,7 +285,7 @@ const Dropbox: React.FC<DropboxProps> = ({ onFileUpdate, name }) => {
                 />
                 <label
                   htmlFor={`fileInput-${name}`}
-                  className="block text-center bg-[#2E5F65] text-white py-2 px-4 mx-4 rounded hover:bg-[#3b747b] transition-all duration-300 cursor-pointer"
+                  className="block text-center bg-[#de0505] rounded-full text-white py-2 px-4 mx-4 hover:bg-[#E91414] transition-all duration-300 cursor-pointer"
                 >
                   Choose File
                 </label>

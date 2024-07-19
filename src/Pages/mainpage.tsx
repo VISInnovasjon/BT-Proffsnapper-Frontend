@@ -12,6 +12,7 @@ import UseRadioGroup from "../Components/UseRadioGroup";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { DataGridComponent } from "../Components/Table";
 import "../index.css";
+import KeyFigures from "../Components/KeyFigures";
 
 type ValueRecord = Record<string, number | string>;
 
@@ -125,6 +126,7 @@ const MainPage: React.FC = () => {
 
   return (
     <div className="pt-32 container mx-auto text-[#1e2222] text-2vw sm:text-base md:text-lg lg:text-lg xl:text-xl ">
+      <KeyFigures />
       <div className=" flex flex-col justify-evenly lg:flex-row ">
         <div className="container flex flex-col  pl-4">
           <h3 className=" font-semibold my-2  text-center sm:text-start">

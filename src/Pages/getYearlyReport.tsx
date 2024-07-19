@@ -67,7 +67,7 @@ const YearlyReport: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center !text-[#1e2222] text-2vw sm:text-base md:text-lg lg:text-lg xl:text-xl">
+    <div className="min-h-screen flex flex-col items-center mx-auto justify-center !text-[#1e2222] text-2vw sm:text-base md:text-lg lg:text-lg xl:text-xl">
       <h1 className="text-2xl text-[#1e2222] font-bold mb-6">
         Get Yearly Report
       </h1>
@@ -78,7 +78,7 @@ const YearlyReport: React.FC = () => {
       <div className="mt-4">
         <button
           onClick={handleFetchTemplate}
-          className="bg-[#2E5F65] text-white py-2 px-4 mt-4 rounded hover:bg-[#3b747b] transition-all duration-300"
+          className="bg-[#de0505] text-white py-2 px-6 mt-4 rounded-full hover:bg-[#E91414] transition-all duration-300"
         >
           Get Template
         </button>
