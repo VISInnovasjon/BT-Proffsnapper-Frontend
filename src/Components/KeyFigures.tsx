@@ -1,21 +1,39 @@
 import React, { useEffect, useState } from "react";
 import CountUp from "react-countup";
 
-const KeyFigures: React.FC = () => {
-  const keyFigureData = [
-    { text: "Årsverk", number: 1234 },
-    { text: "Arbeidsplasser", number: 5678 },
-    { text: "Total Omsetning", number: 98765 },
-    { text: "Antall Bedrifter", number: 4321 },
-  ];
+type KeyFigures = {
+  text: string;
+  number: number;
+};
+const fetchAndPushData = async (url: string, resultArr: KeyFigures[]) => {
+  const response = await fetch(url);
+  const result: KeyFigures = await response.json();
+  resultArr.push(result);
+};
 
-  const [figures, setFigures] = useState(keyFigureData.map(() => 0));
+const KeyFigures: React.FC = () => {
+  const [keyFigureData, setKeyFigureData] = useState<KeyFigures[]>([]);
 
   useEffect(() => {
-    const fetchData = () => {
-      setTimeout(() => {
-        setFigures(keyFigureData.map((data) => data.number));
-      }, 1000);
+    const fetchData = async () => {
+      const resultArr: KeyFigures[] = [];
+      await fetchAndPushData(
+        "http://192.168.9.78:5000" + "/api/companycount",
+        resultArr
+      );
+      await fetchAndPushData(
+        "http://192.168.9.78:5000" + "/api/totalturnover",
+        resultArr
+      );
+      await fetchAndPushData(
+        "http://192.168.9.78:5000" + "/api/workercount",
+        resultArr
+      );
+      await fetchAndPushData(
+        "http://192.168.9.78:5000" + "/api/workyear",
+        resultArr
+      );
+      setKeyFigureData(resultArr);
     };
 
     fetchData();
@@ -34,9 +52,9 @@ const KeyFigures: React.FC = () => {
               {data.text}
             </h3>
             <CountUp
-              end={figures[index]}
+              end={data.number}
               duration={3}
-              className="text-2xl font-bold text-red-500"
+              className="text-3xl font-bold text-red-500"
             />
           </div>
         ))}

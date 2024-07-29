@@ -36,11 +36,11 @@ export const DataGridComponent = ({ ecoCode }: gridProps) => {
     FetchData();
   }, [ecoCode]);
 
-  /* useEffect(() => {
+  useEffect(() => {
     const FetchData = async () => {
       const searchParams = new URLSearchParams({ EcoCode: ecoCode });
       try {
-        const url = "/api/tabledata?";
+        const url = "http://192.168.9.78:5000" + "/api/tabledata?";
 
         const response = await fetch(url + searchParams.toString());
         if (response.status === 400) {
@@ -53,7 +53,7 @@ export const DataGridComponent = ({ ecoCode }: gridProps) => {
       }
     };
     FetchData();
-  }, [ecoCode]);*/
+  }, [ecoCode]);
 
   const columns = [
     { field: "Name", headerName: "Bedriftnavn", width: 250 },
@@ -73,9 +73,18 @@ export const DataGridComponent = ({ ecoCode }: gridProps) => {
           <DataGrid
             rows={tableData.map((row, idx) => ({ ...row, id: idx }))}
             columns={columns}
+            autoHeight
             initialState={{
               pagination: {
                 paginationModel: { page: 0, pageSize: 5 },
+              },
+            }}
+            sx={{
+              boxShadow: 3,
+              border: 2,
+              borderColor: "#DE0505",
+              "& .MuiDataGrid-cell:hover": {
+                color: "#DE0505",
               },
             }}
             getRowId={(row) => row.id}

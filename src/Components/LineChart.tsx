@@ -70,7 +70,7 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
   yearRange,
 }) => {
   const selectedKeys = [
-    "Total Gjennomsnitt",
+    "Total",
     ...selectedAgeGroups,
     ...selectedFases,
     ...selectedBrands,
@@ -252,9 +252,11 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
   return (
     <div className="p-4  w-full shadow-md rounded-md text-[#1e2222]">
       <h2 className="pb-4">{SelectedValue}</h2>
+
       {loading && (
-        <div className="absolute inset-0 flex justify-center items-center bg-[#AED9E0] bg-opacity-75 z-10">
+        <div className=" flex justify-center items-center bg-[#AED9E0] bg-opacity-75">
           <Skeleton variant="rectangular" width="100%" height="100%" />
+          <Line data={dataComponents} options={options} />
         </div>
       )}
       <Line data={dataComponents} options={options} />
