@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import AgeGroupSelect from "../Components/AgeGroupSelect";
 import FaseSelect from "../Components/FaseSelect";
 import BrandSelect from "../Components/BrandSelect";
-import LineChartComponent from "../Components/LineChart";
+import LineChartComponent, { KeyedValues } from "../Components/LineChart";
 import { Button, Menu, MenuItem, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import YearRangeSlider from "../Components/YearRangeSlider";
@@ -14,27 +14,6 @@ import { DataGridComponent } from "../Components/Table";
 import "../index.css";
 import KeyFigures from "../Components/KeyFigures";
 
-type ValueRecord = Record<string, number | string>;
-
-type CollectedValues = Record<string, ValueRecord>;
-
-type YearlyValues = Record<string, CollectedValues | number>;
-
-type KeyedValues = Record<string, YearlyValueObject[]>;
-
-type ValueObject = {
-  Value: number;
-  Delta: number;
-  Description: string;
-} & ValueRecord;
-type CodeValueObject = {
-  [key: string]: ValueObject;
-} & CollectedValues;
-
-type YearlyValueObject = {
-  Year: number;
-  values: CodeValueObject;
-} & YearlyValues;
 type ButtonTarget = {
   value: string;
 };
@@ -227,6 +206,19 @@ const MainPage: React.FC = () => {
                 }
               />
             </div>
+            <div className="m-2">
+              <ToggleButton
+                label="SIK"
+                val="SIK"
+                isActive={activeButton === "option3"}
+                onClick={(e) =>
+                  handleButtonClick(
+                    "option3",
+                    e.target as EventTarget & ButtonTarget
+                  )
+                }
+              />
+            </div>
           </div>
           <div className="flex justify-center m-2  ">
             <CodeFilter ChangeHandler={setEcoKey} />
@@ -258,9 +250,9 @@ const MainPage: React.FC = () => {
                 );
               }}
             />
-            <div className="bg-[#AED9E0] text-[#060316] ">
-              <DataGridComponent ecoCode={ecoKey} />
-            </div>
+          </div>
+          <div className=" text-[#1e2222]">
+            <DataGridComponent ecoCode={ecoKey} />
           </div>
         </div>
       </div>
