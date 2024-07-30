@@ -55,8 +55,8 @@ body {
 .MuiAutocomplete-option:hover {
   font-weight: 600;
 }
+
 .app {
-  background: #f8f9fa;
-  display: flex;
   margin: 0;
+  background: #f8f9fa;
 }
