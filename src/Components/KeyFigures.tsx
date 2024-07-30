@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import CountUp from "react-countup";
+import { useLanguage } from "./LanguageContext";
+import translations from "./translations";
 
 type KeyFigures = {
   text: string;
@@ -12,6 +14,7 @@ const fetchAndPushData = async (url: string, resultArr: KeyFigures[]) => {
 };
 
 const KeyFigures: React.FC = () => {
+  const { language } = useLanguage();
   const [keyFigureData, setKeyFigureData] = useState<KeyFigures[]>([]);
 
   useEffect(() => {
@@ -41,8 +44,10 @@ const KeyFigures: React.FC = () => {
 
   return (
     <div className="mb-10 flex flex-col items-center justify-center p-4">
-      <h1 className="my-10 text-5xl font-bold tracking-wide">Key Figures</h1>
-      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-8 my-6 w-full max-w-6xl">
+      <h1 className="my-10 text-2xl md:text-3xl lg:text-4xl font-bold tracking-wide">
+        {translations[language].keyFiguresHeader}
+      </h1>
+      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-8 my-6 w-full max-w-8xl">
         {keyFigureData.map((data, index) => (
           <div
             key={index}

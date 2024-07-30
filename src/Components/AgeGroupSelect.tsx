@@ -9,6 +9,8 @@ import {
   Chip,
   SelectChangeEvent,
 } from "@mui/material";
+import { useLanguage } from "./LanguageContext";
+import translations from "./translations";
 
 interface AgeGroupSelectProps {
   onChange: (selectedAgeGroups: string[]) => void;
@@ -35,16 +37,22 @@ const AgeGroupSelect: React.FC<AgeGroupSelectProps> = ({ onChange }) => {
     onChange(selectedAgeGroups);
   }, [selectedAgeGroups, onChange]);
 
+  const { language } = useLanguage();
+
   return (
-    <Box className="min-w-[120px]">
+    <Box className="min-w-[140px]">
       <FormControl fullWidth>
-        <InputLabel id="agegroup-select-label">Age Group</InputLabel>
+        <InputLabel id="agegroup-select-label">
+          {translations[language].agegroup}
+        </InputLabel>
         <Select
           labelId="agegroup-select-label"
           multiple
           value={selectedAgeGroups}
           onChange={handleChange}
-          input={<OutlinedInput id="select-multiple-chip" label="Age Group" />}
+          input={
+            <OutlinedInput id="select-multiple-chip" label="Aldersgruppe" />
+          }
           renderValue={(selected) => (
             <Box className="flex flex-wrap gap-0.5">
               {(selected as string[]).map((value) => (

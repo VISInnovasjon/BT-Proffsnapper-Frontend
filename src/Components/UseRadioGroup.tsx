@@ -4,6 +4,8 @@ import { styled } from "@mui/material/styles";
 import RadioGroup, { useRadioGroup } from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Radio from "@mui/material/Radio";
+import { useLanguage } from "./LanguageContext";
+import translations from "./translations";
 
 const StyledFormControlLabel = styled((props: any) => (
   <FormControlLabel {...props} />
@@ -36,6 +38,9 @@ export default function UseRadioGroup(props: {
   onChange: React.ChangeEventHandler;
 }) {
   const [radioValue, setRadioValue] = useState<string>("Accumulated");
+
+  const { language } = useLanguage();
+
   return (
     <RadioGroup
       sx={{
@@ -57,7 +62,7 @@ export default function UseRadioGroup(props: {
     >
       <MyFormControlLabel
         value="Value"
-        label="Avg Value"
+        label={translations[language].radioValue}
         onClick={(e: { target: { value: SetStateAction<string> } }) => {
           setRadioValue(e.target.value);
         }}
@@ -65,7 +70,7 @@ export default function UseRadioGroup(props: {
       />
       <MyFormControlLabel
         value="Accumulated"
-        label="Accumulated"
+        label={translations[language].radioAccumulated}
         onClick={(e: { target: { value: SetStateAction<string> } }) => {
           setRadioValue(e.target.value);
         }}
@@ -73,7 +78,7 @@ export default function UseRadioGroup(props: {
       />
       <MyFormControlLabel
         value="Delta"
-        label="Avg Delta"
+        label={translations[language].radioDelta}
         onClick={(e: { target: { value: SetStateAction<string> } }) => {
           setRadioValue(e.target.value);
         }}

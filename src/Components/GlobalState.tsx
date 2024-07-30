@@ -62,6 +62,7 @@ export const GlobalStateProvider: React.FC<{ children: ReactNode }> = ({
 };
 
 // Custom hook to use the global state
+
 export const useGlobalState = () => {
   const context = useContext(GlobalStateContext);
   if (context === undefined) {

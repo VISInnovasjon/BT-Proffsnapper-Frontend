@@ -7,6 +7,7 @@ export interface ToggleButtonProps {
   label: string;
   isActive: boolean;
   val: string;
+
   onClick: MouseEventHandler;
 }
 

@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
+import { useLanguage } from "./LanguageContext";
+import translations from "./translations";
 
 type gridProps = {
   ecoCode: string;
@@ -56,14 +58,14 @@ export const DataGridComponent = ({ ecoCode }: gridProps) => {
   }, [ecoCode]);
 
   const columns = [
-    { field: "Name", headerName: "Bedriftnavn", width: 250 },
-    { field: "OrgNumber", headerName: "Orgnummer", width: 150 },
-    { field: "Branch", headerName: "Bransje", width: 150 },
-    { field: "Value", headerName: "Verdi", width: 150 },
-    { field: "Delta", headerName: "Delta", width: 150 },
-    { field: "Accumulated", headerName: "Akkumulert", width: 150 },
-    { field: "ValidYear", headerName: "Gjeldende år", width: 150 },
-    { field: "EcoCode", headerName: "Øko kode", width: 150 },
+    { field: "Name", headerName: "Bedriftnavn", width: 250, flex: 2 },
+    { field: "OrgNumber", headerName: "Orgnummer", width: 150, flex: 1 },
+    { field: "Branch", headerName: "Bransje", width: 150, flex: 1 },
+    { field: "Value", headerName: "Verdi", width: 150, flex: 1 },
+    { field: "Delta", headerName: "Delta", width: 150, flex: 1 },
+    { field: "Accumulated", headerName: "Akkumulert", width: 150, flex: 1 },
+    { field: "ValidYear", headerName: "Gjeldende år", width: 150, flex: 1 },
+    { field: "EcoCode", headerName: "Øko kode", width: 150, flex: 1 },
   ];
 
   return (
@@ -73,18 +75,9 @@ export const DataGridComponent = ({ ecoCode }: gridProps) => {
           <DataGrid
             rows={tableData.map((row, idx) => ({ ...row, id: idx }))}
             columns={columns}
-            autoHeight
             initialState={{
               pagination: {
                 paginationModel: { page: 0, pageSize: 5 },
-              },
-            }}
-            sx={{
-              boxShadow: 3,
-              border: 2,
-              borderColor: "#DE0505",
-              "& .MuiDataGrid-cell:hover": {
-                color: "#DE0505",
               },
             }}
             getRowId={(row) => row.id}
