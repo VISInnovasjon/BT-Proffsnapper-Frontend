@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import myImage from "../Images/vis_logo.png";
+import myImage from "../Images/LogoWhite.png";
+import LanguageDropdown from "./LanguageDropdown";
+import { useLanguage } from "./LanguageContext";
+import translations from "./translations";
+
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -48,10 +52,12 @@ const Navbar: React.FC = () => {
   };
  */
 
+  const { language } = useLanguage();
+
   return (
     <nav className="bg-[#de0505] fixed w-full top-0  backdrop-filter backdrop-blur-lg py-4 mb-0 z-10">
       <div className="max-w-8xl mx-auto px-4">
-        <div className="flex justify-between h-16">
+        <div className="flex justify-between h-16 mr-10">
           {/* Logo */}
           <div className="flex items-center">
             <a href="/" className=" ml-10">
@@ -61,7 +67,7 @@ const Navbar: React.FC = () => {
                   style={{
                     objectFit: "contain",
                     width: "100px",
-                    height: "80px",
+                    height: "50px",
                   }}
                   className="md:block my-2"
                   alt="logo"
@@ -109,24 +115,21 @@ const Navbar: React.FC = () => {
           <div className="hidden md:flex md:items-center md:ml-6">
             <div className="flex text-1vw sm:text-sm md:text-base lg:text-lg font-medium text-white">
               <Link to="/" className="px-3 py-2  hover:underline">
-                Home
+                {translations[language].home}
               </Link>
               <Link to="/rapport" className="px-3 py-2 hover:underline">
-                Yearly Rapport
+                {translations[language].yearlyRapport}
               </Link>
               <Link to="/companyflow" className="px-3 py-2  hover:underline">
-                Company Flow
-              </Link>
-
-              <Link to="/test" className="px-3 py-2  hover:underline">
-                Testside
+                {translations[language].companyFlow}
               </Link>
               <button
                 onClick={fetchFile}
                 className="px-3 py-2  hover:underline"
               >
-                Get full view
+                {translations[language].getFullView}
               </button>
+              <LanguageDropdown />
             </div>
           </div>
         </div>
@@ -139,37 +142,35 @@ const Navbar: React.FC = () => {
         } md:hidden transition-all duration-300 ease-in-out`}
         onMouseLeave={closeNavbar}
       >
-        <div className="flex flex-col justify-center px-2 pt-2 pb-3 sm:px-3 text-base font-medium text-white">
+        <div className="flex flex-col justify-center px-2 pt-2 pb-3 mb-10 sm:px-3 text-base font-medium text-white">
           <Link
             to="/"
             className="flex justify-center items-center px-3 py-2  rounded-md hover:underline"
           >
-            Hjem
+            {translations[language].home}
           </Link>
           <Link
             to="/rapport"
             className="flex justify-center items-center px-3 py-2 rounded-md hover:underline"
           >
-            Yearly Rapport
+            {translations[language].yearlyRapport}
           </Link>
           <Link
             to="/companyflow"
             className="flex justify-center items-center px-3 py-2  rounded-md hover:underline"
           >
-            Company flow
+            {translations[language].companyFlow}
           </Link>
-          <Link
-            to="/test"
-            className="flex justify-center items-center px-3 py-2  rounded-md hover:underline"
-          >
-            Testside
-          </Link>
+
           <button
             onClick={fetchFile}
             className="px-3 py-2  rounded-md hover:underline"
           >
-            Get full view
+            {translations[language].getFullView}
           </button>
+          <div className="flex justify-center">
+            <LanguageDropdown />
+          </div>
         </div>
       </div>
     </nav>

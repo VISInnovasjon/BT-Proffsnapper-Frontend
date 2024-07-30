@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import { blobHandler } from "./blobCreator";
+import { useLanguage } from "./LanguageContext";
+import translations from "./translations";
 
 interface DropboxProps {
   onFileUpdate: (file: File) => void;
@@ -115,6 +117,8 @@ const Dropbox: React.FC<DropboxProps> = ({ name }) => {
     }
   };
 
+  const { language } = useLanguage();
+
   return (
     <div
       className={`w-full h-60 md:h-96 lg:h-[55vh] flex flex-col justify-center max-w-md mx-auto relative border-solid border-4 p-8 rounded-lg transition-all duration-300 ease-in-out transform ${
@@ -131,7 +135,10 @@ const Dropbox: React.FC<DropboxProps> = ({ name }) => {
         {isLoading ? (
           <div className="flex flex-col items-center ">
             <CircularProgress className="mb-4" />
-            <p className="text-[#1e2222]">Updating file...</p>
+            <p className="text-[#1e2222]">
+              {" "}
+              {translations[language].dbyrText4}
+            </p>
           </div>
         ) : (
           <>
@@ -147,13 +154,13 @@ const Dropbox: React.FC<DropboxProps> = ({ name }) => {
               htmlFor={`fileInput-${name}`}
               className="block text-center bg-[#de0505] rounded-full text-white py-2 px-4 mx-4 hover:bg-[#E91414] transition-all duration-300 cursor-pointer"
             >
-              Choose File
+              {translations[language].dbyrText1}
             </label>
             <p className="text-center text-sm mt-2">
-              or drag and drop a file here
+              {translations[language].dbyrText2}
             </p>
             <p className="text-center text-sm mt-2">
-              Accepted file types: .xls, .xlsx
+              {translations[language].dbyrText3}
             </p>
           </>
         )}

@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Dropbox from "../Components/dropboxCF";
 import { CircularProgress } from "@mui/material";
 import { blobHandler } from "../Components/blobCreator";
+import { useLanguage } from "../Components/LanguageContext";
+import translations from "../Components/translations";
 
 const CompanyFlowPage: React.FC = () => {
   const [view, setView] = useState<
@@ -34,6 +36,8 @@ const CompanyFlowPage: React.FC = () => {
     setTitle("Update Company Data Flow");
   };
 
+  const { language } = useLanguage();
+
   return (
     <div className="mx-auto flex flex-col md:pt-16 items-center justify-center min-h-screen text-[#1e2222] text-2vw sm:text-base md:text-lg lg:text-lg xl:text-xl ">
       <h1 className="text-2xl lg:text-3xl md:mt-10 font-bold mb-4">{title}</h1>
@@ -46,7 +50,7 @@ const CompanyFlowPage: React.FC = () => {
               setTitle("Add Company Data");
             }}
           >
-            Add Company Data
+            {translations[language].addCompanyData}
           </button>
           <button
             className="bg-[#de0505] text-white py-2 px-6 rounded-full hover:bg-[#e91414] transition-all duration-300"
@@ -55,7 +59,7 @@ const CompanyFlowPage: React.FC = () => {
               setTitle("Delete Company Data");
             }}
           >
-            Delete Company Data
+            {translations[language].deleteCompanyData}
           </button>
         </div>
       )}
@@ -67,7 +71,7 @@ const CompanyFlowPage: React.FC = () => {
             className="bg-[#de0505] text-white py-2 px-6 mx-4 mt-4 rounded-full hover:bg-[#e91414] transition-all duration-300"
             onClick={() => handleTemplateFetch("dropbox1")}
           >
-            Get Template
+            {translations[language].gyrPagetext2}
           </button>
           {isLoading && <CircularProgress />}
 
@@ -75,7 +79,8 @@ const CompanyFlowPage: React.FC = () => {
             className="bg-gray-500 text-white py-1 px-2 rounded mt-4 hover:bg-gray-600 transition-all duration-300"
             onClick={handleBack}
           >
-            <span className="mr-1">&#8592;</span> Back
+            <span className="mr-1">&#8592;</span>{" "}
+            {translations[language].dbcfBackButton}
           </button>
         </div>
       )}
@@ -87,7 +92,7 @@ const CompanyFlowPage: React.FC = () => {
             className="bg-[#de0505] text-white py-2 px-6 mx-4 mt-4 rounded-full hover:bg-[#e91414] transition-all duration-300"
             onClick={() => handleTemplateFetch("dropbox2")}
           >
-            Get Template
+            {translations[language].gyrPagetext2}
           </button>
           {isLoading && <CircularProgress />}
 
@@ -95,7 +100,8 @@ const CompanyFlowPage: React.FC = () => {
             className="bg-gray-500 text-white py-1 px-2 rounded mt-4 hover:bg-gray-600 transition-all duration-300"
             onClick={handleBack}
           >
-            <span className="mr-1">&#8592;</span> Back
+            <span className="mr-1">&#8592;</span>{" "}
+            {translations[language].dbcfBackButton}
           </button>
         </div>
       )}

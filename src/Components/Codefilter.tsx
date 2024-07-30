@@ -3,6 +3,8 @@ import { SetStateAction } from "react";
 import Autocomplete from "@mui/material/Autocomplete";
 // import * as json from "../data.json";
 import { economicCodes } from "../data/economicCodes";
+import { useLanguage } from "./LanguageContext";
+import translations from "./translations";
 
 export default function CodeFilter(props: {
   ChangeHandler: React.Dispatch<SetStateAction<string>>;
@@ -19,6 +21,9 @@ export default function CodeFilter(props: {
       label: item[1],
     })
   );
+
+  const { language } = useLanguage();
+
   return (
     <Autocomplete
       disablePortal
@@ -30,7 +35,11 @@ export default function CodeFilter(props: {
       options={options}
       sx={{ width: 300 }}
       renderInput={(params) => (
-        <TextField {...params} label="Øk. Koder" className="" />
+        <TextField
+          {...params}
+          label={translations[language].Økokoder}
+          className=""
+        />
       )}
     />
   );

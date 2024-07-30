@@ -4,7 +4,7 @@ import MainPage from "./Pages/mainpage";
 import Layout from "./Components/layout";
 import CompanyFlow from "./Pages/companyFlow";
 import YearlyReport from "./Pages/getYearlyReport";
-import Testpage from "./Pages/testpage";
+
 import "./index.css";
 import { GlobalStateProvider } from "./Components/GlobalState";
 [];
@@ -30,10 +30,6 @@ const router = createBrowserRouter([
       {
         path: "/rapport",
         element: <YearlyReport />,
-      },
-      {
-        path: "/test",
-        element: <Testpage />,
       },
     ],
   },

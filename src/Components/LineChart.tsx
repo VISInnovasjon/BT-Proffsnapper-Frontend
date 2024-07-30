@@ -222,11 +222,11 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
           color: "#1e2222",
           font: {
             family: "SystemUi",
-            size: 16,
+            size: 14,
             weight: "normal" as const,
             lineHeight: 1.2,
           },
-          padding: { top: 10, left: 0, right: 0, bottom: 10 },
+          padding: { top: 0, left: 0, right: 0, bottom: 10 },
         },
 
         grid: {
@@ -250,11 +250,11 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
   };
 
   return (
-    <div className="p-4  w-full shadow-md rounded-md text-[#1e2222]">
-      <h2 className="pb-4">{SelectedValue}</h2>
+    <div className="px-4  w-full shadow-md rounded-md text-[#1e2222]">
+      <h2 className="pb-2">{SelectedValue}</h2>
 
       {loading && (
-        <div className=" flex justify-center items-center bg-[#AED9E0] bg-opacity-75">
+        <div className=" flex justify-center items-center bg-[#e87070] bg-opacity-75">
           <Skeleton variant="rectangular" width="100%" height="100%" />
           <Line data={dataComponents} options={options} />
         </div>
