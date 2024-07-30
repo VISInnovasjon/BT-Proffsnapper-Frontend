@@ -210,6 +210,19 @@ const MainPage: React.FC = () => {
                 }
               />
             </div>
+            <div className="m-2">
+              <ToggleButton
+                label="SIK"
+                val="SIK"
+                isActive={activeButton === "option3"}
+                onClick={(e) =>
+                  handleButtonClick(
+                    "option3",
+                    e.target as EventTarget & ButtonTarget
+                  )
+                }
+              />
+            </div>
           </div>
           <div className="flex justify-center m-2  ">
             <CodeFilter ChangeHandler={setEcoKey} />
@@ -243,7 +256,7 @@ const MainPage: React.FC = () => {
               }}
             />
           </div>
-          <div className="bg-[#AED9E0] text-[#060316] ">
+          <div className="bg-[#f8f6f6] text-[#1e2222] ">
             <DataGridComponent ecoCode={ecoKey} />
           </div>
         </div>

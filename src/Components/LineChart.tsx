@@ -70,7 +70,7 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
   yearRange,
 }) => {
   const selectedKeys = [
-    "Total Gjennomsnitt",
+    "Total",
     ...selectedAgeGroups,
     ...selectedFases,
     ...selectedBrands,
@@ -133,7 +133,6 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
           return dataPoint;
         })
       : undefined;
-  console.log(chartData);
   const labels = chartData?.map((item) => item.year);
   const currentYear = new Date().getFullYear();
   const datasets = selectedKeys.map((key, index) => {
@@ -141,7 +140,7 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
       label: `${key}`,
       tension: 0.5,
       data: chartData?.map((item) => {
-        let obj = item[key];
+        const obj = item[key];
         if (objectVerifier(obj))
           return {
             x: item.year,
@@ -220,7 +219,7 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
           text: "I mill NOK.",
           color: "#2E5F65",
           font: {
-            family: "SystemUi",
+            family: "system-ui",
             size: 16,
             weight: "normal" as const,
             lineHeight: 1.2,

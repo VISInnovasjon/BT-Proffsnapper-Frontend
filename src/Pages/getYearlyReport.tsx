@@ -13,7 +13,7 @@ const YearlyReport: React.FC = () => {
 
   // Fetch template based on dropbox
   const handleTemplateFetch = async () => {
-    const endpoint = "http://192.168.9.78:5000/api/orgnummertemplate";
+    const endpoint = "/api/orgnummertemplate";
     try {
       setIsFetchingTemplate(true);
       const response = await fetch(endpoint);
@@ -35,7 +35,7 @@ const YearlyReport: React.FC = () => {
       <Dropbox onFileUpdate={handleFileUpdate} name={""} fetchEndpoint={""} />
       <div className="mt-4">
         <button
-          onClick={handleFetchTemplate}
+          onClick={handleTemplateFetch}
           className="bg-[#de0505] text-white py-2 px-6 mt-4 rounded-full hover:bg-[#E91414] transition-all duration-300"
         >
           Get Template

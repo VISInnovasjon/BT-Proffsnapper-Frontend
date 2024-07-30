@@ -60,7 +60,7 @@ export default function UseRadioGroup(props: {
     >
       <MyFormControlLabel
         value="Value"
-        label="Value"
+        label="Avg Value"
         onClick={(e: { target: { value: SetStateAction<string> } }) => {
           setRadioValue(e.target.value);
         }}
@@ -76,7 +76,7 @@ export default function UseRadioGroup(props: {
       />
       <MyFormControlLabel
         value="Delta"
-        label="Delta"
+        label="Avg Delta"
         onClick={(e: { target: { value: SetStateAction<string> } }) => {
           setRadioValue(e.target.value);
         }}
