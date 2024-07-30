@@ -56,27 +56,27 @@ export const DataGridComponent = ({ ecoCode }: gridProps) => {
   return (
     <>
       {tableData != null ? (
-        <div style={{ width: "100%" }}>
+        <div style={{ height: 400, width: "100%" }}>
           <DataGrid
             rows={tableData.map((row, idx) => ({ ...row, id: idx }))}
             columns={columns}
+            autoHeight
             initialState={{
               pagination: {
                 paginationModel: { page: 0, pageSize: 5 },
               },
             }}
-            autoHeight
             autosizeOptions={autosizeOptions}
-            getRowId={(row) => row.id}
-            pageSizeOptions={[5, 10]}
             sx={{
-              boxShadow: 2,
+              boxShadow: 3,
               border: 2,
               borderColor: "#DE0505",
               "& .MuiDataGrid-cell:hover": {
                 color: "#DE0505",
               },
             }}
+            getRowId={(row) => row.id}
+            pageSizeOptions={[5, 10]}
           />
         </div>
       ) : null}

@@ -43,7 +43,7 @@ const KeyFigures: React.FC = () => {
                 <CountUp
                   end={data.number}
                   duration={3}
-                  className="text-2xl font-bold text-red-500"
+                  className="text-3xl font-bold text-red-500"
                 />
               </div>
             ))

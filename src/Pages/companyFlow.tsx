@@ -3,24 +3,12 @@ import Dropbox from "../Components/dropboxCF";
 import { CircularProgress } from "@mui/material";
 import { blobHandler } from "../Components/BlobCreator";
 
-// Mock files for demonstration purposes
-const validMockFile = new File(
-  ["This is a valid mock file for testing."],
-  "validmockfile.txt",
-  { type: "text/plain" }
-);
-const invalidMockFile = new File(
-  ["This is an invalid mock file for testing."],
-  "invalidmockfile.jpg",
-  { type: "image/jpeg" }
-);
-
 const CompanyFlowPage: React.FC = () => {
   const [view, setView] = useState<
     "Update Company Data Flow" | "dropbox1" | "dropbox2"
   >("Update Company Data Flow");
   const [title, setTitle] = useState("Update Company Data Flow");
-  const [template, setTemplate] = useState<string | null>(null);
+
   const [isLoading, setIsLoading] = useState(false);
 
   // Fetch template based on dropbox
@@ -34,7 +22,7 @@ const CompanyFlowPage: React.FC = () => {
       const response = await fetch(endpoint);
       await blobHandler(response);
     } catch (error) {
-      setTemplate("Error fetching template.");
+      console.log("Error fetching template.");
     } finally {
       setIsLoading(false);
     }
@@ -51,7 +39,7 @@ const CompanyFlowPage: React.FC = () => {
       const response = await fetch("http://192.168.9.78:5000" + endpoint);
       await blobHandler(response);
     } catch (error) {
-      setTemplate("Error fetching template.");
+      console.log("Error fetching template.");
     } finally {
       setIsLoading(false);
     }
@@ -61,26 +49,13 @@ const CompanyFlowPage: React.FC = () => {
   const handleBack = () => {
     setView("Update Company Data Flow");
     setTitle("Update Company Data Flow");
-    setTemplate(null);
-  };
-
-  // Handle drag start event for mock files
-  const handleDragStart = (e: React.DragEvent<HTMLDivElement>, file: File) => {
-    e.dataTransfer.setData(
-      "application/json",
-      JSON.stringify({
-        name: file.name,
-        type: file.type,
-        content: file.text(),
-      })
-    );
   };
 
   return (
-    <div className="mx-auto flex flex-col items-center justify-center min-h-screen text-[#1e2222] text-2vw sm:text-base md:text-lg lg:text-lg xl:text-xl ">
-      <h1 className="text-2xl font-bold mb-4">{title}</h1>
+    <div className="mx-auto flex flex-col md:pt-16 items-center justify-center min-h-screen text-[#1e2222] text-2vw sm:text-base md:text-lg lg:text-lg xl:text-xl ">
+      <h1 className="text-2xl lg:text-3xl md:mt-10 font-bold mb-4">{title}</h1>
       {view === "Update Company Data Flow" && (
-        <div className="block items-center justify-center m-10">
+        <div className="flex flex-col sm:flex-row m-10 gap-3 ">
           <button
             className="bg-[#de0505] text-white py-2 px-6 mx-4 rounded-full hover:bg-[#e91414] transition-all duration-300"
             onClick={() => {
@@ -118,51 +93,13 @@ const CompanyFlowPage: React.FC = () => {
             Get Template
           </button>
           {isLoading && <CircularProgress />}
-          {template && (
-            <div className="bg-[#2E5F65] text-[#FAFFFB] p-4 mt-4 rounded shadow-md w-1/2">
-              <pre className="whitespace-pre-wrap">{template}</pre>
-              <div className="mt-4 flex justify-center gap-2">
-                <button
-                  className=" bg-[#AED9E0]  text-[#060316] py-2 px-4 rounded mt-2 hover:bg-[#8ab5bc] transition-all duration-300"
-                  onClick={() => {
-                    const blob = new Blob([template], { type: "text/plain" });
-                    const link = document.createElement("a");
-                    link.href = URL.createObjectURL(blob);
-                    link.download = "template.txt";
-                    link.click();
-                  }}
-                >
-                  Save Template
-                </button>
-                <button
-                  className="bg-red-500 text-white py-2 px-4 rounded mt-2 hover:bg-red-600 transition-all duration-300"
-                  onClick={() => setTemplate(null)}
-                >
-                  Remove Template
-                </button>
-              </div>
-            </div>
-          )}
+
           <button
             className="bg-gray-500 text-white py-1 px-2 rounded mt-4 hover:bg-gray-600 transition-all duration-300"
             onClick={handleBack}
           >
             <span className="mr-1">&#8592;</span> Back
           </button>
-          <div
-            className="mt-8 p-4 bg-white rounded shadow-md cursor-pointer border border-gray-400 hover:border-blue-400 transition-all duration-300"
-            draggable
-            onDragStart={(e) => handleDragStart(e, validMockFile)}
-          >
-            Drag valid file to Dropbox 1
-          </div>
-          <div
-            className="mt-4 p-4 bg-white rounded shadow-md cursor-pointer border border-gray-400 hover:border-red-400 transition-all duration-300"
-            draggable
-            onDragStart={(e) => handleDragStart(e, invalidMockFile)}
-          >
-            Drag invalid file to Dropbox 1
-          </div>
         </div>
       )}
 
@@ -176,51 +113,13 @@ const CompanyFlowPage: React.FC = () => {
             Get Template
           </button>
           {isLoading && <CircularProgress />}
-          {template && (
-            <div className="bg-[#2E5F65] text-[#FAFFFB] p-4 mt-4 rounded shadow-md w-1/2">
-              <pre className="whitespace-pre-wrap">{template}</pre>
-              <div className="mt-4 flex justify-center gap-2">
-                <button
-                  className="bg-[#AED9E0]  text-[#060316] py-2 px-4 rounded mt-2 hover:bg-[#8ab5bc] transition-all duration-300"
-                  onClick={() => {
-                    const blob = new Blob([template], { type: "text/plain" });
-                    const link = document.createElement("a");
-                    link.href = URL.createObjectURL(blob);
-                    link.download = "template.txt";
-                    link.click();
-                  }}
-                >
-                  Save Template
-                </button>
-                <button
-                  className="bg-red-500 text-white py-2 px-4 rounded mt-2 hover:bg-red-600 transition-all duration-300"
-                  onClick={() => setTemplate(null)}
-                >
-                  Remove Template
-                </button>
-              </div>
-            </div>
-          )}
+
           <button
             className="bg-gray-500 text-white py-1 px-2 rounded mt-4 hover:bg-gray-600 transition-all duration-300"
             onClick={handleBack}
           >
             <span className="mr-1">&#8592;</span> Back
           </button>
-          <div
-            className="mt-8 p-4 bg-white rounded shadow-md cursor-pointer border border-gray-400 hover:border-blue-400 transition-all duration-300"
-            draggable
-            onDragStart={(e) => handleDragStart(e, validMockFile)}
-          >
-            Drag valid file to Dropbox 2
-          </div>
-          <div
-            className="mt-4 p-4 bg-white rounded shadow-md cursor-pointer border border-gray-400 hover:border-red-400 transition-all duration-300"
-            draggable
-            onDragStart={(e) => handleDragStart(e, invalidMockFile)}
-          >
-            Drag invalid file to Dropbox 2
-          </div>
         </div>
       )}
     </div>

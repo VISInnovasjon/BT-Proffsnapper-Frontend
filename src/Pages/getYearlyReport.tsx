@@ -1,15 +1,10 @@
 import React, { useState } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
-import DraggableItem from "../Components/draggableItem";
 import Dropbox from "../Components/DropboxYR";
 import { blobHandler } from "../Components/BlobCreator";
 
 const YearlyReport: React.FC = () => {
   const [isFetchingTemplate, setIsFetchingTemplate] = useState(false);
-
-  const handleFileUpdate = (file: File) => {
-    console.log("Updated file:", file);
-  };
 
   // Fetch template based on dropbox
   const handleTemplateFetch = async () => {
@@ -25,14 +20,12 @@ const YearlyReport: React.FC = () => {
     }
   };
   return (
-    <div className="min-h-screen flex flex-col items-center mx-auto justify-center !text-[#1e2222] text-2vw sm:text-base md:text-lg lg:text-lg xl:text-xl">
-      <h1 className="text-2xl text-[#1e2222] font-bold mb-6">
+    <div className="min-h-screen flex flex-col justify-center items-center md:pt-8 mx-auto !text-[#1e2222] text-2vw sm:text-base md:text-lg lg:text-lg xl:text-xl">
+      <h1 className=" text-2xl lg:text-3xl md:mt-10 text-[#1e2222] font-bold mb-6">
         Get Yearly Report
       </h1>
-      <div className="m-10 absolute left-1 bottom-1">
-        <DraggableItem />
-      </div>
-      <Dropbox onFileUpdate={handleFileUpdate} name={""} fetchEndpoint={""} />
+
+      <Dropbox onFileUpdate={() => {}} name={""} fetchEndpoint={""} />
       <div className="mt-4">
         <button
           onClick={handleTemplateFetch}
