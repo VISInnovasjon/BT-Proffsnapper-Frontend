@@ -39,7 +39,7 @@ const MainPage: React.FC = () => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await fetch("/api/graphdata");
+        const response = await fetch(import.meta.env.VITE_GRAPHDATA_URL);
         const data = await response.json();
         setData(data);
       } catch (error) {

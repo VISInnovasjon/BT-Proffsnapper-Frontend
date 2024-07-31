@@ -54,7 +54,7 @@ const Dropbox: React.FC<DropboxProps> = ({ name }) => {
           setIsLoading(true);
           setError(null);
 
-          const response = await fetch("/api/yearlyreport", {
+          const response = await fetch(import.meta.env.VITE_YEARLYREPORT_URL, {
             method: "POST",
             body: formData,
           });

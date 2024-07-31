@@ -8,7 +8,7 @@ const YearlyReport: React.FC = () => {
 
   // Fetch template based on dropbox
   const handleTemplateFetch = async () => {
-    const endpoint = "/api/orgnummertemplate";
+    const endpoint = import.meta.env.VITE_ORGNRTEMPLATE_URL;
     try {
       setIsFetchingTemplate(true);
       const response = await fetch(endpoint);

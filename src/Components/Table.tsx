@@ -27,7 +27,7 @@ export const DataGridComponent = ({ ecoCode }: gridProps) => {
     const FetchData = async () => {
       const searchParams = new URLSearchParams({ EcoCode: ecoCode });
       try {
-        const url = "/api/tabledata?";
+        const url = `${import.meta.env.VITE_TABLEDATA_URL}?`;
 
         const response = await fetch(url + searchParams.toString());
         if (response.status === 400) {

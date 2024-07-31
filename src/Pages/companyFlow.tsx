@@ -16,8 +16,8 @@ const CompanyFlowPage: React.FC = () => {
     setIsLoading(true);
     const endpoint =
       dropbox === "dropbox1"
-        ? "/api/dbupdatetemplate" //sender tilbake en excel fil med rett format, og viser hva data som trengs for å legge til ny data i databasen.
-        : "/api/orgnummertemplate"; //sender tilbake en excel fil med format for å vise hvordan man kan slette data basert på organisasjonsnummer i databasen.; //set endpoints
+        ? import.meta.env.VITE_DBUPDATETEMPLATE_URL //sender tilbake en excel fil med rett format, og viser hva data som trengs for å legge til ny data i databasen.
+        : import.meta.env.VITE_ORGNRTEMPLATE_URL; //sender tilbake en excel fil med format for å vise hvordan man kan slette data basert på organisasjonsnummer i databasen.; //set endpoints
     try {
       const response = await fetch(endpoint);
       await blobHandler(response);
@@ -79,7 +79,10 @@ const CompanyFlowPage: React.FC = () => {
 
       {view === "dropbox1" && (
         <div className="flex flex-col items-center w-full">
-          <Dropbox name="Dropbox 1" fetchEndpoint="/api/updatewithnewdata" />
+          <Dropbox
+            name="Dropbox 1"
+            fetchEndpoint={import.meta.env.VITE_API_UPDATEWITHNEWDATA_URL}
+          />
 
           <p className="text-[#1e2222] text-center m-4">
             If you need a new file for the dropbox, click on "Get template"
@@ -105,7 +108,10 @@ const CompanyFlowPage: React.FC = () => {
 
       {view === "dropbox2" && (
         <div className="flex flex-col items-center w-full">
-          <Dropbox name="Dropbox 2" fetchEndpoint="/api/deletedata" />
+          <Dropbox
+            name="Dropbox 2"
+            fetchEndpoint={import.meta.env.VITE_API_DELETEDATA_URL}
+          />
           <button
             className="bg-[#de0505] text-white py-2 px-6 mx-4 mt-4 rounded-full hover:bg-[#e91414] transition-all duration-300"
             onClick={() => handleTemplateFetch("dropbox2")}

@@ -17,10 +17,10 @@ const KeyFigures: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       const resultArr: KeyFigures[] = [];
-      await fetchAndPushData("/api/companycount", resultArr);
-      await fetchAndPushData("/api/totalturnover", resultArr);
-      await fetchAndPushData("/api/workercount", resultArr);
-      await fetchAndPushData("/api/workyear", resultArr);
+      await fetchAndPushData(import.meta.env.VITE_COMPANYCOUNT_URL, resultArr);
+      await fetchAndPushData(import.meta.env.VITE_TOTALTURNOVER_URL, resultArr);
+      await fetchAndPushData(import.meta.env.VITE_WORKERCOUNT_URL, resultArr);
+      await fetchAndPushData(import.meta.env.VITE_WORKYEAR_URL, resultArr);
       setKeyFigureData(resultArr);
     };
 
