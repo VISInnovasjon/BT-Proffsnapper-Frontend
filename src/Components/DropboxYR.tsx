@@ -57,7 +57,7 @@ const Dropbox: React.FC<DropboxProps> = ({ name }) => {
           setError(null);
 
           const response = await fetch(
-            "http://192.168.9.78:5000" + "/api/yearlyreport",
+            import.meta.env.VITE_API_YEARLYREPORT_URL,
             {
               method: "POST",
               body: formData,
@@ -96,10 +96,13 @@ const Dropbox: React.FC<DropboxProps> = ({ name }) => {
           setIsLoading(true);
           setError(null);
 
-          const response = await fetch("/api/yearlyreport", {
-            method: "POST",
-            body: formData,
-          });
+          const response = await fetch(
+            import.meta.env.VITE_API_YEARLYREPORT_URL,
+            {
+              method: "POST",
+              body: formData,
+            }
+          );
           if (response.status != 200) {
             console.log(response);
             setError(
@@ -123,7 +126,7 @@ const Dropbox: React.FC<DropboxProps> = ({ name }) => {
     <div
       className={`w-full h-60 md:h-96 lg:h-[55vh] flex flex-col justify-center max-w-md mx-auto relative border-solid border-4 p-8 rounded-lg transition-all duration-300 ease-in-out transform ${
         isDragging
-          ? "border-[#1e2222] bg-[#f09999] "
+          ? "border-[#1e2222] bg-[#f09999] animate-pulse "
           : "border-gray-300 bg-transparent"
       }`}
       onDragEnter={handleDragEnter}

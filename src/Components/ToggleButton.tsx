@@ -23,6 +23,7 @@ const StyledButton = styled(Button)<{ active: boolean }>(({ active }) => ({
   paddingBottom: 8,
   paddingLeft: 16,
   paddingRight: 16,
+  fontWeight: "bold",
 }));
 
 const ToggleButton: React.FC<ToggleButtonProps> = ({

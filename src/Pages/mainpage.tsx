@@ -38,7 +38,9 @@ const MainPage: React.FC = () => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await fetch("mockData.json");
+        const url = import.meta.env.VITE_API_GRAPHDATA_URL;
+        console.log(url);
+        const response = await fetch(url);
         const data = await response.json();
         setData(data);
       } catch (error) {
@@ -49,22 +51,6 @@ const MainPage: React.FC = () => {
     };
     fetchData();
   }, []);
-
-  /*useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const response = await fetch("/api/graphdata");
-        const data = await response.json();
-        setData(data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, []);*/
 
   const { language } = useLanguage();
 
@@ -97,15 +83,6 @@ const MainPage: React.FC = () => {
     setEcoKey(target.value);
   };
 
-  useEffect(() => {
-    // Simulate data loading
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 2000); // Simulate a 2 second data fetch
-
-    return () => clearTimeout(timer); // Clean up the timer
-  }, []);
-
   const [activeButton, setActiveButton] = useState<string | null>("option1");
 
   return (
@@ -113,10 +90,10 @@ const MainPage: React.FC = () => {
       <KeyFigures />
       <div className=" flex flex-col justify-evenly lg:flex-row ">
         <div className="container flex flex-col  pl-4">
-          <h3 className=" font-semibold my-2  text-start">
+          <h3 className="  my-2  text-start font-bold">
             {translations[language].headerMainPage}
           </h3>
-          <p className="mb-4 whitespace-pre-wrap  text-start  ">
+          <p className="mb-4 whitespace-pre-wrap  text-start font-semibold  ">
             {translations[language].paragraphMainPage}
           </p>
           <div className="flex justify-start">
@@ -181,7 +158,7 @@ const MainPage: React.FC = () => {
             ))}
           </div>
         </div>
-        <div className="flex flex-col whitespace-nowrap md:  md:flex-row ">
+        <div className="flex flex-col  whitespace-nowrap md:  md:flex-row ">
           <div className="flex justify-center  ">
             <div className="m-2 ">
               <ToggleButton
@@ -223,12 +200,12 @@ const MainPage: React.FC = () => {
               />
             </div>
           </div>
-          <div className="flex justify-center m-2  ">
+          <div className="flex justify-center mx-2 mt-2 mb-6  ">
             <CodeFilter ChangeHandler={setEcoKey} />
           </div>
         </div>
       </div>
-      <div className="m-2">
+      <div className="mx-2">
         <div className="w-full text-center ">
           <div className="mx-6 mt-10">
             <YearRangeSlider updateValue={setYearRange} />

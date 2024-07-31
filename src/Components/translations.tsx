@@ -1,18 +1,3 @@
-// const LanguageLibrary = {
-//   lang: {
-//     nor: {
-//       CompanyInfo: "Bedrifts Info",
-//       Accumulated: "Akkumulert",
-//       AgeGroup: "Aldersgruppe",
-//     },
-//     en: {
-//       CompanyInfo: "Company Info",
-//       Accumulated: "Accumulated",
-//       AgeGroup: "Agegroup",
-//     },
-//   },
-// };
-// export default LanguageLibrary;
 interface Translations {
   [key: string]: {
     chooseLanguage: string;
@@ -49,6 +34,14 @@ interface Translations {
     deleteCompanyData: string;
     headerCompanyData: string;
     dbcfBackButton: string;
+    tablecol1: string;
+    tablecol2: string;
+    tablecol3: string;
+    tablecol4: string;
+    tablecol5: string;
+    tablecol6: string;
+    tablecol7: string;
+    tablecol8: string;
   };
 }
 
@@ -111,6 +104,15 @@ const translations: Translations = {
     addCompanyData: "Add Company Data",
     deleteCompanyData: "Delete Company Data",
     dbcfBackButton: "Back",
+
+    tablecol1: "Company Name",
+    tablecol2: "Org. Number",
+    tablecol3: "Industry",
+    tablecol4: "Value",
+    tablecol5: "Delta",
+    tablecol6: "Accumulated",
+    tablecol7: "Current Year",
+    tablecol8: "Eco. Kode",
   },
 
   nor: {
@@ -170,6 +172,15 @@ const translations: Translations = {
     addCompanyData: "Legg til Bedriftsdata",
     deleteCompanyData: "Slett Bedriftsdata",
     dbcfBackButton: "Tilbake",
+
+    tablecol1: "Bedriftsnavn",
+    tablecol2: "Org. Nummer",
+    tablecol3: "Bransje",
+    tablecol4: "Verdi",
+    tablecol5: "Delta",
+    tablecol6: "Akkumulert",
+    tablecol7: "Gjeldende År",
+    tablecol8: "Øko. Kode",
   },
 };
 
