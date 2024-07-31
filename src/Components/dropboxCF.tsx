@@ -43,13 +43,10 @@ const Dropbox: React.FC<DropboxProps> = ({ name, fetchEndpoint }) => {
           setIsLoading(true);
           setError(null);
 
-          const response = await fetch(
-            "http://192.168.9.78:5000" + fetchEndpoint,
-            {
-              method: "POST",
-              body: formData,
-            }
-          );
+          const response = await fetch(fetchEndpoint, {
+            method: "POST",
+            body: formData,
+          });
           if (response.status != 200)
             setError(
               `Something went wrong on the server, ${response.statusText}`
@@ -106,7 +103,7 @@ const Dropbox: React.FC<DropboxProps> = ({ name, fetchEndpoint }) => {
     <div
       className={`w-full h-60 md:h-96 lg:h-[55vh] flex flex-col justify-center max-w-md mx-auto relative border-solid border-4 p-8 rounded-lg transition-all duration-300 ease-in-out transform ${
         isDragging
-          ? "border-[#2e5f65] bg-[#AED9E0] "
+          ? "border-[#1e2222] bg-[#f09999] animate-pulse "
           : "border-gray-300 bg-transparent"
       }`}
       onDragLeave={handleDragLeave}

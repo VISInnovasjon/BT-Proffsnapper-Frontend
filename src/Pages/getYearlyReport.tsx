@@ -10,7 +10,7 @@ const YearlyReport: React.FC = () => {
 
   // Fetch template based on dropbox
   const handleFetchTemplate = async () => {
-    const endpoint = "http://192.168.9.78:5000" + "/api/orgnummertemplate";
+    const endpoint = import.meta.env.VITE_ORGNRTEMPLATE_URL;
     try {
       setIsFetchingTemplate(true);
       const response = await fetch(endpoint);
@@ -25,8 +25,8 @@ const YearlyReport: React.FC = () => {
   const { language } = useLanguage();
 
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center md:pt-8 mx-auto !text-[#1e2222] text-2vw sm:text-base md:text-lg lg:text-lg xl:text-xl">
-      <h1 className=" text-2xl lg:text-3xl md:mt-10 text-[#1e2222] font-bold mb-6">
+    <div className="min-h-screen flex flex-col justify-center items-center md:pt-8 mx-auto text-[#1e2222] text-2vw sm:text-base md:text-lg lg:text-lg xl:text-xl">
+      <h1 className=" text-2xl lg:text-3xl md:mt-10 text-[#1e2222] font-bold mb-6 tracking-wide">
         {translations[language].gyrPagetext1}
       </h1>
 

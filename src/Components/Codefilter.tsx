@@ -33,7 +33,7 @@ export default function CodeFilter(props: {
         option === null ? null : props.ChangeHandler(option.id)
       }
       options={options}
-      sx={{ width: 300 }}
+      sx={{ width: 400 }}
       renderInput={(params) => (
         <TextField
           {...params}

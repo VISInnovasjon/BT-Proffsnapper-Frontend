@@ -21,21 +21,18 @@ const KeyFigures: React.FC = () => {
     const fetchData = async () => {
       const resultArr: KeyFigures[] = [];
       await fetchAndPushData(
-        "http://192.168.9.78:5000" + "/api/companycount",
+        import.meta.env.VITE_API_COMPANYCOUNT_URL,
         resultArr
       );
       await fetchAndPushData(
-        "http://192.168.9.78:5000" + "/api/totalturnover",
+        import.meta.env.VITE_API_TOTALTURNOVER_URL,
         resultArr
       );
       await fetchAndPushData(
-        "http://192.168.9.78:5000" + "/api/workercount",
+        import.meta.env.VITE_API_WORKERCOUNT_URL,
         resultArr
       );
-      await fetchAndPushData(
-        "http://192.168.9.78:5000" + "/api/workyear",
-        resultArr
-      );
+      await fetchAndPushData(import.meta.env.VITE_API_WORKYEAR_URL, resultArr);
       setKeyFigureData(resultArr);
     };
 
