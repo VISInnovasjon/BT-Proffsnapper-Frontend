@@ -3,6 +3,8 @@
 import React, { useState, useEffect, SetStateAction } from "react";
 import { Slider, Typography } from "@mui/material";
 import { useGlobalState } from "../Components/GlobalState";
+import { useLanguage } from "./LanguageContext";
+import translations from "./translations";
 
 const YearRangeSlider = (props: {
   updateValue: React.Dispatch<SetStateAction<number[]>>;
@@ -13,6 +15,8 @@ const YearRangeSlider = (props: {
     new Date().getFullYear() - 1,
   ]);
   console.log(yearRange);
+
+  const { language } = useLanguage();
 
   const handleSliderChange = (_event: Event, newValue: number | number[]) => {
     setYearRange(newValue as number[]);
@@ -33,8 +37,12 @@ const YearRangeSlider = (props: {
 
   return (
     <div className="">
-      <Typography id="year-range-slider" gutterBottom>
-        Velg år
+      <Typography
+        sx={{ fontWeight: "bold" }}
+        id="year-range-slider"
+        gutterBottom
+      >
+        {translations[language].yearRangeSlider}
       </Typography>
       <Slider
         value={yearRange}

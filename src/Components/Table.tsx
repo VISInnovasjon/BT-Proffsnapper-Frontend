@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
+import { useLanguage } from "./LanguageContext";
+import translations from "./translations";
 
 type gridProps = {
   ecoCode: string;
@@ -42,15 +44,57 @@ export const DataGridComponent = ({ ecoCode }: gridProps) => {
     FetchData();
   }, [ecoCode]);
 
+  const { language } = useLanguage();
+
   const columns = [
-    { field: "Name", headerName: "Bedriftnavn", minWidth: 300 },
-    { field: "OrgNumber", headerName: "Orgnummer", minWidth: 150 },
-    { field: "Branch", headerName: "Bransje", minWidth: 150 },
-    { field: "Value", headerName: "Verdi", minWidth: 150 },
-    { field: "Delta", headerName: "Delta", minWidth: 150 },
-    { field: "Accumulated", headerName: "Akkumulert", minWidth: 150 },
-    { field: "ValidYear", headerName: "Gjeldende år", minWidth: 150 },
-    { field: "EcoCode", headerName: "Øko kode", minWidth: 150 },
+    {
+      field: "Name",
+      headerName: translations[language].tablecol1,
+      width: 250,
+      flex: 2,
+    },
+    {
+      field: "OrgNumber",
+      headerName: translations[language].tablecol2,
+      width: 150,
+      flex: 1,
+    },
+    {
+      field: "Branch",
+      headerName: translations[language].tablecol3,
+      width: 150,
+      flex: 1,
+    },
+    {
+      field: "Value",
+      headerName: translations[language].tablecol4,
+      width: 150,
+      flex: 1,
+    },
+    {
+      field: "Delta",
+      headerName: translations[language].tablecol5,
+      width: 150,
+      flex: 1,
+    },
+    {
+      field: "Accumulated",
+      headerName: translations[language].tablecol6,
+      width: 150,
+      flex: 1,
+    },
+    {
+      field: "ValidYear",
+      headerName: translations[language].tablecol7,
+      width: 150,
+      flex: 1,
+    },
+    {
+      field: "EcoCode",
+      headerName: translations[language].tablecol8,
+      width: 150,
+      flex: 1,
+    },
   ];
 
   return (
@@ -60,19 +104,9 @@ export const DataGridComponent = ({ ecoCode }: gridProps) => {
           <DataGrid
             rows={tableData.map((row, idx) => ({ ...row, id: idx }))}
             columns={columns}
-            autoHeight
             initialState={{
               pagination: {
                 paginationModel: { page: 0, pageSize: 5 },
-              },
-            }}
-            autosizeOptions={autosizeOptions}
-            sx={{
-              boxShadow: 3,
-              border: 2,
-              borderColor: "#DE0505",
-              "& .MuiDataGrid-cell:hover": {
-                color: "#DE0505",
               },
             }}
             getRowId={(row) => row.id}

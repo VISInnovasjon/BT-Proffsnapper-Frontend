@@ -21,23 +21,14 @@ body {
 }
 
 .MuiSlider-thumb {
-  color: #2e5f65;
+  color: #022447;
 }
 .MuiSlider-rail {
-  color: #aed9e0;
+  color: #1e2222;
 }
 .MuiSlider-track {
-  color: #2e5f65;
+  color: #022447;
 }
-
-/* Styling for the select components*/
-/* #agegroup-select-label {
-}
-
-#fase-select-label {
-}
-#brand-select-label {
-} */
 
 /* Styling for the autocomplete */
 .MuiAutocomplete-root {

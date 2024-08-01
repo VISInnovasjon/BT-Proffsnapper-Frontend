@@ -13,6 +13,8 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { DataGridComponent } from "../Components/Table";
 import "../index.css";
 import KeyFigures from "../Components/KeyFigures";
+import { useLanguage } from "../Components/LanguageContext";
+import translations from "../Components/translations";
 
 type ButtonTarget = {
   value: string;
@@ -33,13 +35,16 @@ const MainPage: React.FC = () => {
   const [filters, setFilters] = useState<string[]>([]);
   const [monetaryKey, setMonetaryKey] = useState<string>("Accumulated");
   const [yearRange, setYearRange] = useState<number[]>([]);
+  // const [lang, setLang] = useState<string>("nor");
   console.log(yearRange);
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await fetch(import.meta.env.VITE_GRAPHDATA_URL);
+        const url = import.meta.env.VITE_API_GRAPHDATA_URL;
+        console.log(url);
+        const response = await fetch(url);
         const data = await response.json();
         setData(data);
       } catch (error) {
@@ -51,21 +56,7 @@ const MainPage: React.FC = () => {
     fetchData();
   }, []);
 
-  /*useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const response = await fetch("/api/graphdata");
-        const data = await response.json();
-        setData(data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, []);*/
+  const { language } = useLanguage();
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -83,8 +74,8 @@ const MainPage: React.FC = () => {
   const handleRemoveFilter = (filter: string) => {
     setFilters((prevFilters) => prevFilters.filter((f) => f !== filter));
     if (filter === "Age Group") setSelectedAgeGroups([]);
-    if (filter === "Fase") setSelectedFases([]);
-    if (filter === "Brand") setSelectedBrands([]);
+    if (filter === "Phase") setSelectedFases([]);
+    if (filter === "Industry") setSelectedBrands([]);
   };
 
   const handleButtonClick = (
@@ -96,15 +87,6 @@ const MainPage: React.FC = () => {
     setEcoKey(target.value);
   };
 
-  useEffect(() => {
-    // Simulate data loading
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 2000); // Simulate a 2 second data fetch
-
-    return () => clearTimeout(timer); // Clean up the timer
-  }, []);
-
   const [activeButton, setActiveButton] = useState<string | null>("option1");
 
   return (
@@ -112,15 +94,13 @@ const MainPage: React.FC = () => {
       <KeyFigures />
       <div className=" flex flex-col justify-evenly lg:flex-row ">
         <div className="container flex flex-col  pl-4">
-          <h3 className=" font-semibold my-2  text-center sm:text-start">
-            Choose filters to display data:
+          <h3 className="  my-2  text-start font-bold">
+            {translations[language].headerMainPage}
           </h3>
-          <p className="mb-4 text-center sm:text-start">
-            Use the button below to select and add filters<br></br> for Age
-            Group, Fase, and Brand.<br></br>You can remove filters by clicking
-            the X button next to each <br></br>filter.
+          <p className="mb-4 whitespace-pre-wrap  text-start font-semibold  ">
+            {translations[language].paragraphMainPage}
           </p>
-          <div className="flex justify-center sm:justify-start">
+          <div className="flex justify-start">
             <Button
               style={{
                 backgroundColor: " #de0505",
@@ -131,7 +111,7 @@ const MainPage: React.FC = () => {
               onClick={handleClick}
               size={"small"}
             >
-              Choose filter <ArrowDropDownIcon />
+              {translations[language].filter} <ArrowDropDownIcon />
             </Button>
           </div>
           <Menu
@@ -143,23 +123,23 @@ const MainPage: React.FC = () => {
           >
             {!filters.includes("Age Group") && (
               <MenuItem onClick={() => handleMenuItemClick("Age Group")}>
-                Age Group
+                {translations[language].agegroup}
               </MenuItem>
             )}
 
-            {!filters.includes("Fase") && (
+            {!filters.includes("Phase") && (
               <MenuItem onClick={() => handleMenuItemClick("Fase")}>
-                Fase
+                {translations[language].fase}
               </MenuItem>
             )}
-            {!filters.includes("Brand") && (
+            {!filters.includes("Industry") && (
               <MenuItem onClick={() => handleMenuItemClick("Brand")}>
-                Brand
+                {translations[language].brand}
               </MenuItem>
             )}
           </Menu>
 
-          <div className="mt-6 flex justify-center sm:justify-start ">
+          <div className="mt-6 flex justify-start flex-col md:flex-row lg:flex-row ">
             {filters.map((filter) => (
               <div key={filter} className="flex items-center mb-2">
                 {filter === "Age Group" && (
@@ -182,11 +162,11 @@ const MainPage: React.FC = () => {
             ))}
           </div>
         </div>
-        <div className="flex flex-col  sm:flex-row ">
-          <div className="flex justify-center sm:justify-start ">
+        <div className="flex flex-col  whitespace-nowrap md:  md:flex-row ">
+          <div className="flex justify-center  ">
             <div className="m-2 ">
               <ToggleButton
-                label="Driftsresultat"
+                label={translations[language].toggleDrift}
                 val="DR"
                 isActive={activeButton === "option1"}
                 onClick={(e) => {
@@ -199,7 +179,7 @@ const MainPage: React.FC = () => {
             </div>
             <div className="m-2">
               <ToggleButton
-                label="Omsetning"
+                label={translations[language].toggleOmsetning}
                 val="SDI"
                 isActive={activeButton === "option2"}
                 onClick={(e) =>
@@ -212,7 +192,7 @@ const MainPage: React.FC = () => {
             </div>
             <div className="m-2">
               <ToggleButton
-                label="SIK"
+                label={translations[language].toggleSik}
                 val="SIK"
                 isActive={activeButton === "option3"}
                 onClick={(e) =>
@@ -224,12 +204,12 @@ const MainPage: React.FC = () => {
               />
             </div>
           </div>
-          <div className="flex justify-center m-2  ">
+          <div className="flex justify-center mx-2 mt-2 mb-6  ">
             <CodeFilter ChangeHandler={setEcoKey} />
           </div>
         </div>
       </div>
-      <div className="m-2">
+      <div className="mx-2">
         <div className="w-full text-center ">
           <div className="mx-6 mt-10">
             <YearRangeSlider updateValue={setYearRange} />
@@ -246,7 +226,7 @@ const MainPage: React.FC = () => {
               yearRange={yearRange}
             />
           </div>
-          <div className="inline-flex sm:flex sm:justify-center mt-1  ">
+          <div className="inline-flex  sm:justify-center  ">
             <UseRadioGroup
               onChange={(e) => {
                 const target = e.target as EventTarget & Element & RadioTarget;

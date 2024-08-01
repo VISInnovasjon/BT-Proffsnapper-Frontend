@@ -22,7 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-
+.env
 
 Alle.json
 data.json
@@ -32,3 +32,4 @@ mockData.json
 mockData.ts
 types.ts
 data.ts
+

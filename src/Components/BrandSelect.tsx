@@ -9,6 +9,8 @@ import {
   Chip,
   SelectChangeEvent,
 } from "@mui/material";
+import { useLanguage } from "./LanguageContext";
+import translations from "./translations";
 
 interface BrandSelectProps {
   onChange: (selectedBrands: string[]) => void;
@@ -35,16 +37,20 @@ const BrandSelect: React.FC<BrandSelectProps> = ({ onChange }) => {
     onChange(selectedBrands);
   }, [selectedBrands, onChange]);
 
+  const { language } = useLanguage();
+
   return (
-    <Box className="min-w-[90px] ml-4">
+    <Box className="min-w-[140px] ">
       <FormControl fullWidth>
-        <InputLabel id="brand-select-label">Brand</InputLabel>
+        <InputLabel id="brand-select-label">
+          {translations[language].brand}
+        </InputLabel>
         <Select
           labelId="brand-select-label"
           multiple
           value={selectedBrands}
           onChange={handleChange}
-          input={<OutlinedInput id="select-multiple-chip" label="Brand" />}
+          input={<OutlinedInput id="select-multiple-chip" label="Industry" />}
           renderValue={(selected) => (
             <Box className="flex flex-wrap gap-0.5">
               {(selected as string[]).map((value) => (
