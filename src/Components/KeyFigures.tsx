@@ -7,8 +7,13 @@ type KeyFigures = {
   text: string;
   number: number;
 };
-const fetchAndPushData = async (url: string, resultArr: KeyFigures[]) => {
-  const response = await fetch(url);
+const fetchAndPushData = async (
+  url: string,
+  resultArr: KeyFigures[],
+  lang: string
+) => {
+  const searchParams = new URLSearchParams({ Language: lang });
+  const response = await fetch(url + "?" + searchParams.toString());
   const result: KeyFigures = await response.json();
   resultArr.push(result);
 };
@@ -22,22 +27,29 @@ const KeyFigures: React.FC = () => {
       const resultArr: KeyFigures[] = [];
       await fetchAndPushData(
         import.meta.env.VITE_API_COMPANYCOUNT_URL,
-        resultArr
+        resultArr,
+        language
       );
       await fetchAndPushData(
         import.meta.env.VITE_API_TOTALTURNOVER_URL,
-        resultArr
+        resultArr,
+        language
       );
       await fetchAndPushData(
         import.meta.env.VITE_API_WORKERCOUNT_URL,
-        resultArr
+        resultArr,
+        language
       );
-      await fetchAndPushData(import.meta.env.VITE_API_WORKYEAR_URL, resultArr);
+      await fetchAndPushData(
+        import.meta.env.VITE_API_WORKYEAR_URL,
+        resultArr,
+        language
+      );
       setKeyFigureData(resultArr);
     };
 
     fetchData();
-  }, []);
+  }, [language]);
 
   return (
     <div className="mb-10 flex flex-col items-center justify-center p-4">

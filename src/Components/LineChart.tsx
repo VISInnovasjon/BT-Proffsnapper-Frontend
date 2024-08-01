@@ -1,5 +1,4 @@
-import React from "react";
-import { economicCodes } from "../data/economicCodes";
+import React, { useState, useEffect } from "react";
 import { Line } from "react-chartjs-2";
 import { Chart, registerables } from "chart.js";
 import { CircularProgress } from "@mui/material";
@@ -39,6 +38,7 @@ interface LineChartComponentProps {
   monetaryKey: string;
   yearRange: number[];
   loading: boolean;
+  economicCodes: Record<string, string>;
 }
 type DataPoint = {
   year: number;
@@ -68,6 +68,7 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
   ecoKey,
   monetaryKey,
   yearRange,
+  economicCodes,
 }) => {
   const selectedKeys = [
     "Total",
@@ -99,7 +100,13 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
     "#1F2176",
     "#8A2BE2",
   ];
-  const SelectedValue = economicCodes[ecoKey]; //Setter verdien i SelectedValue (H2)
+  const [SelectedValue, setSelectedValue] = useState<string>(
+    economicCodes[ecoKey]
+  );
+
+  useEffect(() => {
+    setSelectedValue(economicCodes[ecoKey]);
+  }, [economicCodes, ecoKey]);
 
   const chartData = //lage en metode som bygger om JSON til linechartData.
     data[selectedKeys[0]] != undefined //selectedKeys.length > 0

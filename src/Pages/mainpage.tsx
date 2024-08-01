@@ -35,8 +35,10 @@ const MainPage: React.FC = () => {
   const [filters, setFilters] = useState<string[]>([]);
   const [monetaryKey, setMonetaryKey] = useState<string>("Accumulated");
   const [yearRange, setYearRange] = useState<number[]>([]);
-  // const [lang, setLang] = useState<string>("nor");
-  console.log(yearRange);
+  const [economicCodes, setEconomicCodes] = useState<Record<string, string>>(
+    {}
+  );
+  const { language } = useLanguage();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -55,8 +57,26 @@ const MainPage: React.FC = () => {
     };
     fetchData();
   }, []);
+  useEffect(() => {
+    const fetchEcoCodes = async () => {
+      try {
+        const searchParams = new URLSearchParams({
+          Language: language.toString(),
+        });
+        const url =
+          import.meta.env.VITE_API_ECOCODEDATA_URL +
+          "?" +
+          searchParams.toString();
 
-  const { language } = useLanguage();
+        const response = await fetch(url);
+        const data: Record<string, string> = await response.json();
+        setEconomicCodes(data);
+      } catch (err) {
+        console.log("error fetching eco codes", err);
+      }
+    };
+    fetchEcoCodes();
+  }, [language]);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -205,7 +225,7 @@ const MainPage: React.FC = () => {
             </div>
           </div>
           <div className="flex justify-center mx-2 mt-2 mb-6  ">
-            <CodeFilter ChangeHandler={setEcoKey} />
+            <CodeFilter ChangeHandler={setEcoKey} ecoCodes={economicCodes} />
           </div>
         </div>
       </div>
@@ -224,6 +244,7 @@ const MainPage: React.FC = () => {
               ecoKey={ecoKey}
               monetaryKey={monetaryKey}
               yearRange={yearRange}
+              economicCodes={economicCodes}
             />
           </div>
           <div className="inline-flex  sm:justify-center  ">

@@ -18,8 +18,8 @@ const CompanyFlowPage: React.FC = () => {
     setIsLoading(true);
     const endpoint =
       dropbox === "dropbox1"
-        ? import.meta.env.VITE_DBUPDATETEMPLATE_URL //sender tilbake en excel fil med rett format, og viser hva data som trengs for å legge til ny data i databasen.
-        : import.meta.env.VITE_ORGNRTEMPLATE_URL; //sender tilbake en excel fil med format for å vise hvordan man kan slette data basert på organisasjonsnummer i databasen.; //set endpoints
+        ? import.meta.env.VITE_API_DBUPDATETEMPLATE_URL //sender tilbake en excel fil med rett format, og viser hva data som trengs for å legge til ny data i databasen.
+        : import.meta.env.VITE_API_ORGNRTEMPLATE_URL; //sender tilbake en excel fil med format for å vise hvordan man kan slette data basert på organisasjonsnummer i databasen.; //set endpoints
     try {
       const response = await fetch(endpoint);
       await blobHandler(response);
@@ -29,7 +29,6 @@ const CompanyFlowPage: React.FC = () => {
       setIsLoading(false);
     }
   };
-
 
   // Handle back button click
   const handleBack = () => {

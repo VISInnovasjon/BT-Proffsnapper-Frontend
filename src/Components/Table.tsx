@@ -17,19 +17,13 @@ type TableData = {
   EcoCode: string;
 } & Record<string, string | number>;
 
-const autosizeOptions = {
-  includeHeaders: true,
-  includeOutliers: true,
-  expand: true,
-};
-
 export const DataGridComponent = ({ ecoCode }: gridProps) => {
   const [tableData, setTableData] = useState<TableData[] | null>(null);
   useEffect(() => {
     const FetchData = async () => {
       const searchParams = new URLSearchParams({ EcoCode: ecoCode });
       try {
-        const url = `${import.meta.env.VITE_TABLEDATA_URL}?`;
+        const url = `${import.meta.env.VITE_API_TABLEDATA_URL}?`;
 
         const response = await fetch(url + searchParams.toString());
         if (response.status === 400) {
