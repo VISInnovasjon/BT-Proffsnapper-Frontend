@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
-import Dropbox from "../Components/DropboxYR";
+import Dropbox from "../Components/Dropbox";
 import { blobHandler } from "../Components/BlobCreator";
 import { useLanguage } from "../Components/LanguageContext";
 import translations from "../Components/translations";
@@ -30,7 +30,10 @@ const YearlyReport: React.FC = () => {
         {translations[language].gyrPagetext1}
       </h1>
 
-      <Dropbox onFileUpdate={() => {}} name={""} fetchEndpoint={""} />
+      <Dropbox
+        name={""}
+        fetchEndpoint={import.meta.env.VITE_API_YEARLYREPORT_URL}
+      />
       <div className="mt-4">
         <button
           onClick={handleFetchTemplate}

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Dropbox from "../Components/dropboxCF";
+import Dropbox from "../Components/Dropbox";
 import { CircularProgress } from "@mui/material";
 import { blobHandler } from "../Components/BlobCreator";
 import { useLanguage } from "../Components/LanguageContext";

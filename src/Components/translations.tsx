@@ -1,4 +1,4 @@
-interface Translations {
+type Translations = {
   [key: string]: {
     chooseLanguage: string;
     keyFiguresHeader: string;
@@ -43,7 +43,7 @@ interface Translations {
     tablecol7: string;
     tablecol8: string;
   };
-}
+} & Record<string, Record<string, string>>;
 
 const translations: Translations = {
   en: {

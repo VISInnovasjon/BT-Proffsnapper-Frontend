@@ -1,7 +1,4 @@
 import React, { useState, useEffect } from "react";
-import AgeGroupSelect from "../Components/AgeGroupSelect";
-import FaseSelect from "../Components/FaseSelect";
-import BrandSelect from "../Components/BrandSelect";
 import LineChartComponent, { KeyedValues } from "../Components/LineChart";
 import { Button, Menu, MenuItem, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
@@ -15,6 +12,7 @@ import "../index.css";
 import KeyFigures from "../Components/KeyFigures";
 import { useLanguage } from "../Components/LanguageContext";
 import translations from "../Components/translations";
+import FilterSelect from "../Components/FilterSelect";
 
 type ButtonTarget = {
   value: string;
@@ -163,14 +161,29 @@ const MainPage: React.FC = () => {
             {filters.map((filter) => (
               <div key={filter} className="flex items-center mb-2">
                 {filter === "Age Group" && (
-                  <AgeGroupSelect onChange={setSelectedAgeGroups} />
+                  <FilterSelect
+                    onChange={setSelectedAgeGroups}
+                    label="Age Group"
+                    property="agegroup"
+                    url={import.meta.env.VITE_API_AGEGROUPS_URL}
+                  />
                 )}
 
                 {filter === "Fase" && (
-                  <FaseSelect onChange={setSelectedFases} />
+                  <FilterSelect
+                    onChange={setSelectedFases}
+                    label="Fases"
+                    property="fase"
+                    url={import.meta.env.VITE_API_FASES_URL}
+                  />
                 )}
                 {filter === "Brand" && (
-                  <BrandSelect onChange={setSelectedBrands} />
+                  <FilterSelect
+                    onChange={setSelectedBrands}
+                    label="Brands"
+                    property="brand"
+                    url={import.meta.env.VITE_API_BRANCHNAMES_URL}
+                  />
                 )}
                 <IconButton
                   onClick={() => handleRemoveFilter(filter)}
