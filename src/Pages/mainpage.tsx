@@ -112,10 +112,10 @@ const MainPage: React.FC = () => {
       <KeyFigures />
       <div className=" flex flex-col justify-evenly lg:flex-row ">
         <div className="container flex flex-col  pl-4">
-          <h3 className="  my-2  text-start font-bold">
+          <h3 className="my-2 text-start font-bold">
             {translations[language].headerMainPage}
           </h3>
-          <p className="mb-4 whitespace-pre-wrap  text-start font-semibold  ">
+          <p className="mb-4 whitespace-pre-wrap text-start font-semibold  ">
             {translations[language].paragraphMainPage}
           </p>
           <div className="flex justify-start">

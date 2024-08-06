@@ -108,7 +108,7 @@ const Dropbox: React.FC<DropboxProps> = ({ name, fetchEndpoint }) => {
 
   return (
     <div
-      className={`w-full h-60 md:h-96 lg:h-[55vh] flex flex-col justify-center max-w-md mx-auto relative border-solid border-4 p-8 rounded-lg transition-all duration-300 ease-in-out transform ${
+      className={`w-full h-60 md:h-96 lg:h-[55vh] flex flex-col justify-center max-w-md mx-auto relative border-solid border-4 p-8 mt-6 rounded-lg transition-all duration-300 ease-in-out transform ${
         isDragging
           ? "border-[#1e2222] bg-[#f09999] animate-pulse "
           : "border-gray-300 bg-transparent"

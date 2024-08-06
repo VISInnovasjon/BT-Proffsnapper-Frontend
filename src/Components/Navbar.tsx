@@ -17,15 +17,6 @@ const Navbar: React.FC = () => {
     setIsOpen(false);
   };
 
-  const fetchFile = async () => {
-    try {
-      const response = await fetch(import.meta.env.VITE_API_EXCELFULLVIEW_URL);
-      await blobHandler(response);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const { language } = useLanguage();
 
   return (
@@ -97,12 +88,7 @@ const Navbar: React.FC = () => {
               <Link to="/companyflow" className="px-3 py-2  hover:underline">
                 {translations[language].companyFlow}
               </Link>
-              <button
-                onClick={fetchFile}
-                className="px-3 py-2  hover:underline"
-              >
-                {translations[language].getFullView}
-              </button>
+
               <LanguageDropdown />
             </div>
           </div>
@@ -136,12 +122,6 @@ const Navbar: React.FC = () => {
             {translations[language].companyFlow}
           </Link>
 
-          <button
-            onClick={fetchFile}
-            className="px-3 py-2  rounded-md hover:underline"
-          >
-            {translations[language].getFullView}
-          </button>
           <div className="flex justify-center">
             <LanguageDropdown />
           </div>

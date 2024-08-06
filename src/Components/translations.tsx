@@ -14,6 +14,7 @@ type Translations = {
     yearlyRapport: string;
     companyFlow: string;
     getFullView: string;
+    fetchFullView: string;
     radioValue: string;
     radioAccumulated: string;
     radioDelta: string;
@@ -73,9 +74,10 @@ const translations: Translations = {
 
     /*translation for navbar on header*/
     home: "Home",
-    yearlyRapport: "Yearly Rapport",
+    yearlyRapport: "Reports",
     companyFlow: "Company Flow",
     getFullView: "Get full view",
+    fetchFullView: "Henter full oversikt",
 
     /*translation for useRadioGroup.tsx*/
     radioValue: "Avg. Value",
@@ -91,15 +93,15 @@ const translations: Translations = {
     dbyrText1: "Choose File",
     dbyrText2: "Or drag and drop a file here",
     dbyrText3: "Accepted file types: .XLS, .XLSX",
-    dbyrText4: "Updating File...",
-    gyrPagetext1: "Get Yearly Rapport",
+    dbyrText4: "Fetching Data...",
+    gyrPagetext1: "Reports",
     gyrPagetext2: "Get Template",
 
     /*translation for CFDropbox and page*/
     dbcfText1: "Choose File",
     dbcfText2: "Or drag and drop a file here",
     dbcfText3: "Accepted file types: .XLS, .XLSX",
-    dbcfText4: "Updating File...",
+    dbcfText4: "Fetching Data...",
     headerCompanyData: "Update Company Data Flow",
     addCompanyData: "Add Company Data",
     deleteCompanyData: "Delete Company Data",
@@ -141,9 +143,10 @@ const translations: Translations = {
 
     /*translation for navbar on header*/
     home: "Hjem",
-    yearlyRapport: "Årlig Rapport",
+    yearlyRapport: "Rapporter",
     companyFlow: "Bedriftsflyt",
     getFullView: "Få full oversikt",
+    fetchFullView: "Henter full oversikt",
 
     /*translation for useRadioGroup.tsx*/
     radioValue: "Gj. Snitt Verdi",
@@ -159,15 +162,15 @@ const translations: Translations = {
     dbyrText1: "Velg Fil",
     dbyrText2: "Eller dra og slipp en fil her",
     dbyrText3: "Aksepterte filtyper: .XLS, .XLSX",
-    dbyrText4: "Oppdaterer Fil...",
-    gyrPagetext1: "Hent Årlig Rapport",
+    dbyrText4: "Henter Data",
+    gyrPagetext1: "Rapporter",
     gyrPagetext2: "Hent Mal",
 
     /*translation for CFDropbox and page*/
     dbcfText1: "Velg Fil",
     dbcfText2: "Eller dra og slipp en fil her",
     dbcfText3: "Aksepterte filtyper: .XLS, .XLSX",
-    dbcfText4: "Oppdaterer Fil...",
+    dbcfText4: "Henter Data...",
     headerCompanyData: "Oppdater Bedrifts Dataflyt",
     addCompanyData: "Legg til Bedriftsdata",
     deleteCompanyData: "Slett Bedriftsdata",
