@@ -10,6 +10,7 @@ type Translations = {
     agegroup: string;
     brand: string;
     fase: string;
+    sex: string;
     home: string;
     yearlyRapport: string;
     companyFlow: string;
@@ -71,6 +72,7 @@ const translations: Translations = {
     agegroup: "Agegroup",
     brand: "Industry",
     fase: "Phase",
+    sex: "Sex",
 
     /*translation for navbar on header*/
     home: "Home",
@@ -140,6 +142,7 @@ const translations: Translations = {
     agegroup: "Aldersgruppe",
     brand: "Bransje",
     fase: "Fase",
+    sex: "Kjønn",
 
     /*translation for navbar on header*/
     home: "Hjem",

@@ -27,6 +27,7 @@ const MainPage: React.FC = () => {
   const [selectedAgeGroups, setSelectedAgeGroups] = useState<string[]>([]);
   const [selectedFases, setSelectedFases] = useState<string[]>([]);
   const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
+  const [selectedSexes, setSelectedSexes] = useState<string[]>([]);
   const [data, setData] = useState<KeyedValues>({});
   const [ecoKey, setEcoKey] = useState<string>("DR");
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -94,6 +95,7 @@ const MainPage: React.FC = () => {
     if (filter === "Age Group") setSelectedAgeGroups([]);
     if (filter === "Phase") setSelectedFases([]);
     if (filter === "Industry") setSelectedBrands([]);
+    if (filter === "Sexes") setSelectedSexes([]);
   };
 
   const handleButtonClick = (
@@ -146,13 +148,18 @@ const MainPage: React.FC = () => {
             )}
 
             {!filters.includes("Phase") && (
-              <MenuItem onClick={() => handleMenuItemClick("Fase")}>
+              <MenuItem onClick={() => handleMenuItemClick("Phase")}>
                 {translations[language].fase}
               </MenuItem>
             )}
             {!filters.includes("Industry") && (
-              <MenuItem onClick={() => handleMenuItemClick("Brand")}>
+              <MenuItem onClick={() => handleMenuItemClick("Industry")}>
                 {translations[language].brand}
+              </MenuItem>
+            )}
+            {!filters.includes("Sexes") && (
+              <MenuItem onClick={() => handleMenuItemClick("Sexes")}>
+                {translations[language].sex}
               </MenuItem>
             )}
           </Menu>
@@ -169,7 +176,7 @@ const MainPage: React.FC = () => {
                   />
                 )}
 
-                {filter === "Fase" && (
+                {filter === "Phase" && (
                   <FilterSelect
                     onChange={setSelectedFases}
                     label="Fases"
@@ -177,12 +184,20 @@ const MainPage: React.FC = () => {
                     url={import.meta.env.VITE_API_FASES_URL}
                   />
                 )}
-                {filter === "Brand" && (
+                {filter === "Industry" && (
                   <FilterSelect
                     onChange={setSelectedBrands}
                     label="Brands"
                     property="brand"
                     url={import.meta.env.VITE_API_BRANCHNAMES_URL}
+                  />
+                )}
+                {filter === "Sexes" && (
+                  <FilterSelect
+                    onChange={setSelectedSexes}
+                    label="Sex"
+                    property="sex"
+                    url={import.meta.env.VITE_API_SEXES_URL}
                   />
                 )}
                 <IconButton
@@ -254,6 +269,7 @@ const MainPage: React.FC = () => {
               selectedAgeGroups={selectedAgeGroups}
               selectedFases={selectedFases}
               selectedBrands={selectedBrands}
+              selectedSexes={selectedSexes}
               ecoKey={ecoKey}
               monetaryKey={monetaryKey}
               yearRange={yearRange}
