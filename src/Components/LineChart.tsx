@@ -224,7 +224,7 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
         title: {
           display: true,
           text: "I mill NOK.",
-          color: "#2E5F65",
+          color: "#1e2222",
           font: {
             family: "system-ui",
             size: 16,
