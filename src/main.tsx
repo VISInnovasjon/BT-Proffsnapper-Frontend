@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import MainPage from "./Pages/mainpage";
 import Layout from "./Components/layout";
 import CompanyFlow from "./Pages/companyFlow";
-import YearlyReport from "./Pages/getYearlyReport";
+import Reports from "./Pages/reportspage";
 
 import "./index.css";
 import { GlobalStateProvider } from "./Components/GlobalState";
@@ -29,7 +29,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/rapport",
-        element: <YearlyReport />,
+        element: <Reports />,
       },
     ],
   },
