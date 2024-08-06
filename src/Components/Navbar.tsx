@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import myImage from "../Images/LogoWhite.png";
-import { blobHandler } from "./BlobCreator";
 import LanguageDropdown from "./LanguageDropdown";
 import { useLanguage } from "./LanguageContext";
 import translations from "./translations";

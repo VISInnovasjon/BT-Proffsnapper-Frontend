@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, CircularProgress, Box } from "@mui/material";
-import Dropbox from "../Components/DropboxYR";
-import { blobHandler } from "../Components/blobCreator";
+import Dropbox from "../Components/Dropbox";
+import { blobHandler } from "../Components/BlobCreator";
 import { useLanguage } from "../Components/LanguageContext";
 import translations from "../Components/translations";
 
@@ -39,7 +39,10 @@ const Reports: React.FC = () => {
         {translations[language].gyrPagetext1}
       </h1>
 
-      <Dropbox onFileUpdate={() => {}} name={""} fetchEndpoint={""} />
+      <Dropbox
+        name={""}
+        fetchEndpoint={import.meta.env.VITE_API_YEARLYREPORT_URL}
+      />
       <div className="mt-4 ">
         <Box>
           <Button
