@@ -40,8 +40,8 @@ const KeyFigures: React.FC = () => {
   }, []);
 
   return (
-    <div className="mb-10 flex flex-col items-center justify-center p-4">
-      <h1 className="my-10 text-2xl md:text-3xl lg:text-4xl font-bold tracking-wide">
+    <div className="mb-10 flex flex-col items-center px-4 ">
+      <h1 className="my-2 md:my-6 text-2xl md:text-4xl lg:text-4xl font-bold tracking-wide">
         {translations[language].keyFiguresHeader}
       </h1>
       <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-8 my-6 w-full max-w-8xl">

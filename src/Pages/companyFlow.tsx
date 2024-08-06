@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Dropbox from "../Components/dropboxCF";
-import { CircularProgress } from "@mui/material";
+
 import { blobHandler } from "../Components/blobCreator";
 import { useLanguage } from "../Components/LanguageContext";
 import translations from "../Components/translations";
@@ -11,11 +11,8 @@ const CompanyFlowPage: React.FC = () => {
     "Update Company Data Flow" | "dropbox1" | "dropbox2"
   >("Update Company Data Flow");
 
-  const [isLoading, setIsLoading] = useState(false);
-
   // Fetch template based on dropbox
   const handleTemplateFetch = async (dropbox: "dropbox1" | "dropbox2") => {
-    setIsLoading(true);
     const endpoint =
       dropbox === "dropbox1"
         ? import.meta.env.VITE_API_DBUPDATETEMPLATE_URL //sender tilbake en excel fil med rett format, og viser hva data som trengs for å legge til ny data i databasen.
@@ -25,8 +22,6 @@ const CompanyFlowPage: React.FC = () => {
       await blobHandler(response);
     } catch (error) {
       console.log("Error fetching template.");
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -79,7 +74,6 @@ const CompanyFlowPage: React.FC = () => {
             >
               {translations[language].gyrPagetext2}
             </button>
-            {isLoading && <CircularProgress />}
 
             <button
               className="bg-gray-700 text-white py-1 px-2 rounded mt-4 hover:bg-gray-600 transition-all duration-300"
@@ -108,7 +102,6 @@ const CompanyFlowPage: React.FC = () => {
             >
               {translations[language].gyrPagetext2}
             </button>
-            {isLoading && <CircularProgress />}
 
             <button
               className="bg-gray-700 text-white py-1 px-2 rounded mt-4 hover:bg-gray-600 transition-all duration-300"
