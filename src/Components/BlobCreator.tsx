@@ -11,7 +11,7 @@ export const blobHandler = async (res: Response) => {
       }
     }
     const blob = await res.blob();
-    const confirmMessage = `Are you sure you want to download the file ${filename}?`;
+    const confirmMessage = `Are you sure you want to save the file ${filename}?`;
     const userConfirmed = window.confirm(confirmMessage);
     if (!userConfirmed) return;
     const link = document.createElement("a");
