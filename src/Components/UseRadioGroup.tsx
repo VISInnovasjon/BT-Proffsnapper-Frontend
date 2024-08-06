@@ -31,7 +31,10 @@ MyFormControlLabel.propTypes = {
   /**
    * The value of the component.
    */
-  value: PropTypes.any,
+  value: PropTypes.string,
+  label: PropTypes.string,
+  onClick: PropTypes.func,
+  control: PropTypes.element,
 };
 
 export default function UseRadioGroup(props: {

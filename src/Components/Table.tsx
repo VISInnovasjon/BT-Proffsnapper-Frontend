@@ -19,26 +19,6 @@ type TableData = {
 
 export const DataGridComponent = ({ ecoCode }: gridProps) => {
   const [tableData, setTableData] = useState<TableData[] | null>(null);
-
-  // useEffect(() => {
-  //   const FetchData = async () => {
-  //     const searchParams = new URLSearchParams({ EcoCode: ecoCode });
-  //     try {
-  //       const url = ""; //Denne må endres på når siden går live.
-
-  //       const response = await fetch(url + searchParams.toString());
-  //       if (response.status === 400) {
-  //         console.log(response.statusText);
-  //       }
-  //       const result = await response.json();
-  //       setTableData(result);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-  //   FetchData();
-  // }, [ecoCode]);
-
   useEffect(() => {
     const FetchData = async () => {
       const searchParams = new URLSearchParams({ EcoCode: ecoCode });

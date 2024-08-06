@@ -1,7 +1,4 @@
 import React, { useState, useEffect } from "react";
-import AgeGroupSelect from "../Components/AgeGroupSelect";
-import FaseSelect from "../Components/FaseSelect";
-import BrandSelect from "../Components/BrandSelect";
 import LineChartComponent, { KeyedValues } from "../Components/LineChart";
 import { Button, Menu, MenuItem, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
@@ -15,9 +12,14 @@ import "../index.css";
 import KeyFigures from "../Components/KeyFigures";
 import { useLanguage } from "../Components/LanguageContext";
 import translations from "../Components/translations";
+import FilterSelect from "../Components/FilterSelect";
 
 type ButtonTarget = {
   value: string;
+};
+type RadioTarget = {
+  value: string | null;
+  defaultValue: string;
 };
 
 const MainPage: React.FC = () => {
@@ -31,8 +33,10 @@ const MainPage: React.FC = () => {
   const [filters, setFilters] = useState<string[]>([]);
   const [monetaryKey, setMonetaryKey] = useState<string>("Accumulated");
   const [yearRange, setYearRange] = useState<number[]>([]);
-  // const [lang, setLang] = useState<string>("nor");
-  console.log(yearRange);
+  const [economicCodes, setEconomicCodes] = useState<Record<string, string>>(
+    {}
+  );
+  const { language } = useLanguage();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,8 +55,26 @@ const MainPage: React.FC = () => {
     };
     fetchData();
   }, []);
+  useEffect(() => {
+    const fetchEcoCodes = async () => {
+      try {
+        const searchParams = new URLSearchParams({
+          Language: language.toString(),
+        });
+        const url =
+          import.meta.env.VITE_API_ECOCODEDATA_URL +
+          "?" +
+          searchParams.toString();
 
-  const { language } = useLanguage();
+        const response = await fetch(url);
+        const data: Record<string, string> = await response.json();
+        setEconomicCodes(data);
+      } catch (err) {
+        console.log("error fetching eco codes", err);
+      }
+    };
+    fetchEcoCodes();
+  }, [language]);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -139,14 +161,29 @@ const MainPage: React.FC = () => {
             {filters.map((filter) => (
               <div key={filter} className="flex items-center mb-2">
                 {filter === "Age Group" && (
-                  <AgeGroupSelect onChange={setSelectedAgeGroups} />
+                  <FilterSelect
+                    onChange={setSelectedAgeGroups}
+                    label="Age Group"
+                    property="agegroup"
+                    url={import.meta.env.VITE_API_AGEGROUPS_URL}
+                  />
                 )}
 
                 {filter === "Fase" && (
-                  <FaseSelect onChange={setSelectedFases} />
+                  <FilterSelect
+                    onChange={setSelectedFases}
+                    label="Fases"
+                    property="fase"
+                    url={import.meta.env.VITE_API_FASES_URL}
+                  />
                 )}
                 {filter === "Brand" && (
-                  <BrandSelect onChange={setSelectedBrands} />
+                  <FilterSelect
+                    onChange={setSelectedBrands}
+                    label="Brands"
+                    property="brand"
+                    url={import.meta.env.VITE_API_BRANCHNAMES_URL}
+                  />
                 )}
                 <IconButton
                   onClick={() => handleRemoveFilter(filter)}
@@ -201,7 +238,7 @@ const MainPage: React.FC = () => {
             </div>
           </div>
           <div className="flex justify-center mx-2 mt-2 mb-6  ">
-            <CodeFilter ChangeHandler={setEcoKey} />
+            <CodeFilter ChangeHandler={setEcoKey} ecoCodes={economicCodes} />
           </div>
         </div>
       </div>
@@ -220,18 +257,20 @@ const MainPage: React.FC = () => {
               ecoKey={ecoKey}
               monetaryKey={monetaryKey}
               yearRange={yearRange}
+              economicCodes={economicCodes}
             />
           </div>
           <div className="inline-flex  sm:justify-center  ">
             <UseRadioGroup
               onChange={(e) => {
+                const target = e.target as EventTarget & Element & RadioTarget;
                 setMonetaryKey(
-                  e.target.value ? e.target.value : e.target.defaultValue
+                  target.value ? target.value : target.defaultValue
                 );
               }}
             />
           </div>
-          <div className=" text-[#1e2222]">
+          <div className="bg-[#f8f6f6] text-[#1e2222] ">
             <DataGridComponent ecoCode={ecoKey} />
           </div>
         </div>

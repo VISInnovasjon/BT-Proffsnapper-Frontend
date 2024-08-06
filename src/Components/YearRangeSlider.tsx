@@ -9,7 +9,7 @@ import translations from "./translations";
 const YearRangeSlider = (props: {
   updateValue: React.Dispatch<SetStateAction<number[]>>;
 }) => {
-  const { state, dispatch } = useGlobalState();
+  const { dispatch } = useGlobalState();
   const [yearRange, setYearRange] = useState<number[]>([
     2014,
     new Date().getFullYear() - 1,

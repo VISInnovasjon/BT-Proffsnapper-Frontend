@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import Dropbox from "../Components/dropboxCF";
-
-import { blobHandler } from "../Components/blobCreator";
+import Dropbox from "../Components/Dropbox";
+import { blobHandler } from "../Components/BlobCreator";
 import { useLanguage } from "../Components/LanguageContext";
 import translations from "../Components/translations";
 
