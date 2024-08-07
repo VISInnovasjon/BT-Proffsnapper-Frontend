@@ -125,7 +125,7 @@ const Dropbox: React.FC<DropboxProps> = ({ name, fetchEndpoint }) => {
           </div>
         ) : (
           <>
-            {error && <p className="text-red-500 mb-4">{error}</p>}
+            {error && <p className="text-red-900 mb-10">{error}</p>}
 
             <input
               type="file"

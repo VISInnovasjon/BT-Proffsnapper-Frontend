@@ -95,8 +95,8 @@ const translations: Translations = {
     dbyrText2: "Or drag and drop a file here",
     dbyrText3: "Accepted file types: .XLS, .XLSX",
     dbyrText4: "Fetching Data...",
-    getFullView: "Get Full View",
-    fetchFullView: "Fetching Full View",
+    getFullView: "Fetch All data",
+    fetchFullView: "Fetching all data",
     gyrPagetext1: "Reports",
     gyrPagetext2: "Get Template",
 
@@ -168,8 +168,8 @@ const translations: Translations = {
     dbyrText4: "Henter Data",
     gyrPagetext1: "Rapporter",
     gyrPagetext2: "Hent Mal",
-    getFullView: "Få full oversikt",
-    fetchFullView: "Henter full oversikt",
+    getFullView: "Hent all data",
+    fetchFullView: "Henter all Data",
 
     /*translation for CFDropbox and page*/
     dbcfText1: "Velg Fil",

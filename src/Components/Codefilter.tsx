@@ -44,7 +44,7 @@ export default function CodeFilter(props: {
       size="small"
       onChange={(_, option) => handleChange(option)}
       options={options}
-      sx={{ width: 400 }}
+      sx={{ width: 400, marginBottom: 2 }}
       renderInput={(params) => (
         <TextField
           {...params}
