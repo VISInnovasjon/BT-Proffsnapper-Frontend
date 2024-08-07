@@ -83,7 +83,7 @@ const translations: Translations = {
     /*translation for useRadioGroup.tsx*/
     radioValue: "Avg. Value",
     radioAccumulated: "Accumulated",
-    radioDelta: "Delta",
+    radioDelta: "Avg. Delta",
 
     /*translation for togglebuttons on mainpage.tsx*/
     toggleDrift: "Operating Result",
@@ -154,7 +154,7 @@ const translations: Translations = {
     /*translation for useRadioGroup.tsx*/
     radioValue: "Gj. Snitt Verdi",
     radioAccumulated: "Akkumulert",
-    radioDelta: "Delta",
+    radioDelta: "Gj. Snitt Delta",
 
     /*translation for togglebuttons on mainpage.tsx*/
     toggleDrift: "Driftsresultat",
