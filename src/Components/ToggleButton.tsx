@@ -18,12 +18,14 @@ const StyledButton = styled(Button)<{ active: boolean }>(({ active }) => ({
     color: active ? "#FAFFFB" : "#FAFFFB",
     backgroundColor: active ? "#E91414" : "#de0505",
   },
+
+  fontWeight: "bold",
+  fontFamily: "Poppins, Arial, sans-serif",
   borderRadius: 30,
   paddingTop: 8,
   paddingBottom: 8,
   paddingLeft: 16,
   paddingRight: 16,
-  fontWeight: "bold",
 }));
 
 const ToggleButton: React.FC<ToggleButtonProps> = ({

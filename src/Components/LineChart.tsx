@@ -178,10 +178,25 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
     datasets,
   };
 
+  const plugin = {
+    id: "customCanvasBackgroundColor",
+    beforeDraw: (chart, args, options) => {
+      const { ctx } = chart;
+      ctx.save();
+      ctx.globalCompositeOperation = "destination-over";
+      ctx.fillStyle = options.color || "#99ffff";
+      ctx.fillRect(0, 0, chart.width, chart.height);
+      ctx.restore();
+    },
+  };
+
   const options = {
     responsive: true,
     aspectRatio: 3,
     plugins: {
+      customCanvasBackgroundColor: {
+        color: "#f8f9fa",
+      },
       legend: {
         display: true,
         position: "bottom" as const,
@@ -263,7 +278,7 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
       <h2 className="pb-2">{SelectedValue}</h2>
 
       {loading && <CircularProgress />}
-      <Line data={dataComponents} options={options} />
+      <Line data={dataComponents} options={options} plugins={[plugin]} />
     </div>
   );
 };

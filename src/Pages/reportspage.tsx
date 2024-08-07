@@ -66,7 +66,8 @@ const Reports: React.FC = () => {
                 lg: "16px", // Font size for large screens
                 xl: "18px", // Font size for extra large screens
               },
-              fontFamily: "semiBold",
+              fontWeight: "bold",
+              fontFamily: "Poppins, Arial, sans-serif",
             }}
           >
             {loading && (

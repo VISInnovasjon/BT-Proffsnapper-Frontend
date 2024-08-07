@@ -37,7 +37,7 @@ const YearRangeSlider = (props: {
   return (
     <div className="">
       <Typography
-        sx={{ fontWeight: "bold" }}
+        sx={{ fontWeight: "bold", fontSize: "medium" }}
         id="year-range-slider"
         gutterBottom
       >
