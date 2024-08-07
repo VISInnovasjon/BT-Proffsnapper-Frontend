@@ -77,9 +77,7 @@ const translations: Translations = {
     /*translation for navbar on header*/
     home: "Home",
     yearlyRapport: "Reports",
-    companyFlow: "Company Flow",
-    getFullView: "Get full view",
-    fetchFullView: "Henter full oversikt",
+    companyFlow: "Update Company Data",
 
     /*translation for useRadioGroup.tsx*/
     radioValue: "Avg. Value",
@@ -91,11 +89,13 @@ const translations: Translations = {
     toggleOmsetning: "Turnover",
     toggleSik: "SIK",
 
-    /*translation for YRDropbox and page*/
+    /*translation for ReportsDropbox and page*/
     dbyrText1: "Choose File",
     dbyrText2: "Or drag and drop a file here",
     dbyrText3: "Accepted file types: .XLS, .XLSX",
     dbyrText4: "Fetching Data...",
+    getFullView: "Get Full View",
+    fetchFullView: "Fetching Full View",
     gyrPagetext1: "Reports",
     gyrPagetext2: "Get Template",
 
@@ -147,9 +147,7 @@ const translations: Translations = {
     /*translation for navbar on header*/
     home: "Hjem",
     yearlyRapport: "Rapporter",
-    companyFlow: "Bedriftsflyt",
-    getFullView: "Få full oversikt",
-    fetchFullView: "Henter full oversikt",
+    companyFlow: "Oppdater Bedriftsdata",
 
     /*translation for useRadioGroup.tsx*/
     radioValue: "Gj. Snitt Verdi",
@@ -168,6 +166,8 @@ const translations: Translations = {
     dbyrText4: "Henter Data",
     gyrPagetext1: "Rapporter",
     gyrPagetext2: "Hent Mal",
+    getFullView: "Få full oversikt",
+    fetchFullView: "Henter full oversikt",
 
     /*translation for CFDropbox and page*/
     dbcfText1: "Velg Fil",

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Line } from "react-chartjs-2";
 import { Chart, registerables } from "chart.js";
 import { CircularProgress } from "@mui/material";
+import "@fontsource/poppins";
 
 Chart.register(...registerables);
 
@@ -229,7 +230,7 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
           text: "I mill NOK.",
           color: "#1e2222",
           font: {
-            family: "system-ui",
+            family: "Poppins, Arial, sans-serif",
             size: 16,
             weight: "normal" as const,
             lineHeight: 1.2,

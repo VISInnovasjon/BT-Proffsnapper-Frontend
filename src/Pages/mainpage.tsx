@@ -117,13 +117,13 @@ const MainPage: React.FC = () => {
           <h3 className="my-2 text-start font-bold">
             {translations[language].headerMainPage}
           </h3>
-          <p className="mb-4 whitespace-pre-wrap text-start font-semibold  ">
+          <p className="mb-4 whitespace-pre-wrap text-start font-medium  ">
             {translations[language].paragraphMainPage}
           </p>
           <div className="flex justify-start">
             <Button
               style={{
-                backgroundColor: " #de0505",
+                backgroundColor: "#de0505",
                 color: "#FAFFFB",
                 padding: 5,
               }}
