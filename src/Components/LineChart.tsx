@@ -35,6 +35,7 @@ interface LineChartComponentProps {
   selectedAgeGroups: string[];
   selectedFases: string[];
   selectedBrands: string[];
+  selectedSexes: string[];
   ecoKey: string;
   monetaryKey: string;
   yearRange: number[];
@@ -66,6 +67,7 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
   selectedAgeGroups,
   selectedFases,
   selectedBrands,
+  selectedSexes,
   ecoKey,
   monetaryKey,
   yearRange,
@@ -76,6 +78,7 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
     ...selectedAgeGroups,
     ...selectedFases,
     ...selectedBrands,
+    ...selectedSexes,
   ];
 
   const colors = [
