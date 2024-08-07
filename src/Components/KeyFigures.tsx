@@ -69,6 +69,9 @@ const KeyFigures: React.FC<KeyFigureProps> = (props) => {
       <h1 className="my-2 md:my-6 text-2xl md:text-4xl lg:text-4xl font-bold tracking-wide">
         {translations[language].keyFiguresHeader}
       </h1>
+      <h3 className="my-1.5 md:my-3 text-1xl md:text-1xl lg:text-1xl font-bold tracking-wide">
+        {`${translations[language].keyFiguresSubHeader} ${props.year}.`}
+      </h3>
       <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 my-6 w-full max-w-8xl">
         {keyFigureData.map((data, index) => (
           <div
