@@ -14,7 +14,6 @@ const YearRangeSlider = (props: {
     2014,
     new Date().getFullYear() - 1,
   ]);
-  console.log(yearRange);
 
   const { language } = useLanguage();
 

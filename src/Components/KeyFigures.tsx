@@ -3,6 +3,10 @@ import CountUp from "react-countup";
 import { useLanguage } from "./LanguageContext";
 import translations from "./translations";
 
+type KeyFigureProps = {
+  year: number;
+};
+
 type KeyFigures = {
   text: string;
   number: number;
@@ -10,17 +14,22 @@ type KeyFigures = {
 const fetchAndPushData = async (
   url: string,
   resultArr: KeyFigures[],
-  lang: string
+  lang: string,
+  endYear: string
 ) => {
-  const searchParams = new URLSearchParams({ Language: lang });
+  const searchParams = new URLSearchParams({
+    Language: lang,
+    Year: endYear.toString(),
+  });
   const response = await fetch(url + "?" + searchParams.toString());
   const result: KeyFigures = await response.json();
   resultArr.push(result);
 };
 
-const KeyFigures: React.FC = () => {
+const KeyFigures: React.FC<KeyFigureProps> = (props) => {
   const { language } = useLanguage();
   const [keyFigureData, setKeyFigureData] = useState<KeyFigures[]>([]);
+  console.log(props.year);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,28 +37,32 @@ const KeyFigures: React.FC = () => {
       await fetchAndPushData(
         import.meta.env.VITE_API_COMPANYCOUNT_URL,
         resultArr,
-        language
+        language,
+        props.year.toString()
       );
       await fetchAndPushData(
         import.meta.env.VITE_API_TOTALTURNOVER_URL,
         resultArr,
-        language
+        language,
+        props.year.toString()
       );
       await fetchAndPushData(
         import.meta.env.VITE_API_WORKERCOUNT_URL,
         resultArr,
-        language
+        language,
+        props.year.toString()
       );
       await fetchAndPushData(
         import.meta.env.VITE_API_WORKYEAR_URL,
         resultArr,
-        language
+        language,
+        props.year.toString()
       );
       setKeyFigureData(resultArr);
     };
 
     fetchData();
-  }, [language]);
+  }, [language, props.year]);
 
   return (
     <div className="mb-10 flex flex-col items-center px-4 ">
