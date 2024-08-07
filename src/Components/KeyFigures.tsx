@@ -65,7 +65,7 @@ const KeyFigures: React.FC<KeyFigureProps> = (props) => {
   }, [language, props.year]);
 
   return (
-    <div className="mb-10 flex flex-col items-center px-2 ">
+    <div className="mb-10 flex flex-col items-center px-4 ">
       <h1 className="my-2 md:my-6 text-2xl md:text-4xl lg:text-4xl font-bold tracking-wide">
         {translations[language].keyFiguresHeader}
       </h1>
