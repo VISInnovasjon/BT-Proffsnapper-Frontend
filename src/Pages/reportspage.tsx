@@ -50,7 +50,24 @@ const Reports: React.FC = () => {
             variant="contained"
             color="primary"
             disabled={loading}
-            className="!bg-[#de0505] !text-white !py-2 !px-6 !mt-4  !rounded-full !hover:bg-[#E91414] !transition-all !duration-300"
+            sx={{
+              backgroundColor: "#de0505", // Default background color
+              "&:hover": {
+                backgroundColor: "#E91414", // Background color on hover
+              },
+              color: "white",
+              paddingY: "0.5rem",
+              paddingX: "1.5rem",
+              borderRadius: "9999px",
+              fontSize: {
+                xs: "12px", // Font size for extra small screens
+                sm: "14px", // Font size for small screens
+                md: "16px", // Font size for medium screens
+                lg: "16px", // Font size for large screens
+                xl: "18px", // Font size for extra large screens
+              },
+              fontFamily: "semiBold",
+            }}
           >
             {loading && (
               <CircularProgress
