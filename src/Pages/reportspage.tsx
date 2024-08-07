@@ -60,7 +60,6 @@ const Reports: React.FC = () => {
               paddingX: "1.5rem",
               borderRadius: "9999px",
               fontSize: {
-                xs: "12px", // Font size for extra small screens
                 sm: "14px", // Font size for small screens
                 md: "16px", // Font size for medium screens
                 lg: "16px", // Font size for large screens
