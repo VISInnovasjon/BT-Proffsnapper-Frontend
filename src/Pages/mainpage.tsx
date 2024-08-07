@@ -110,18 +110,18 @@ const MainPage: React.FC = () => {
   return (
     <div className="pt-32 container mx-auto text-[#1e2222] text-2vw sm:text-base md:text-lg lg:text-lg xl:text-xl ">
       <KeyFigures />
-      <div className=" flex flex-col justify-evenly lg:flex-row ">
+      <div className=" flex flex-col lg:flex-row ">
         <div className="container flex flex-col  pl-4">
           <h3 className="my-2 text-start font-bold">
             {translations[language].headerMainPage}
           </h3>
-          <p className="mb-4 whitespace-pre-wrap text-start font-semibold  ">
+          <p className="mb-4 whitespace-pre-wrap text-start font-medium  ">
             {translations[language].paragraphMainPage}
           </p>
           <div className="flex justify-start">
             <Button
               style={{
-                backgroundColor: " #de0505",
+                backgroundColor: "#de0505",
                 color: "#FAFFFB",
                 padding: 5,
               }}
