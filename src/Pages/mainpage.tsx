@@ -112,6 +112,9 @@ const MainPage: React.FC = () => {
   return (
     <div className="pt-32 container mx-auto text-[#1e2222] text-2vw sm:text-base md:text-lg lg:text-lg xl:text-xl ">
       <KeyFigures year={yearRange[yearRange.length - 1]} />
+      <div className="m-2 w-full text-center px-6 mb-2">
+        <YearRangeSlider updateValue={setYearRange} />
+      </div>
       <div className=" flex flex-col justify-evenly lg:flex-row ">
         <div className="container flex flex-col  pl-4">
           <h3 className="my-2 text-start font-bold">
@@ -259,9 +262,6 @@ const MainPage: React.FC = () => {
       </div>
       <div className="mx-2">
         <div className="w-full text-center ">
-          <div className="mx-6 mt-10">
-            <YearRangeSlider updateValue={setYearRange} />
-          </div>
           <div className="">
             <LineChartComponent
               data={data}

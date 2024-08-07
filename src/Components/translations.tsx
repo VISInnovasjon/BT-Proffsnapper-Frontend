@@ -54,6 +54,7 @@ const translations: Translations = {
 
     /*translation for KeyFigures.tsx*/
     keyFiguresHeader: "Key Figures",
+    keyFiguresSubHeader: "Selected key figures for the year",
 
     /*translation for yearRangeSlider.tsx.tsx*/
     yearRangeSlider: "Choose Year",
@@ -125,6 +126,7 @@ const translations: Translations = {
 
     /*translation for yearRangeSlider.tsx.tsx*/
     keyFiguresHeader: "Nøkkeltall",
+    keyFiguresSubHeader: "Utvalgte nøkkeltall for år",
 
     /*translation for yearRangeSlider.tsx.tsx*/
     yearRangeSlider: "Velg År",
