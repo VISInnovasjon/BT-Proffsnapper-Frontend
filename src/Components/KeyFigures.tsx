@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import CountUp from "react-countup";
 import { useLanguage } from "./LanguageContext";
 import translations from "./translations";
+import { CircularProgress } from "@mui/material";
 
 type KeyFigureProps = {
   year: number;
@@ -27,13 +28,16 @@ const fetchAndPushData = async (
 };
 
 const KeyFigures: React.FC<KeyFigureProps> = (props) => {
+  const [loading, setLoading] = useState(true);
   const { language } = useLanguage();
   const [keyFigureData, setKeyFigureData] = useState<KeyFigures[]>([]);
   console.log(props.year);
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       const resultArr: KeyFigures[] = [];
+
       await fetchAndPushData(
         import.meta.env.VITE_API_COMPANYCOUNT_URL,
         resultArr,
@@ -58,7 +62,11 @@ const KeyFigures: React.FC<KeyFigureProps> = (props) => {
         language,
         props.year.toString()
       );
-      setKeyFigureData(resultArr);
+      try {
+        setKeyFigureData(resultArr);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchData();
@@ -69,9 +77,11 @@ const KeyFigures: React.FC<KeyFigureProps> = (props) => {
       <h1 className="my-2 md:my-6 text-2xl md:text-4xl lg:text-4xl font-bold tracking-wide">
         {translations[language].keyFiguresHeader}
       </h1>
+
       <h3 className="my-1.5 md:my-3 text-1xl md:text-1xl lg:text-1xl font-bold tracking-wide">
         {`${translations[language].keyFiguresSubHeader} ${props.year}.`}
       </h3>
+      {loading && <CircularProgress />}
       <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 my-6 w-full max-w-8xl">
         {keyFigureData.map((data, index) => (
           <div
