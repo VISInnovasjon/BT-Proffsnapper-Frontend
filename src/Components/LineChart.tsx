@@ -180,7 +180,8 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
 
   const plugin = {
     id: "customCanvasBackgroundColor",
-    beforeDraw: (chart, args, options) => {
+    // @ts-expect-error args any must be included for function to run.
+    beforeDraw: (chart: any, args: any, options: any) => {
       const { ctx } = chart;
       ctx.save();
       ctx.globalCompositeOperation = "destination-over";
