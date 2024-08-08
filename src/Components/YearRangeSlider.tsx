@@ -35,7 +35,7 @@ const YearRangeSlider = (props: {
   }, [yearRange, dispatch]);
 
   return (
-    <div className="">
+    <div className="mx-4">
       <Typography
         sx={{ fontWeight: "bold", fontSize: "medium" }}
         id="year-range-slider"

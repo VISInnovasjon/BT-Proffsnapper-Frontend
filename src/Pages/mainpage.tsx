@@ -127,12 +127,18 @@ const MainPage: React.FC = () => {
             <Button
               style={{
                 backgroundColor: "#de0505",
+
                 color: "#FAFFFB",
-                padding: 5,
+                fontWeight: "bold",
+                fontFamily: "Poppins, Arial, sans-serif",
+                paddingTop: 8,
+                paddingBottom: 8,
+                paddingLeft: 16,
+                paddingRight: 16,
               }}
               variant="contained"
               onClick={handleClick}
-              size={"small"}
+              size={"medium"}
             >
               {translations[language].filter} <ArrowDropDownIcon />
             </Button>

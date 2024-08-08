@@ -53,17 +53,32 @@ const FilterSelect: React.FC<FilterSelectProps> = ({
   const { language } = useLanguage();
 
   return (
-    <Box className="min-w-[140px]">
+    <Box className="min-w-[200px]  ">
       <FormControl fullWidth>
-        <InputLabel id={`${label}-select-label`}>
+        <InputLabel
+          style={{
+            padding: "0 4px",
+            backgroundColor: "#f8f9fa",
+            color: "#1e2222",
+            transform: "translate(14px, -6px) scale(0.75)", // Adjust label position
+          }}
+          id={`${label}-select-label`}
+        >
           {translations[language][property]}
         </InputLabel>
+
         <Select
           labelId={`${label}-select-label`}
           multiple
           value={selectedProperty}
           onChange={handleChange}
-          input={<OutlinedInput id="select-multiple-chip" label={label} />}
+          input={
+            <OutlinedInput
+              id="select-multiple-chip"
+              value={label}
+              label={label}
+            />
+          }
           renderValue={(selected) => (
             <Box className="flex flex-wrap gap-0.5">
               {(selected as string[]).map((value) => (
