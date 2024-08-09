@@ -34,7 +34,7 @@ const YearRangeSlider = (props: {
   }, [yearRange, dispatch]);
 
   return (
-    <div className="">
+    <div className="mx-4">
       <Typography
         sx={{ fontWeight: "bold", fontSize: "medium" }}
         id="year-range-slider"
@@ -51,6 +51,36 @@ const YearRangeSlider = (props: {
         min={2014}
         max={new Date().getFullYear() - 1}
         marks
+        sx={{
+          height: 2,
+          "& .MuiSlider-thumb": {
+            backgroundColor: "#022447",
+            width: 20,
+            height: 20,
+            "&:hover": {
+              boxShadow: "0px 0px 0px 8px rgba(59, 130, 246, 0.16)",
+            },
+          },
+          "& .MuiSlider-track": {
+            backgroundColor: "#ffffff",
+            height: 4,
+            border: "1px solid #1e2222", // Customize the border color
+          },
+          "& .MuiSlider-rail": {
+            backgroundColor: "#1e2222",
+            height: 2,
+          },
+          "& .MuiSlider-mark": {
+            backgroundColor: "black", // Remove background for marks
+            fontSize: "0.75rem",
+          },
+          // Customize the value label
+          "& .MuiSlider-valueLabel": {
+            backgroundColor: "#de0505", // Change this to your desired background color
+            color: "#ffffff", // Text color in the value label
+            borderRadius: "9999px",
+          },
+        }}
       />
     </div>
   );

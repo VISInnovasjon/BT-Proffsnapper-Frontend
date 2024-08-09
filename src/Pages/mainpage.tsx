@@ -104,7 +104,9 @@ const MainPage: React.FC = () => {
 
   return (
     <div className="pt-32 container mx-auto text-[#1e2222] text-2vw sm:text-base md:text-lg lg:text-lg xl:text-xl ">
-      <KeyFigures year={yearRange[yearRange.length - 1]} />
+      <div>
+        <KeyFigures year={yearRange[yearRange.length - 1]} />
+      </div>
       <div className="m-2 w-full text-center px-6 mb-2">
         <YearRangeSlider updateValue={setYearRange} />
       </div>
@@ -122,12 +124,18 @@ const MainPage: React.FC = () => {
             <Button
               style={{
                 backgroundColor: "#de0505",
+
                 color: "#FAFFFB",
-                padding: 5,
+                fontWeight: "bold",
+                fontFamily: "Poppins, Arial, sans-serif",
+                paddingTop: 8,
+                paddingBottom: 8,
+                paddingLeft: 16,
+                paddingRight: 16,
               }}
               variant="contained"
               onClick={handleClick}
-              size={"small"}
+              size={"medium"}
             >
               {languageSet.filter} <ArrowDropDownIcon />
             </Button>
@@ -281,7 +289,7 @@ const MainPage: React.FC = () => {
               }}
             />
           </div>
-          <div className="bg-[#f8f6f6] text-[#1e2222] ">
+          <div className="bg-[#f8f6f6] text-[#1e2222] mb-6">
             <DataGridComponent ecoCode={ecoKey} />
           </div>
         </div>

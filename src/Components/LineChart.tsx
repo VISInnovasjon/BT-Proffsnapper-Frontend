@@ -193,7 +193,7 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
 
   const options = {
     responsive: true,
-    aspectRatio: 3,
+    maintainAspectRatio: false,
     plugins: {
       customCanvasBackgroundColor: {
         color: "#f8f9fa",
@@ -275,11 +275,16 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
   };
 
   return (
-    <div className="px-4  w-full shadow-md rounded-md text-[#1e2222]">
+    <div className="w-full h-72 md:h-112 lg:h-120  px-4 pb-10 shadow-md rounded-md text-[#1e2222]">
       <h2 className="pb-2">{SelectedValue}</h2>
 
       {loading && <CircularProgress />}
-      <Line data={dataComponents} options={options} plugins={[plugin]} />
+      <Line
+        className="h-full w-full"
+        data={dataComponents}
+        options={options}
+        plugins={[plugin]}
+      />
     </div>
   );
 };
