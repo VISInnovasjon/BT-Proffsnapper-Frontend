@@ -3,7 +3,6 @@ import { SetStateAction } from "react";
 import Autocomplete from "@mui/material/Autocomplete";
 import { useState, useEffect } from "react";
 import { useLanguage } from "./LanguageContext";
-import translations from "./translations";
 
 export default function CodeFilter(props: {
   ChangeHandler: React.Dispatch<SetStateAction<string>>;
@@ -13,7 +12,7 @@ export default function CodeFilter(props: {
     id: string;
     label: string;
   };
-  const { language } = useLanguage();
+  const { languageSet } = useLanguage();
   const [options, setOptions] = useState<AutoCompleteOptions[]>([]);
 
   useEffect(() => {
@@ -48,7 +47,7 @@ export default function CodeFilter(props: {
       renderInput={(params) => (
         <TextField
           {...params}
-          label={translations[language].Økokoder}
+          label={languageSet.Økokoder}
           className=""
         />
       )}

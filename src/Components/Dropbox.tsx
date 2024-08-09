@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useLanguage } from "./LanguageContext";
-import translations from "./translations";
 import { blobHandler } from "./BlobCreator";
 
 interface DropboxProps {
@@ -36,32 +35,22 @@ const Dropbox: React.FC<DropboxProps> = ({ name, fetchEndpoint }) => {
     if (data) {
       try {
         formData.append("file", data);
-        if (
-          [
-            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-          ].includes(data.type)
-        ) {
-          setIsLoading(true);
-          setError(null);
+        setIsLoading(true);
+        setError(null);
 
-          const response = await fetch(fetchEndpoint, {
-            method: "POST",
-            body: formData,
-          });
-          if (response.status != 200)
-            setError(
-              `Something went wrong on the server, ${response.statusText}`
-            );
-          if (response.headers.get("Content-Disposition") === null)
-            return setIsLoading(false);
-          else await blobHandler(response);
+        const response = await fetch(fetchEndpoint, {
+          method: "POST",
+          body: formData,
+        });
+        console.log(response);
+        if (response.status != 200)
+          setError(await response.json().then((err) => err.error));
+        if (response.headers.get("Content-Disposition") === null)
           return setIsLoading(false);
-        } else {
-          setError("Invalid file type. Please try again with a .xlsx file.");
-        }
+        else await blobHandler(response);
+        return setIsLoading(false);
       } catch (error) {
         console.log(error);
-        setError("Error reading file. Please try again.");
       }
     }
   };
@@ -75,36 +64,26 @@ const Dropbox: React.FC<DropboxProps> = ({ name, fetchEndpoint }) => {
       try {
         const formData = new FormData();
         formData.append("file", data);
-        if (
-          [
-            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-          ].includes(data.type)
-        ) {
-          setIsLoading(true);
-          setError(null);
+        setIsLoading(true);
+        setError(null);
 
-          const response = await fetch(fetchEndpoint, {
-            method: "POST",
-            body: formData,
-          });
-          if (response.status != 200)
-            setError(
-              `Something went wrong on the server, ${response.statusText}`
-            );
-          if (response.headers.get("Content-Disposition") === null)
-            return setIsLoading(false);
-          else await blobHandler(response);
+        const response = await fetch(fetchEndpoint, {
+          method: "POST",
+          body: formData,
+        });
+        if (response.status != 200)
+          setError(await response.json().then((err) => err.error));
+        if (response.headers.get("Content-Disposition") === null)
           return setIsLoading(false);
-        } else {
-          setError("Invalid file type. Please try again with a .xlsx file.");
-        }
-      } catch (error) {
-        setError("Error reading file. Please try again.");
+        else await blobHandler(response);
+        return setIsLoading(false);
+      } catch (err) {
+        console.log(err);
       }
     }
   };
 
-  const { language } = useLanguage();
+  const { languageSet } = useLanguage();
 
   return (
     <div
@@ -121,7 +100,7 @@ const Dropbox: React.FC<DropboxProps> = ({ name, fetchEndpoint }) => {
         {isLoading ? (
           <div className="flex flex-col items-center ">
             <CircularProgress className="mb-4" />
-            <p className="text-[#1e2222]">{translations[language].dbcfText4}</p>
+            <p className="text-[#1e2222]">{languageSet.dbcfText4}</p>
           </div>
         ) : (
           <>
@@ -137,14 +116,10 @@ const Dropbox: React.FC<DropboxProps> = ({ name, fetchEndpoint }) => {
               htmlFor={`fileInput-${name}`}
               className="block text-center bg-[#de0505] text-white py-2 px-4 mx-4 rounded-full hover:bg-[#E91414] transition-all duration-300 cursor-pointer"
             >
-              {translations[language].dbcfText1}
+              {languageSet.dbcfText1}
             </label>
-            <p className="text-center text-sm mt-2">
-              {translations[language].dbcfText2}
-            </p>
-            <p className="text-center text-sm mt-2">
-              {translations[language].dbcfText3}
-            </p>
+            <p className="text-center text-sm mt-2">{languageSet.dbcfText2}</p>
+            <p className="text-center text-sm mt-2">{languageSet.dbcfText3}</p>
           </>
         )}
       </div>

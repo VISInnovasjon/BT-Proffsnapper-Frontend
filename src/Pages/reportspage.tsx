@@ -3,7 +3,6 @@ import { Button, CircularProgress, Box } from "@mui/material";
 import Dropbox from "../Components/Dropbox";
 import { blobHandler } from "../Components/BlobCreator";
 import { useLanguage } from "../Components/LanguageContext";
-import translations from "../Components/translations";
 
 const Reports: React.FC = () => {
   // Fetch template based on dropbox
@@ -31,12 +30,12 @@ const Reports: React.FC = () => {
     }
   };
 
-  const { language } = useLanguage();
+  const { languageSet } = useLanguage();
 
   return (
     <div className=" pt-32 flex flex-col items-center mx-auto text-[#1e2222] text-2vw sm:text-base md:text-lg lg:text-lg xl:text-xl">
       <h1 className=" my-2 md:my-6 text-2xl md:text-4xl lg:text-4xl font-bold tracking-wide">
-        {translations[language].gyrPagetext1}
+        {languageSet.gyrPageText1}
       </h1>
 
       <Dropbox
@@ -76,9 +75,7 @@ const Reports: React.FC = () => {
                 className="mr-2"
               />
             )}
-            {loading
-              ? translations[language].fetchFullView
-              : translations[language].getFullView}
+            {loading ? languageSet.fetchFullView : languageSet.getFullView}
 
             {fetchFile && (
               <div className="mt-4">{JSON.stringify(fetchFile)}</div>
@@ -90,7 +87,7 @@ const Reports: React.FC = () => {
         onClick={handleFetchTemplate}
         className="bg-[#de0505] text-white py-2 px-6 mt-4 rounded-full hover:bg-[#E91414] transition-all duration-300"
       >
-        {translations[language].gyrPagetext2}
+        {languageSet.gyrPageText2}
       </button>
     </div>
   );

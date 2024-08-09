@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import Dropbox from "../Components/Dropbox";
 import { blobHandler } from "../Components/BlobCreator";
 import { useLanguage } from "../Components/LanguageContext";
-import translations from "../Components/translations";
 
 const CompanyFlowPage: React.FC = () => {
-  const { language } = useLanguage();
+  const { languageSet } = useLanguage();
   const [view, setView] = useState<
     "Update Company Data Flow" | "dropbox1" | "dropbox2"
   >("Update Company Data Flow");
@@ -34,7 +33,7 @@ const CompanyFlowPage: React.FC = () => {
       {view === "Update Company Data Flow" && (
         <>
           <h1 className="text-2xl lg:text-3xl md:mt-10 font-bold mb-4 tracking-wide">
-            {translations[language].headerCompanyData}
+            {languageSet.headerCompanyData}
           </h1>
           <div className="flex flex-col sm:flex-row m-10 gap-3 ">
             <button
@@ -43,7 +42,7 @@ const CompanyFlowPage: React.FC = () => {
                 setView("dropbox1");
               }}
             >
-              {translations[language].addCompanyData}
+              {languageSet.addCompanyData}
             </button>
             <button
               className="bg-[#de0505] text-white py-2 px-6 rounded-full hover:bg-[#e91414] transition-all duration-300"
@@ -51,7 +50,7 @@ const CompanyFlowPage: React.FC = () => {
                 setView("dropbox2");
               }}
             >
-              {translations[language].deleteCompanyData}
+              {languageSet.deleteCompanyData}
             </button>
           </div>
         </>
@@ -60,7 +59,7 @@ const CompanyFlowPage: React.FC = () => {
       {view === "dropbox1" && (
         <>
           <h1 className="text-2xl lg:text-3xl md:mt-10 font-bold mb-4 tracking-wide">
-            {translations[language].addCompanyData}
+            {languageSet.addCompanyData}
           </h1>
           <div className="flex flex-col items-center w-full">
             <Dropbox
@@ -71,15 +70,14 @@ const CompanyFlowPage: React.FC = () => {
               className="bg-[#de0505] text-white py-2 px-6 mx-4 mt-4 rounded-full hover:bg-[#e91414] transition-all duration-300"
               onClick={() => handleTemplateFetch("dropbox1")}
             >
-              {translations[language].gyrPagetext2}
+              {languageSet.gyrPageText2}
             </button>
 
             <button
               className="bg-gray-700 text-white py-1 px-2 rounded mt-4 hover:bg-gray-600 transition-all duration-300"
               onClick={handleBack}
             >
-              <span className="mr-1">&#8592;</span>{" "}
-              {translations[language].dbcfBackButton}
+              <span className="mr-1">&#8592;</span> {languageSet.dbcfBackButton}
             </button>
           </div>
         </>
@@ -88,7 +86,7 @@ const CompanyFlowPage: React.FC = () => {
       {view === "dropbox2" && (
         <>
           <h1 className="text-2xl lg:text-3xl md:mt-10 font-bold mb-4 tracking-wide">
-            {translations[language].deleteCompanyData}
+            {languageSet.deleteCompanyData}
           </h1>
           <div className="flex flex-col items-center w-full">
             <Dropbox
@@ -99,15 +97,14 @@ const CompanyFlowPage: React.FC = () => {
               className="bg-[#de0505] text-white py-2 px-6 mx-4 mt-4 rounded-full hover:bg-[#e91414] transition-all duration-300"
               onClick={() => handleTemplateFetch("dropbox2")}
             >
-              {translations[language].gyrPagetext2}
+              {languageSet.gyrPageText2}
             </button>
 
             <button
               className="bg-gray-700 text-white py-1 px-2 rounded mt-4 hover:bg-gray-600 transition-all duration-300"
               onClick={handleBack}
             >
-              <span className="mr-1">&#8592;</span>{" "}
-              {translations[language].dbcfBackButton}
+              <span className="mr-1">&#8592;</span> {languageSet.dbcfBackButton}
             </button>
           </div>
         </>

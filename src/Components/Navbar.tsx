@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import myImage from "../Images/LogoWhite.png";
 import LanguageDropdown from "./LanguageDropdown";
 import { useLanguage } from "./LanguageContext";
-import translations from "./translations";
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,7 +15,7 @@ const Navbar: React.FC = () => {
     setIsOpen(false);
   };
 
-  const { language } = useLanguage();
+  const { languageSet } = useLanguage();
 
   return (
     <nav className="bg-[#de0505] fixed w-full top-0  backdrop-filter backdrop-blur-lg py-4 mb-0 z-10">
@@ -79,13 +78,13 @@ const Navbar: React.FC = () => {
           <div className="hidden md:flex md:items-center md:ml-6">
             <div className="flex text-1vw sm:text-sm md:text-base lg:text-lg font-medium text-white">
               <Link to="/" className="px-3 py-2  hover:underline">
-                {translations[language].home}
+                {languageSet.home}
               </Link>
               <Link to="/rapport" className="px-3 py-2 hover:underline">
-                {translations[language].yearlyRapport}
+                {languageSet.yearlyRapport}
               </Link>
               <Link to="/companyflow" className="px-3 py-2  hover:underline">
-                {translations[language].companyFlow}
+                {languageSet.companyFlow}
               </Link>
 
               <LanguageDropdown />
@@ -106,19 +105,19 @@ const Navbar: React.FC = () => {
             to="/"
             className="flex justify-center items-center px-3 py-2  rounded-md hover:underline"
           >
-            {translations[language].home}
+            {languageSet.home}
           </Link>
           <Link
             to="/rapport"
             className="flex justify-center items-center px-3 py-2 rounded-md hover:underline"
           >
-            {translations[language].yearlyRapport}
+            {languageSet.yearlyRapport}
           </Link>
           <Link
             to="/companyflow"
             className="flex justify-center items-center px-3 py-2  rounded-md hover:underline"
           >
-            {translations[language].companyFlow}
+            {languageSet.companyFlow}
           </Link>
 
           <div className="flex justify-center">

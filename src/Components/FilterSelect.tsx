@@ -10,7 +10,6 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 import { useLanguage } from "./LanguageContext";
-import translations from "./translations";
 
 interface FilterSelectProps {
   onChange: (selectedProperty: string[]) => void;
@@ -50,13 +49,13 @@ const FilterSelect: React.FC<FilterSelectProps> = ({
     onChange(selectedProperty);
   }, [selectedProperty, onChange]);
 
-  const { language } = useLanguage();
+  const { languageSet } = useLanguage();
 
   return (
     <Box className="min-w-[140px]">
       <FormControl fullWidth>
         <InputLabel id={`${label}-select-label`}>
-          {translations[language][property]}
+          {languageSet[property]}
         </InputLabel>
         <Select
           labelId={`${label}-select-label`}

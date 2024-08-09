@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import CountUp from "react-countup";
 import { useLanguage } from "./LanguageContext";
-import translations from "./translations";
 
 type KeyFigureProps = {
   year: number;
@@ -14,12 +13,10 @@ type KeyFigures = {
 const fetchAndPushData = async (
   url: string,
   resultArr: KeyFigures[],
-  lang: string,
   endYear: string
 ) => {
   const searchParams = new URLSearchParams({
-    Language: lang,
-    Year: endYear.toString(),
+    Year: endYear,
   });
   const response = await fetch(url + "?" + searchParams.toString());
   const result: KeyFigures = await response.json();
@@ -27,7 +24,7 @@ const fetchAndPushData = async (
 };
 
 const KeyFigures: React.FC<KeyFigureProps> = (props) => {
-  const { language } = useLanguage();
+  const { languageSet } = useLanguage();
   const [keyFigureData, setKeyFigureData] = useState<KeyFigures[]>([]);
   console.log(props.year);
 
@@ -37,40 +34,36 @@ const KeyFigures: React.FC<KeyFigureProps> = (props) => {
       await fetchAndPushData(
         import.meta.env.VITE_API_COMPANYCOUNT_URL,
         resultArr,
-        language,
         props.year.toString()
       );
       await fetchAndPushData(
         import.meta.env.VITE_API_TOTALTURNOVER_URL,
         resultArr,
-        language,
         props.year.toString()
       );
       await fetchAndPushData(
         import.meta.env.VITE_API_WORKERCOUNT_URL,
         resultArr,
-        language,
         props.year.toString()
       );
       await fetchAndPushData(
         import.meta.env.VITE_API_WORKYEAR_URL,
         resultArr,
-        language,
         props.year.toString()
       );
       setKeyFigureData(resultArr);
     };
 
     fetchData();
-  }, [language, props.year]);
+  }, [languageSet, props.year]);
 
   return (
     <div className="mb-10 flex flex-col items-center px-4 ">
       <h1 className="my-2 md:my-6 text-2xl md:text-4xl lg:text-4xl font-bold tracking-wide">
-        {translations[language].keyFiguresHeader}
+        {languageSet.keyFiguresHeader}
       </h1>
       <h3 className="my-1.5 md:my-3 text-1xl md:text-1xl lg:text-1xl font-bold tracking-wide">
-        {`${translations[language].keyFiguresSubHeader} ${props.year}.`}
+        {`${languageSet.keyFiguresSubHeader} ${props.year}.`}
       </h3>
       <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 my-6 w-full max-w-8xl">
         {keyFigureData.map((data, index) => (
