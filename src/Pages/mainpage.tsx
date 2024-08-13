@@ -290,7 +290,10 @@ const MainPage: React.FC = () => {
             />
           </div>
           <div className="bg-[#f8f6f6] text-[#1e2222] mb-6">
-            <DataGridComponent ecoCode={ecoKey} />
+            <DataGridComponent
+              ecoCode={ecoKey}
+              year={yearRange[yearRange.length - 1]}
+            />
           </div>
         </div>
       </div>
