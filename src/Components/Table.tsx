@@ -4,6 +4,7 @@ import { useLanguage } from "./LanguageContext";
 
 type gridProps = {
   ecoCode: string;
+  year: number;
 };
 type TableData = {
   Name: string;
@@ -16,11 +17,14 @@ type TableData = {
   EcoCode: string;
 } & Record<string, string | number>;
 
-export const DataGridComponent = ({ ecoCode }: gridProps) => {
+export const DataGridComponent = ({ ecoCode, year }: gridProps) => {
   const [tableData, setTableData] = useState<TableData[] | null>(null);
   useEffect(() => {
     const FetchData = async () => {
-      const searchParams = new URLSearchParams({ EcoCode: ecoCode });
+      const searchParams = new URLSearchParams({
+        EcoCode: ecoCode,
+        Year: year.toString(),
+      });
       try {
         const url = `${import.meta.env.VITE_API_TABLEDATA_URL}?`;
 
@@ -35,7 +39,7 @@ export const DataGridComponent = ({ ecoCode }: gridProps) => {
       }
     };
     FetchData();
-  }, [ecoCode]);
+  }, [ecoCode, year]);
 
   const { languageSet } = useLanguage();
 
