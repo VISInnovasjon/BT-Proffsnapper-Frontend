@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { useLanguage } from "./LanguageContext";
-import translations from "./translations";
 
 type gridProps = {
   ecoCode: string;
@@ -38,54 +37,54 @@ export const DataGridComponent = ({ ecoCode }: gridProps) => {
     FetchData();
   }, [ecoCode]);
 
-  const { language } = useLanguage();
+  const { languageSet } = useLanguage();
 
   const columns = [
     {
       field: "Name",
-      headerName: translations[language].tablecol1,
+      headerName: languageSet.tablecol1,
       width: 250,
       flex: 2,
     },
     {
       field: "OrgNumber",
-      headerName: translations[language].tablecol2,
+      headerName: languageSet.tablecol2,
       width: 150,
       flex: 1,
     },
     {
       field: "Branch",
-      headerName: translations[language].tablecol3,
+      headerName: languageSet.tablecol3,
       width: 150,
       flex: 1,
     },
     {
       field: "Value",
-      headerName: translations[language].tablecol4,
+      headerName: languageSet.tablecol4,
       width: 150,
       flex: 1,
     },
     {
       field: "Delta",
-      headerName: translations[language].tablecol5,
+      headerName: languageSet.tablecol5,
       width: 150,
       flex: 1,
     },
     {
       field: "Accumulated",
-      headerName: translations[language].tablecol6,
+      headerName: languageSet.tablecol6,
       width: 150,
       flex: 1,
     },
     {
       field: "ValidYear",
-      headerName: translations[language].tablecol7,
+      headerName: languageSet.tablecol7,
       width: 150,
       flex: 1,
     },
     {
       field: "EcoCode",
-      headerName: translations[language].tablecol8,
+      headerName: languageSet.tablecol8,
       width: 150,
       flex: 1,
     },

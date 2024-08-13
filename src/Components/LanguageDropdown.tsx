@@ -1,6 +1,5 @@
 import React, { useState, MouseEvent } from "react";
 import { Menu, MenuItem, Button } from "@mui/material";
-import translations from "./translations";
 import ArrowDropDown from "@mui/icons-material/ArrowDropDown";
 import { useLanguage } from "./LanguageContext";
 
@@ -8,7 +7,7 @@ type Language = "en" | "nor"; // language codes
 
 const LanguageDropdown: React.FC = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const { language, setLanguage } = useLanguage(); // Use context to get/set language
+  const { languageSet, setLanguage } = useLanguage(); // Use context to get/set language
 
   // Open menu
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
@@ -22,7 +21,7 @@ const LanguageDropdown: React.FC = () => {
   };
 
   // Get the current language text for the button
-  const currentLanguage = translations[language].chooseLanguage;
+  const currentLanguage = languageSet.chooseLanguage;
 
   return (
     <div className="flex items-center ">
@@ -60,13 +59,11 @@ const LanguageDropdown: React.FC = () => {
         onClose={() => setAnchorEl(null)}
       >
         <MenuItem onClick={() => handleClose("en")}>
-          {translations["en"].chooseLanguage}{" "}
-          {/* Display language for English */}
+          {"English"} {/* Display language for English */}
         </MenuItem>
 
         <MenuItem onClick={() => handleClose("nor")}>
-          {translations["nor"].chooseLanguage}{" "}
-          {/* Display langauge for Norsk */}
+          {"Norsk"} {/* Display langauge for Norsk */}
         </MenuItem>
       </Menu>
     </div>

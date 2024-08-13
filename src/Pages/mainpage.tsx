@@ -11,7 +11,6 @@ import { DataGridComponent } from "../Components/Table";
 import "../index.css";
 import KeyFigures from "../Components/KeyFigures";
 import { useLanguage } from "../Components/LanguageContext";
-import translations from "../Components/translations";
 import FilterSelect from "../Components/FilterSelect";
 
 type ButtonTarget = {
@@ -37,7 +36,7 @@ const MainPage: React.FC = () => {
   const [economicCodes, setEconomicCodes] = useState<Record<string, string>>(
     {}
   );
-  const { language } = useLanguage();
+  const { languageSet } = useLanguage();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -59,13 +58,7 @@ const MainPage: React.FC = () => {
   useEffect(() => {
     const fetchEcoCodes = async () => {
       try {
-        const searchParams = new URLSearchParams({
-          Language: language.toString(),
-        });
-        const url =
-          import.meta.env.VITE_API_ECOCODEDATA_URL +
-          "?" +
-          searchParams.toString();
+        const url = import.meta.env.VITE_API_ECOCODEDATA_URL;
 
         const response = await fetch(url);
         const data: Record<string, string> = await response.json();
@@ -75,7 +68,7 @@ const MainPage: React.FC = () => {
       }
     };
     fetchEcoCodes();
-  }, [language]);
+  }, [languageSet]);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -120,10 +113,12 @@ const MainPage: React.FC = () => {
       <div className=" flex flex-col justify-evenly lg:flex-row ">
         <div className="container flex flex-col  pl-4">
           <h3 className="my-2 text-start font-bold">
-            {translations[language].headerMainPage}
+            {languageSet.headerMainPage}
           </h3>
           <p className="mb-4 whitespace-pre-wrap text-start font-medium  ">
-            {translations[language].paragraphMainPage}
+            {languageSet.paragraphMainPage != undefined
+              ? languageSet.paragraphMainPage.replace(/\\n/g, "\n")
+              : ""}
           </p>
           <div className="flex justify-start">
             <Button
@@ -142,7 +137,7 @@ const MainPage: React.FC = () => {
               onClick={handleClick}
               size={"medium"}
             >
-              {translations[language].filter} <ArrowDropDownIcon />
+              {languageSet.filter} <ArrowDropDownIcon />
             </Button>
           </div>
           <Menu
@@ -154,23 +149,23 @@ const MainPage: React.FC = () => {
           >
             {!filters.includes("Age Group") && (
               <MenuItem onClick={() => handleMenuItemClick("Age Group")}>
-                {translations[language].agegroup}
+                {languageSet.agegroup}
               </MenuItem>
             )}
 
             {!filters.includes("Phase") && (
               <MenuItem onClick={() => handleMenuItemClick("Phase")}>
-                {translations[language].fase}
+                {languageSet.fase}
               </MenuItem>
             )}
             {!filters.includes("Industry") && (
               <MenuItem onClick={() => handleMenuItemClick("Industry")}>
-                {translations[language].brand}
+                {languageSet.brand}
               </MenuItem>
             )}
             {!filters.includes("Sexes") && (
               <MenuItem onClick={() => handleMenuItemClick("Sexes")}>
-                {translations[language].sex}
+                {languageSet.sex}
               </MenuItem>
             )}
           </Menu>
@@ -225,7 +220,7 @@ const MainPage: React.FC = () => {
           <div className="flex justify-center  ">
             <div className="m-2 ">
               <ToggleButton
-                label={translations[language].toggleDrift}
+                label={languageSet.toggleDrift}
                 val="DR"
                 isActive={activeButton === "option1"}
                 onClick={(e) => {
@@ -238,7 +233,7 @@ const MainPage: React.FC = () => {
             </div>
             <div className="m-2">
               <ToggleButton
-                label={translations[language].toggleOmsetning}
+                label={languageSet.toggleOmsetning}
                 val="SDI"
                 isActive={activeButton === "option2"}
                 onClick={(e) =>
@@ -251,7 +246,7 @@ const MainPage: React.FC = () => {
             </div>
             <div className="m-2">
               <ToggleButton
-                label={translations[language].toggleSik}
+                label={languageSet.toggleSik}
                 val="SIK"
                 isActive={activeButton === "option3"}
                 onClick={(e) =>
