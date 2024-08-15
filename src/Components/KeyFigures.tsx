@@ -32,7 +32,7 @@ const KeyFigures: React.FC<KeyFigureProps> = (props) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
+      if (keyFigureData.length === 0) setLoading(true);
       const resultArr: KeyFigures[] = [];
 
       await fetchAndPushData(
@@ -63,7 +63,7 @@ const KeyFigures: React.FC<KeyFigureProps> = (props) => {
     };
 
     fetchData();
-  }, [languageSet, props.year]);
+  }, [keyFigureData.length, languageSet, props.year]);
 
   return (
     <div className="mb-10 flex flex-col items-center px-4 ">

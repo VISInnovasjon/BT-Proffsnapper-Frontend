@@ -1,5 +1,3 @@
-// globalState.tsx
-
 import React, { createContext, useContext, useReducer, ReactNode } from "react";
 
 // Define the shape of the global state

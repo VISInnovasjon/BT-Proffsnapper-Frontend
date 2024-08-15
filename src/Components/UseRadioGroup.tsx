@@ -49,7 +49,7 @@ export default function UseRadioGroup(props: {
         marginTop: 2,
         "& .MuiSvgIcon-root": {
           fontSize: {
-            xs: 16, // small screen
+            xs: 14, // small screen
             sm: 18, // medium screen
             md: 20, // large screen
             lg: 22, // extra large screen

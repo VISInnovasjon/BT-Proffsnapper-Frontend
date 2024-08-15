@@ -21,17 +21,6 @@ body {
   min-height: 100vh;
 }
 
-/* Styling for the Yearslider */
-/* .MuiSlider-thumb {
-  color: #022447;
-}
-.MuiSlider-rail {
-  color: #1e2222;
-}
-.MuiSlider-track {
-  color: #022447;
-} */
-
 /* Styling for the autocomplete */
 .MuiAutocomplete-root {
   height: 10px;
