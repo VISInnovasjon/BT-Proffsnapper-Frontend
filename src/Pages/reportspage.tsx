@@ -1,32 +1,51 @@
 import React, { useState } from "react";
-import { Button, CircularProgress, Box } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import Dropbox from "../Components/Dropbox";
 import { blobHandler } from "../Components/BlobCreator";
 import { useLanguage } from "../Components/LanguageContext";
 
 const Reports: React.FC = () => {
   // Fetch template based on dropbox
-  const handleFetchTemplate = async () => {
-    const endpoint = import.meta.env.VITE_ORGNRTEMPLATE_URL;
+  const [loading, setLoading] = useState({
+    button1: false,
+    button2: false,
+  });
+  const [error, setError] = useState<string | null>(null);
+
+  const handleFetchTemplate = async (button: string) => {
+    setLoading((prevState) => ({ ...prevState, [button]: true }));
     try {
-      const response = await fetch(endpoint);
+      setError(null);
+      const response = await fetch(import.meta.env.VITE_API_ORGNRTEMPLATE_URL);
+      if (response.status != 200) {
+        throw new Error("Network response was not ok " + response.statusText);
+      }
+
       await blobHandler(response);
-    } catch (error) {
-      console.log("Something went wrong fetching template! Try again.", error);
+    } catch (Error) {
+      setError(
+        languageSet.templateErrorText ??
+          "Something went wrong fetching template! Try again."
+      );
+    } finally {
+      setLoading((prevState) => ({ ...prevState, [button]: false }));
     }
   };
 
-  const [loading, setLoading] = useState(false);
   // For the full view button
-  const fetchFile = async () => {
-    setLoading(true);
+  const fetchFile = async (button: string) => {
+    setLoading((prevState) => ({ ...prevState, [button]: true }));
     try {
+      setError(null);
       const response = await fetch(import.meta.env.VITE_API_EXCELFULLVIEW_URL);
       await blobHandler(response);
     } catch (error) {
-      console.log(error);
+      setError(
+        languageSet.fetchAllDataErrorText ??
+          "Something went wrong fetching All Data! Try again."
+      );
     } finally {
-      setLoading(false);
+      setLoading((prevState) => ({ ...prevState, [button]: false }));
     }
   };
 
@@ -42,53 +61,84 @@ const Reports: React.FC = () => {
         name={""}
         fetchEndpoint={import.meta.env.VITE_API_YEARLYREPORT_URL}
       />
-      <div className="mt-4 ">
-        <Box>
-          <Button
-            onClick={fetchFile}
-            variant="contained"
-            color="primary"
-            disabled={loading}
-            sx={{
-              backgroundColor: "#de0505", // Default background color
-              "&:hover": {
-                backgroundColor: "#E91414", // Background color on hover
-              },
-              color: "white",
-              paddingY: "0.5rem",
-              paddingX: "1.5rem",
-              borderRadius: "9999px",
-              fontSize: {
-                sm: "14px", // Font size for small screens
-                md: "16px", // Font size for medium screens
-                lg: "16px", // Font size for large screens
-                xl: "18px", // Font size for extra large screens
-              },
-              fontWeight: "bold",
-              fontFamily: "Poppins, Arial, sans-serif",
-            }}
-          >
-            {loading && (
-              <CircularProgress
-                size={24}
-                sx={{ color: "#FAFFFB" }}
-                className="mr-2"
-              />
-            )}
-            {loading ? languageSet.fetchFullView : languageSet.getFullView}
-
-            {fetchFile && (
-              <div className="mt-4">{JSON.stringify(fetchFile)}</div>
-            )}
-          </Button>
-        </Box>
+      <div className="text-red-900 mt-5 ">
+        {error == null ? "" : <h2>{error}</h2>}
       </div>
-      <button
-        onClick={handleFetchTemplate}
+      <div className="mt-4 ">
+        <Button
+          onClick={() => fetchFile("button1")}
+          variant="contained"
+          color="primary"
+          disabled={loading.button1}
+          sx={{
+            backgroundColor: "#de0505", // Default background color
+            "&:hover": {
+              backgroundColor: "#E91414", // Background color on hover
+            },
+            color: "white",
+            paddingY: "0.5rem",
+            paddingX: "1.5rem",
+            borderRadius: "9999px",
+            fontSize: {
+              sm: "14px", // Font size for small screens
+              md: "16px", // Font size for medium screens
+              lg: "16px", // Font size for large screens
+              xl: "18px", // Font size for extra large screens
+            },
+            fontWeight: "bold",
+            fontFamily: "Poppins, Arial, sans-serif",
+          }}
+        >
+          {loading.button1 && (
+            <CircularProgress
+              size={24}
+              sx={{ color: "#FAFFFB" }}
+              className="mr-2"
+            />
+          )}
+          {loading.button1
+            ? languageSet.fetchFullView
+            : languageSet.getFullView}
+
+          {/* {fetchFile && <div className="mt-4">{JSON.stringify(fetchFile)}</div>} */}
+        </Button>
+      </div>
+
+      <Button
+        onClick={() => handleFetchTemplate("button2")}
+        variant="contained"
+        color="primary"
+        disabled={loading.button2}
+        sx={{
+          backgroundColor: "#de0505", // Default background color
+          "&:hover": {
+            backgroundColor: "#E91414", // Background color on hover
+          },
+          color: "white",
+          paddingY: "0.5rem",
+          paddingX: "1.5rem",
+          borderRadius: "9999px",
+          marginTop: "5px",
+          fontSize: {
+            sm: "14px", // Font size for small screens
+            md: "16px", // Font size for medium screens
+            lg: "16px", // Font size for large screens
+            xl: "18px", // Font size for extra large screens
+          },
+
+          fontFamily: "Poppins, Arial, sans-serif",
+        }}
         className="bg-[#de0505] text-white py-2 px-6 mt-4 rounded-full hover:bg-[#E91414] transition-all duration-300"
       >
+        {loading.button2 && (
+          <CircularProgress
+            size={20}
+            style={{ color: "#FAFFFB" }}
+            className="mr-2"
+          />
+        )}
         {languageSet.gyrPageText2}
-      </button>
+      </Button>
     </div>
   );
 };
