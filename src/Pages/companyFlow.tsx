@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Dropbox from "../Components/Dropbox";
 import { blobHandler } from "../Components/BlobCreator";
 import { useLanguage } from "../Components/LanguageContext";
+import { CircularProgress } from "@mui/material";
 
 const CompanyFlowPage: React.FC = () => {
   const { languageSet } = useLanguage();
@@ -9,17 +10,33 @@ const CompanyFlowPage: React.FC = () => {
     "Update Company Data Flow" | "dropbox1" | "dropbox2"
   >("Update Company Data Flow");
 
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+
   // Fetch template based on dropbox
   const handleTemplateFetch = async (dropbox: "dropbox1" | "dropbox2") => {
+    setLoading(true);
     const endpoint =
       dropbox === "dropbox1"
         ? import.meta.env.VITE_API_DBUPDATETEMPLATE_URL //sender tilbake en excel fil med rett format, og viser hva data som trengs for å legge til ny data i databasen.
         : import.meta.env.VITE_API_ORGNRTEMPLATE_URL; //sender tilbake en excel fil med format for å vise hvordan man kan slette data basert på organisasjonsnummer i databasen.; //set endpoints
+
     try {
+      setError(null);
       const response = await fetch(endpoint);
+      setLoading(false);
+      if (response.status != 200) {
+        throw new Error("Network response was not ok " + response.statusText);
+      }
       await blobHandler(response);
-    } catch (error) {
-      console.log("Error fetching template.");
+      setLoading(false);
+    } catch (Error) {
+      setError(
+        languageSet.templateErrorText ??
+          "Something went wrong fetching template! Please try again."
+      );
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -66,6 +83,11 @@ const CompanyFlowPage: React.FC = () => {
               name="Dropbox 1"
               fetchEndpoint={import.meta.env.VITE_API_UPDATEWITHNEWDATA_URL}
             />
+
+            <div className="text-red-900 mt-5">
+              {loading && <CircularProgress size={20} style={{}} />}
+              {error == null ? "" : <h2>{error}</h2>}
+            </div>
             <button
               className="bg-[#de0505] text-white py-2 px-6 mx-4 mt-4 rounded-full hover:bg-[#e91414] transition-all duration-300"
               onClick={() => handleTemplateFetch("dropbox1")}
@@ -93,6 +115,11 @@ const CompanyFlowPage: React.FC = () => {
               name="Dropbox 2"
               fetchEndpoint={import.meta.env.VITE_API_DELETEDATA_URL}
             />
+            <div className="text-red-900 mt-5">
+              {loading && <CircularProgress size={20} style={{}} />}
+              {error == null ? "" : <h2>{error}</h2>}
+            </div>
+
             <button
               className="bg-[#de0505] text-white py-2 px-6 mx-4 mt-4 rounded-full hover:bg-[#e91414] transition-all duration-300"
               onClick={() => handleTemplateFetch("dropbox2")}
