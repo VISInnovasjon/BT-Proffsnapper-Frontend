@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useLanguage } from "./LanguageContext";
-import { blobHandler } from "./BlobCreator";
+import { blobHandler } from "./blobCreator";
 
 interface DropboxProps {
   name: string;
@@ -42,15 +42,19 @@ const Dropbox: React.FC<DropboxProps> = ({ name, fetchEndpoint }) => {
           method: "POST",
           body: formData,
         });
-        console.log(response);
+        setIsLoading(true);
         if (response.status != 200)
           setError(await response.json().then((err) => err.error));
+
         if (response.headers.get("Content-Disposition") === null)
           return setIsLoading(false);
-        else await blobHandler(response);
-        return setIsLoading(false);
+        await blobHandler(response);
       } catch (error) {
-        console.log(error);
+        setError(
+          languageSet.dbNoResponse ?? "Something went wrong. Please try again."
+        );
+      } finally {
+        setIsLoading(false);
       }
     }
   };
@@ -108,6 +112,7 @@ const Dropbox: React.FC<DropboxProps> = ({ name, fetchEndpoint }) => {
 
             <input
               type="file"
+              accept=".xlsx"
               className="hidden"
               id={`fileInput-${name}`}
               onChange={handleFileChange}

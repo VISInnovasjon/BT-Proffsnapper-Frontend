@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Button, CircularProgress } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 import Dropbox from "../Components/Dropbox";
-import { blobHandler } from "../Components/BlobCreator";
+import { blobHandler } from "../Components/blobCreator";
 import { useLanguage } from "../Components/LanguageContext";
+import UseButton from "../Components/UseButton";
 
 const Reports: React.FC = () => {
   // Fetch template based on dropbox
@@ -61,37 +62,19 @@ const Reports: React.FC = () => {
         name={""}
         fetchEndpoint={import.meta.env.VITE_API_YEARLYREPORT_URL}
       />
-      <div className="text-red-900 mt-5 ">
+      <div className="text-red-900 mt-4 mx-2 text-center ">
         {error == null ? "" : <h2>{error}</h2>}
       </div>
       <div className="mt-4 ">
-        <Button
+        <UseButton
           onClick={() => fetchFile("button1")}
           variant="contained"
-          color="primary"
           disabled={loading.button1}
-          sx={{
-            backgroundColor: "#de0505", // Default background color
-            "&:hover": {
-              backgroundColor: "#E91414", // Background color on hover
-            },
-            color: "white",
-            paddingY: "0.5rem",
-            paddingX: "1.5rem",
-            borderRadius: "9999px",
-            fontSize: {
-              sm: "14px", // Font size for small screens
-              md: "16px", // Font size for medium screens
-              lg: "16px", // Font size for large screens
-              xl: "18px", // Font size for extra large screens
-            },
-            fontWeight: "bold",
-            fontFamily: "Poppins, Arial, sans-serif",
-          }}
+          sx={{ fontWeight: "bold" }}
         >
           {loading.button1 && (
             <CircularProgress
-              size={24}
+              size={20}
               sx={{ color: "#FAFFFB" }}
               className="mr-2"
             />
@@ -99,36 +82,13 @@ const Reports: React.FC = () => {
           {loading.button1
             ? languageSet.fetchFullView
             : languageSet.getFullView}
-
-          {/* {fetchFile && <div className="mt-4">{JSON.stringify(fetchFile)}</div>} */}
-        </Button>
+        </UseButton>
       </div>
 
-      <Button
+      <UseButton
         onClick={() => handleFetchTemplate("button2")}
         variant="contained"
-        color="primary"
         disabled={loading.button2}
-        sx={{
-          backgroundColor: "#de0505", // Default background color
-          "&:hover": {
-            backgroundColor: "#E91414", // Background color on hover
-          },
-          color: "white",
-          paddingY: "0.5rem",
-          paddingX: "1.5rem",
-          borderRadius: "9999px",
-          marginTop: "5px",
-          fontSize: {
-            sm: "14px", // Font size for small screens
-            md: "16px", // Font size for medium screens
-            lg: "16px", // Font size for large screens
-            xl: "18px", // Font size for extra large screens
-          },
-
-          fontFamily: "Poppins, Arial, sans-serif",
-        }}
-        className="bg-[#de0505] text-white py-2 px-6 mt-4 rounded-full hover:bg-[#E91414] transition-all duration-300"
       >
         {loading.button2 && (
           <CircularProgress
@@ -138,7 +98,7 @@ const Reports: React.FC = () => {
           />
         )}
         {languageSet.gyrPageText2}
-      </Button>
+      </UseButton>
     </div>
   );
 };
