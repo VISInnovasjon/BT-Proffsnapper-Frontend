@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import Dropbox from "../Components/Dropbox";
-import { blobHandler } from "../Components/BlobCreator";
+import { blobHandler } from "../Components/blobCreator";
 import { useLanguage } from "../Components/LanguageContext";
 import { CircularProgress } from "@mui/material";
+import UseButton from "../Components/UseButton";
 
 const CompanyFlowPage: React.FC = () => {
   const { languageSet } = useLanguage();
@@ -14,10 +15,10 @@ const CompanyFlowPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
 
   // Fetch template based on dropbox
-  const handleTemplateFetch = async (dropbox: "dropbox1" | "dropbox2") => {
+  const handleTemplateFetch = async () => {
     setLoading(true);
     const endpoint =
-      dropbox === "dropbox1"
+      view === "dropbox1"
         ? import.meta.env.VITE_API_DBUPDATETEMPLATE_URL //sender tilbake en excel fil med rett format, og viser hva data som trengs for å legge til ny data i databasen.
         : import.meta.env.VITE_API_ORGNRTEMPLATE_URL; //sender tilbake en excel fil med format for å vise hvordan man kan slette data basert på organisasjonsnummer i databasen.; //set endpoints
 
@@ -49,26 +50,26 @@ const CompanyFlowPage: React.FC = () => {
     <div className="mx-auto flex flex-col md:pt-16 items-center justify-center min-h-screen text-[#1e2222] text-2vw sm:text-base md:text-lg lg:text-lg xl:text-xl ">
       {view === "Update Company Data Flow" && (
         <>
-          <h1 className="text-2xl lg:text-3xl md:mt-10 font-bold mb-4 tracking-wide">
+          <h1 className="my-2 md:my-6 text-2xl md:text-4xl lg:text-4xl font-bold tracking-wide">
             {languageSet.headerCompanyData}
           </h1>
           <div className="flex flex-col sm:flex-row m-10 gap-3 ">
-            <button
-              className="bg-[#de0505] text-white py-2 px-6 mx-4 rounded-full hover:bg-[#e91414] transition-all duration-300"
+            <UseButton
+              variant="contained"
               onClick={() => {
                 setView("dropbox1");
               }}
             >
               {languageSet.addCompanyData}
-            </button>
-            <button
-              className="bg-[#de0505] text-white py-2 px-6 rounded-full hover:bg-[#e91414] transition-all duration-300"
+            </UseButton>
+            <UseButton
+              variant="contained"
               onClick={() => {
                 setView("dropbox2");
               }}
             >
               {languageSet.deleteCompanyData}
-            </button>
+            </UseButton>
           </div>
         </>
       )}
@@ -83,17 +84,23 @@ const CompanyFlowPage: React.FC = () => {
               name="Dropbox 1"
               fetchEndpoint={import.meta.env.VITE_API_UPDATEWITHNEWDATA_URL}
             />
-
-            <div className="text-red-900 mt-5">
-              {loading && <CircularProgress size={20} style={{}} />}
+            <div className="text-red-900 my-4 mx-2 text-center ">
               {error == null ? "" : <h2>{error}</h2>}
             </div>
-            <button
-              className="bg-[#de0505] text-white py-2 px-6 mx-4 mt-4 rounded-full hover:bg-[#e91414] transition-all duration-300"
-              onClick={() => handleTemplateFetch("dropbox1")}
+            <UseButton
+              onClick={() => handleTemplateFetch()}
+              variant="contained"
+              disabled={loading}
             >
+              {loading && (
+                <CircularProgress
+                  size={20}
+                  style={{ color: "#FAFFFB" }}
+                  className="mr-2"
+                />
+              )}
               {languageSet.gyrPageText2}
-            </button>
+            </UseButton>
 
             <button
               className="bg-gray-700 text-white py-1 px-2 rounded mt-4 hover:bg-gray-600 transition-all duration-300"
@@ -115,17 +122,21 @@ const CompanyFlowPage: React.FC = () => {
               name="Dropbox 2"
               fetchEndpoint={import.meta.env.VITE_API_DELETEDATA_URL}
             />
-            <div className="text-red-900 mt-5">
-              {loading && <CircularProgress size={20} style={{}} />}
+
+            <div className="text-red-900 my-4 mx-2 text-center  ">
               {error == null ? "" : <h2>{error}</h2>}
             </div>
 
-            <button
-              className="bg-[#de0505] text-white py-2 px-6 mx-4 mt-4 rounded-full hover:bg-[#e91414] transition-all duration-300"
-              onClick={() => handleTemplateFetch("dropbox2")}
-            >
+            <UseButton onClick={() => handleTemplateFetch()} disabled={loading}>
+              {loading && (
+                <CircularProgress
+                  size={20}
+                  style={{ color: "#FAFFFB" }}
+                  className="mr-2"
+                />
+              )}
               {languageSet.gyrPageText2}
-            </button>
+            </UseButton>
 
             <button
               className="bg-gray-700 text-white py-1 px-2 rounded mt-4 hover:bg-gray-600 transition-all duration-300"
