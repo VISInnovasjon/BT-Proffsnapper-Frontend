@@ -48,56 +48,56 @@ export const DataGridComponent = ({ ecoCode, year }: gridProps) => {
       field: "Name",
       headerName: languageSet.tablecol1,
 
-      flex: 2,
+      minWidth: 350,
     },
     {
       field: "OrgNumber",
       headerName: languageSet.tablecol2,
 
-      flex: 1,
+      minWidth: 200,
     },
     {
       field: "Branch",
       headerName: languageSet.tablecol3,
 
-      flex: 1,
+      minWidth: 150,
     },
     {
       field: "Value",
       headerName: languageSet.tablecol4,
 
-      flex: 1,
+      minWidth: 150,
     },
     {
       field: "Delta",
       headerName: languageSet.tablecol5,
 
-      flex: 1,
+      minWidth: 150,
     },
     {
       field: "Accumulated",
       headerName: languageSet.tablecol6,
 
-      flex: 1,
+      minWidth: 150,
     },
     {
       field: "ValidYear",
       headerName: languageSet.tablecol7,
 
-      flex: 1,
+      minWidth: 150,
     },
     {
       field: "EcoCode",
       headerName: languageSet.tablecol8,
 
-      flex: 1,
+      minWidth: 150,
     },
   ];
 
   return (
     <>
       {tableData != null ? (
-        <div style={{ height: 400, width: "100%" }} className="">
+        <div style={{ height: "100%", width: "100%" }}>
           <DataGrid
             autoHeight
             rows={tableData.map((row, idx) => ({ ...row, id: idx }))}
@@ -108,7 +108,7 @@ export const DataGridComponent = ({ ecoCode, year }: gridProps) => {
               },
             }}
             getRowId={(row) => row.id}
-            pageSizeOptions={[5, 10]}
+            pageSizeOptions={[5, 10, 25]}
           />
         </div>
       ) : null}
