@@ -71,6 +71,13 @@ const FilterSelect: React.FC<FilterSelectProps> = ({
           multiple
           value={selectedProperty}
           onChange={handleChange}
+          MenuProps={{
+            PaperProps: {
+              style: {},
+              sx: { zIndex: 49, overflowY: "auto", maxHeight: "200px" },
+            },
+            disableScrollLock: true,
+          }}
           input={
             <OutlinedInput
               id="select-multiple-chip"
@@ -79,7 +86,7 @@ const FilterSelect: React.FC<FilterSelectProps> = ({
             />
           }
           renderValue={(selected) => (
-            <Box className="flex flex-wrap gap-0.5">
+            <Box className="flex flex-wrap gap-0.5 ">
               {(selected as string[]).map((value) => (
                 <Chip key={value} label={value} />
               ))}
@@ -87,7 +94,7 @@ const FilterSelect: React.FC<FilterSelectProps> = ({
           )}
         >
           {selector.map((e) => (
-            <MenuItem key={e} value={e}>
+            <MenuItem key={e} value={e} className="">
               {e}
             </MenuItem>
           ))}

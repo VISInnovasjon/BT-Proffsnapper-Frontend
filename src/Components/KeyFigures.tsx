@@ -71,7 +71,7 @@ const KeyFigures: React.FC<KeyFigureProps> = (props) => {
         {languageSet.keyFiguresHeader}
       </h1>
 
-      <h3 className="my-1.5 md:my-3 text-1xl md:text-1xl lg:text-1xl font-bold tracking-wide">
+      <h3 className=" md:my-3 text-xl md:text-2xl lg:text-2xl font-bold tracking-wide">
         {`${languageSet.keyFiguresSubHeader} ${props.year}.`}
       </h3>
       {loading && <CircularProgress />}

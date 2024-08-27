@@ -103,7 +103,7 @@ const MainPage: React.FC = () => {
   const [activeButton, setActiveButton] = useState<string | null>("option1");
 
   return (
-    <div className="pt-32 container mx-auto text-[#1e2222] text-2vw sm:text-base md:text-lg lg:text-lg xl:text-xl ">
+    <div className="pt-32 md:pt-24  container mx-auto text-[#1e2222] text-2vw sm:text-base md:text-lg lg:text-lg xl:text-xl ">
       <div>
         <KeyFigures year={yearRange[yearRange.length - 1]} />
       </div>
@@ -146,6 +146,16 @@ const MainPage: React.FC = () => {
             keepMounted
             open={Boolean(anchorEl)}
             onClose={handleClose}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "left",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "left",
+            }}
+            disableScrollLock // Prevents issues with scrolling
+            sx={{ zIndex: 1 }}
           >
             {!filters.includes("Age Group") && (
               <MenuItem onClick={() => handleMenuItemClick("Age Group")}>

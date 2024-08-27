@@ -53,7 +53,7 @@ const Reports: React.FC = () => {
   const { languageSet } = useLanguage();
 
   return (
-    <div className=" pt-32 flex flex-col items-center mx-auto text-[#1e2222] text-2vw sm:text-base md:text-lg lg:text-lg xl:text-xl">
+    <div className=" pt-32 md:pt-24 flex flex-col items-center mx-auto text-[#1e2222] text-2vw sm:text-base md:text-lg lg:text-lg xl:text-xl">
       <h1 className=" my-2 md:my-6 text-2xl md:text-4xl lg:text-4xl font-bold tracking-wide">
         {languageSet.gyrPageText1}
       </h1>
