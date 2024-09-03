@@ -155,7 +155,7 @@ const MainPage: React.FC = () => {
               horizontal: "left",
             }}
             disableScrollLock // Prevents issues with scrolling
-            sx={{ zIndex: 1 }}
+            sx={{ zIndex: 10 }}
           >
             {!filters.includes("Age Group") && (
               <MenuItem onClick={() => handleMenuItemClick("Age Group")}>

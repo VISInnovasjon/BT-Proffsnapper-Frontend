@@ -18,7 +18,7 @@ const Navbar: React.FC = () => {
   const { languageSet } = useLanguage();
 
   return (
-    <nav className="bg-[#de0505] w-full fixed top-0 left-0 right-0 py-4 z-50  ">
+    <nav className="bg-[#de0505] w-full fixed top-0 left-0 right-0 py-4 z-50">
       <div className="max-w-8xl mx-auto px-4 ">
         <div className="flex justify-between h-16 mr-10">
           {/* Logo */}
