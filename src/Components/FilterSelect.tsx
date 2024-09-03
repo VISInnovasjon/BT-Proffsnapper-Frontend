@@ -72,10 +72,8 @@ const FilterSelect: React.FC<FilterSelectProps> = ({
           value={selectedProperty}
           onChange={handleChange}
           MenuProps={{
-            PaperProps: {
-              style: {},
-              sx: { zIndex: 49, overflowY: "auto", maxHeight: "200px" },
-            },
+            sx: { zIndex: 10, maxHeight: "400px" },
+
             disableScrollLock: true,
           }}
           input={
@@ -94,7 +92,7 @@ const FilterSelect: React.FC<FilterSelectProps> = ({
           )}
         >
           {selector.map((e) => (
-            <MenuItem key={e} value={e} className="">
+            <MenuItem key={e} value={e}>
               {e}
             </MenuItem>
           ))}

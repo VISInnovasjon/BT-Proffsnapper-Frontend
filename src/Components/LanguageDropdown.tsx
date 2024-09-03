@@ -57,6 +57,8 @@ const LanguageDropdown: React.FC = () => {
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
         onClose={() => setAnchorEl(null)}
+        sx={{}}
+        disableScrollLock // Prevents issues with scrolling
       >
         <MenuItem onClick={() => handleClose("en")}>
           {"English"} {/* Display language for English */}
