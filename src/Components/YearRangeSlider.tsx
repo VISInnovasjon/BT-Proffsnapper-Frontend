@@ -64,14 +64,14 @@ const YearRangeSlider = (props: {
           "& .MuiSlider-track": {
             backgroundColor: "#ffffff",
             height: 4,
-            border: "1px solid #1e2222", // Customize the border color
+            border: "1px solid #BFBFC0", // Customize the border color
           },
           "& .MuiSlider-rail": {
-            backgroundColor: "#1e2222",
+            backgroundColor: "#BFBFC0",
             height: 2,
           },
           "& .MuiSlider-mark": {
-            backgroundColor: "black", // Remove background for marks
+            backgroundColor: "#022447", // Remove background for marks
             fontSize: "0.75rem",
           },
           // Customize the value label

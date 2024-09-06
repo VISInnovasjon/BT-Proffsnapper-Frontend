@@ -4,6 +4,7 @@ import Dropbox from "../Components/Dropbox";
 import { blobHandler } from "../Components/blobCreator";
 import { useLanguage } from "../Components/LanguageContext";
 import UseButton from "../Components/UseButton";
+import { LastUpdatedText } from "../Components/LastUpdated";
 
 const Reports: React.FC = () => {
   // Fetch template based on dropbox
@@ -57,6 +58,7 @@ const Reports: React.FC = () => {
       <h1 className=" my-2 md:my-6 text-2xl md:text-4xl lg:text-4xl font-bold tracking-wide">
         {languageSet.gyrPageText1}
       </h1>
+      <LastUpdatedText className="text-1.5xl" />
 
       <Dropbox
         name={""}

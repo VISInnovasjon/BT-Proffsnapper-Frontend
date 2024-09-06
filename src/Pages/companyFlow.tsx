@@ -4,6 +4,7 @@ import { blobHandler } from "../Components/blobCreator";
 import { useLanguage } from "../Components/LanguageContext";
 import { CircularProgress } from "@mui/material";
 import UseButton from "../Components/UseButton";
+import { LastUpdatedText } from "../Components/LastUpdated";
 
 const CompanyFlowPage: React.FC = () => {
   const { languageSet } = useLanguage();
@@ -79,6 +80,7 @@ const CompanyFlowPage: React.FC = () => {
           <h1 className="text-2xl lg:text-3xl md:mt-10 font-bold mb-4 tracking-wide">
             {languageSet.addCompanyData}
           </h1>
+          <LastUpdatedText className="text-1.5xl" />
           <div className="flex flex-col items-center w-full">
             <Dropbox
               name="Dropbox 1"

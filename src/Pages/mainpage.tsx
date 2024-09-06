@@ -12,6 +12,7 @@ import "../index.css";
 import KeyFigures from "../Components/KeyFigures";
 import { useLanguage } from "../Components/LanguageContext";
 import FilterSelect from "../Components/FilterSelect";
+import { useMsal } from "@azure/msal-react";
 
 type ButtonTarget = {
   value: string;
@@ -43,7 +44,6 @@ const MainPage: React.FC = () => {
       setLoading(true);
       try {
         const url = import.meta.env.VITE_API_GRAPHDATA_URL;
-        console.log(url);
         const response = await fetch(url);
         const data = await response.json();
         setData(data);
@@ -69,6 +69,13 @@ const MainPage: React.FC = () => {
     };
     fetchEcoCodes();
   }, [languageSet]);
+  const { instance } = useMsal();
+  const initializeMsal = async () => {
+    await instance.initialize();
+    instance
+      .handleRedirectPromise();
+  };
+  initializeMsal();
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -95,7 +102,6 @@ const MainPage: React.FC = () => {
     option: string,
     target: EventTarget & ButtonTarget
   ) => {
-    console.log(target);
     setActiveButton((prev) => (prev === option ? null : option));
     setEcoKey(target.value);
   };
