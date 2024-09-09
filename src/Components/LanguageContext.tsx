@@ -41,7 +41,6 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({
         import.meta.env.VITE_API_LANGUAGE_URL + `?` + searchParam.toString();
       const response = await fetch(url);
       const result = await response.json();
-      console.log(result);
       setLanguageSet(result);
     };
     fetchLanguageSet();

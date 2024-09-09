@@ -30,7 +30,6 @@ const Dropbox: React.FC<DropboxProps> = ({ name, fetchEndpoint }) => {
     e.preventDefault();
     setIsDragging(false);
     const data = e.dataTransfer.items[0].getAsFile();
-    console.log(data);
     const formData = new FormData();
     if (data) {
       try {

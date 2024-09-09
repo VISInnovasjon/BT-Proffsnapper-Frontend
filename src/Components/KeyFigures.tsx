@@ -28,7 +28,6 @@ const KeyFigures: React.FC<KeyFigureProps> = (props) => {
   const { languageSet } = useLanguage();
   const [loading, setLoading] = useState(true);
   const [keyFigureData, setKeyFigureData] = useState<KeyFigures[]>([]);
-  console.log(props.year);
 
   useEffect(() => {
     const fetchData = async () => {
