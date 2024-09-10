@@ -15,7 +15,6 @@ export default function CodeFilter(props: {
   };
   const { languageSet } = useLanguage();
   const [options, setOptions] = useState<AutoCompleteOptions[]>([]);
-  const [button, setButton] = useState<string | null>(props.activeButton);
 
   useEffect(() => {
     const updateOptions = async () => {
@@ -36,9 +35,8 @@ export default function CodeFilter(props: {
   }, [props.ecoCodes]);
 
   const handleChange = (option: AutoCompleteOptions | null) => {
-    setButton(props.activeButton);
     let key = "";
-    switch (button) {
+    switch (props.activeButton) {
       case "option1":
         key = "DR";
         break;
