@@ -13,11 +13,13 @@ type KeyFigures = {
 };
 const fetchAndPushData = async (
   url: string,
+  language: string,
   resultArr: KeyFigures[],
   endYear: string
 ) => {
   const searchParams = new URLSearchParams({
     Year: endYear,
+    Language: language,
   });
   const response = await fetch(url + "?" + searchParams.toString());
   const result: KeyFigures = await response.json();
@@ -25,7 +27,7 @@ const fetchAndPushData = async (
 };
 
 const KeyFigures: React.FC<KeyFigureProps> = (props) => {
-  const { languageSet } = useLanguage();
+  const { language, languageSet } = useLanguage();
   const [loading, setLoading] = useState(true);
   const [keyFigureData, setKeyFigureData] = useState<KeyFigures[]>([]);
 
@@ -36,21 +38,25 @@ const KeyFigures: React.FC<KeyFigureProps> = (props) => {
 
       await fetchAndPushData(
         import.meta.env.VITE_API_COMPANYCOUNT_URL,
+        language,
         resultArr,
         props.year.toString()
       );
       await fetchAndPushData(
         import.meta.env.VITE_API_TOTALTURNOVER_URL,
+        language,
         resultArr,
         props.year.toString()
       );
       await fetchAndPushData(
         import.meta.env.VITE_API_WORKERCOUNT_URL,
+        language,
         resultArr,
         props.year.toString()
       );
       await fetchAndPushData(
         import.meta.env.VITE_API_WORKYEAR_URL,
+        language,
         resultArr,
         props.year.toString()
       );
@@ -62,7 +68,7 @@ const KeyFigures: React.FC<KeyFigureProps> = (props) => {
     };
 
     fetchData();
-  }, [keyFigureData.length, languageSet, props.year]);
+  }, [keyFigureData.length, props.year, language]);
 
   return (
     <div className="mb-10 flex flex-col items-center px-4 ">
