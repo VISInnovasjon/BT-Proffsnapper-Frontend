@@ -37,7 +37,7 @@ const MainPage: React.FC = () => {
   const [economicCodes, setEconomicCodes] = useState<Record<string, string>>(
     {}
   );
-  const { languageSet } = useLanguage();
+  const { language, languageSet } = useLanguage();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -58,9 +58,12 @@ const MainPage: React.FC = () => {
   useEffect(() => {
     const fetchEcoCodes = async () => {
       try {
+        const searchParams = new URLSearchParams({
+          Language: language,
+        });
         const url = import.meta.env.VITE_API_ECOCODEDATA_URL;
 
-        const response = await fetch(url);
+        const response = await fetch(url + `?` + searchParams.toString());
         const data: Record<string, string> = await response.json();
         setEconomicCodes(data);
       } catch (err) {
@@ -68,12 +71,11 @@ const MainPage: React.FC = () => {
       }
     };
     fetchEcoCodes();
-  }, [languageSet]);
+  }, [language]);
   const { instance } = useMsal();
   const initializeMsal = async () => {
     await instance.initialize();
-    instance
-      .handleRedirectPromise();
+    instance.handleRedirectPromise();
   };
   initializeMsal();
 
