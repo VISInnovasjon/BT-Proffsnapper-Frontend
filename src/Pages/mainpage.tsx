@@ -277,7 +277,11 @@ const MainPage: React.FC = () => {
             </div>
           </div>
           <div className="flex justify-center mx-2 mt-2 mb-6  ">
-            <CodeFilter ChangeHandler={setEcoKey} ecoCodes={economicCodes} />
+            <CodeFilter
+              ChangeHandler={setEcoKey}
+              ecoCodes={economicCodes}
+              activeButton={activeButton}
+            />
           </div>
         </div>
       </div>

@@ -7,6 +7,7 @@ import { useLanguage } from "./LanguageContext";
 export default function CodeFilter(props: {
   ChangeHandler: React.Dispatch<SetStateAction<string>>;
   ecoCodes: Record<string, string>;
+  activeButton: string | null;
 }) {
   type AutoCompleteOptions = {
     id: string;
@@ -14,6 +15,7 @@ export default function CodeFilter(props: {
   };
   const { languageSet } = useLanguage();
   const [options, setOptions] = useState<AutoCompleteOptions[]>([]);
+  const [button, setButton] = useState<string | null>(props.activeButton);
 
   useEffect(() => {
     const updateOptions = async () => {
@@ -34,7 +36,23 @@ export default function CodeFilter(props: {
   }, [props.ecoCodes]);
 
   const handleChange = (option: AutoCompleteOptions | null) => {
-    option === null ? null : props.ChangeHandler(option.id);
+    setButton(props.activeButton);
+    let key = "";
+    switch (button) {
+      case "option1":
+        key = "DR";
+        break;
+      case "option2":
+        key = "SDI";
+        break;
+      case "option3":
+        key = "SIK";
+        break;
+      case null:
+        key = "DR";
+        break;
+    }
+    option === null ? props.ChangeHandler(key) : props.ChangeHandler(option.id);
   };
   return (
     <Autocomplete
@@ -45,11 +63,7 @@ export default function CodeFilter(props: {
       options={options}
       sx={{ width: 400, marginBottom: 2 }}
       renderInput={(params) => (
-        <TextField
-          {...params}
-          label={languageSet.Økokoder}
-          className=""
-        />
+        <TextField {...params} label={languageSet.Økokoder} className="" />
       )}
     />
   );
