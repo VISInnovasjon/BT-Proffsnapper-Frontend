@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useLanguage } from "./LanguageContext";
 import { blobHandler } from "./blobCreator";
+import { useMsal } from "@azure/msal-react";
 
 interface DropboxProps {
   name: string;
@@ -11,6 +12,24 @@ interface DropboxProps {
 const Dropbox: React.FC<DropboxProps> = ({ name, fetchEndpoint }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const { instance, accounts } = useMsal();
+  const account = accounts[0];
+
+  const getToken = async () => {
+    const clientId = import.meta.env.VITE_API_AZURE_CLIENT_ID;
+    const defaultScope = `api://${clientId}/user_impersonation`;
+    const request = {
+      scopes: [defaultScope, "User.Read"],
+      account: account,
+    };
+    try {
+      const response = await instance.acquireTokenSilent(request);
+      return response.accessToken;
+    } catch (error) {
+      const popupResponse = await instance.acquireTokenPopup(request);
+      return popupResponse.accessToken;
+    }
+  };
 
   const [error, setError] = useState<string | null>(null);
 
@@ -36,10 +55,13 @@ const Dropbox: React.FC<DropboxProps> = ({ name, fetchEndpoint }) => {
         formData.append("file", data);
         setIsLoading(true);
         setError(null);
-
+        const token = await getToken();
         const response = await fetch(fetchEndpoint, {
           method: "POST",
           body: formData,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         });
         setIsLoading(true);
         if (response.status != 200)
@@ -69,10 +91,13 @@ const Dropbox: React.FC<DropboxProps> = ({ name, fetchEndpoint }) => {
         formData.append("file", data);
         setIsLoading(true);
         setError(null);
-
+        const token = await getToken();
         const response = await fetch(fetchEndpoint, {
           method: "POST",
           body: formData,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         });
         if (response.status != 200)
           setError(await response.json().then((err) => err.error));

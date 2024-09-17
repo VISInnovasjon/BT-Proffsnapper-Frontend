@@ -5,6 +5,7 @@ import { blobHandler } from "../Components/blobCreator";
 import { useLanguage } from "../Components/LanguageContext";
 import UseButton from "../Components/UseButton";
 import { LastUpdatedText } from "../Components/LastUpdated";
+import { useMsal } from "@azure/msal-react";
 
 const Reports: React.FC = () => {
   // Fetch template based on dropbox
@@ -13,6 +14,24 @@ const Reports: React.FC = () => {
     button2: false,
   });
   const [error, setError] = useState<string | null>(null);
+
+  const { instance, accounts } = useMsal();
+  const account = accounts[0];
+  const getToken = async () => {
+    const clientId = import.meta.env.VITE_API_AZURE_CLIENT_ID;
+    const defaultScope = `api://${clientId}/user_impersonation`;
+    const request = {
+      scopes: [defaultScope, "User.Read"],
+      account: account,
+    };
+    try {
+      const response = await instance.acquireTokenSilent(request);
+      return response.accessToken;
+    } catch (error) {
+      const popupResponse = await instance.acquireTokenPopup(request);
+      return popupResponse.accessToken;
+    }
+  };
 
   const handleFetchTemplate = async (button: string) => {
     setLoading((prevState) => ({ ...prevState, [button]: true }));
@@ -39,8 +58,13 @@ const Reports: React.FC = () => {
     setLoading((prevState) => ({ ...prevState, [button]: true }));
     try {
       setError(null);
-      const response = await fetch(import.meta.env.VITE_API_EXCELFULLVIEW_URL);
-      await blobHandler(response);
+      const token = await getToken();
+      const response = await fetch(import.meta.env.VITE_API_EXCELFULLVIEW_URL, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.ok) await blobHandler(response);
     } catch (error) {
       setError(
         languageSet.fetchAllDataErrorText ??
