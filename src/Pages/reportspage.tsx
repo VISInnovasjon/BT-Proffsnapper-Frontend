@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { CircularProgress } from "@mui/material";
 import Dropbox from "../Components/Dropbox";
-import { blobHandler } from "../Components/blobCreator";
+import { blobHandler } from "../Components/BlobCreator";
 import { useLanguage } from "../Components/LanguageContext";
 import UseButton from "../Components/UseButton";
 import { LastUpdatedText } from "../Components/LastUpdated";
+import { useMsal } from "@azure/msal-react";
+import { getToken } from "../Components/GetToken";
 
 const Reports: React.FC = () => {
   // Fetch template based on dropbox
@@ -13,6 +15,9 @@ const Reports: React.FC = () => {
     button2: false,
   });
   const [error, setError] = useState<string | null>(null);
+
+  const { instance, accounts } = useMsal();
+  const account = accounts[0];
 
   const handleFetchTemplate = async (button: string) => {
     setLoading((prevState) => ({ ...prevState, [button]: true }));
@@ -39,8 +44,13 @@ const Reports: React.FC = () => {
     setLoading((prevState) => ({ ...prevState, [button]: true }));
     try {
       setError(null);
-      const response = await fetch(import.meta.env.VITE_API_EXCELFULLVIEW_URL);
-      await blobHandler(response);
+      const token = await getToken(instance, account);
+      const response = await fetch(import.meta.env.VITE_API_EXCELFULLVIEW_URL, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.ok) await blobHandler(response);
     } catch (error) {
       setError(
         languageSet.fetchAllDataErrorText ??

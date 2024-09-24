@@ -29,8 +29,10 @@ const Navbar: React.FC = () => {
   useEffect(() => {
     if (accounts.length === 0) return;
     else {
+      const clientId = import.meta.env.VITE_API_AZURE_CLIENT_ID;
+      const defaultScope = `api://${clientId}/user_impersonation`;
       instance.acquireTokenSilent({
-        scopes: ["user.read"],
+        scopes: [defaultScope, "User.Read"],
         account: accounts[0],
       });
     }

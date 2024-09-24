@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useLanguage } from "./LanguageContext";
-import { blobHandler } from "./blobCreator";
+import { blobHandler } from "./BlobCreator";
+import { useMsal } from "@azure/msal-react";
+import { getToken } from "./GetToken";
 
 interface DropboxProps {
   name: string;
@@ -11,6 +13,8 @@ interface DropboxProps {
 const Dropbox: React.FC<DropboxProps> = ({ name, fetchEndpoint }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const { instance, accounts } = useMsal();
+  const account = accounts[0];
 
   const [error, setError] = useState<string | null>(null);
 
@@ -36,10 +40,13 @@ const Dropbox: React.FC<DropboxProps> = ({ name, fetchEndpoint }) => {
         formData.append("file", data);
         setIsLoading(true);
         setError(null);
-
+        const token = await getToken(instance, account);
         const response = await fetch(fetchEndpoint, {
           method: "POST",
           body: formData,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         });
         setIsLoading(true);
         if (response.status != 200)
@@ -69,10 +76,13 @@ const Dropbox: React.FC<DropboxProps> = ({ name, fetchEndpoint }) => {
         formData.append("file", data);
         setIsLoading(true);
         setError(null);
-
+        const token = await getToken(instance, account);
         const response = await fetch(fetchEndpoint, {
           method: "POST",
           body: formData,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         });
         if (response.status != 200)
           setError(await response.json().then((err) => err.error));
