@@ -6,7 +6,6 @@ import CompanyFlow from "./Pages/companyFlow";
 import { MsalProvider } from "@azure/msal-react";
 import Reports from "./Pages/reportspage";
 import { msalConfig } from "./Components/MsalPca";
-
 import "./index.css";
 import { GlobalStateProvider } from "./Components/GlobalState";
 [];
@@ -14,6 +13,7 @@ import { GlobalStateProvider } from "./Components/GlobalState";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { PublicClientApplication } from "@azure/msal-browser";
 import { ProtectedRoute } from "./Components/ProtectedRoute";
+
 const pca = new PublicClientApplication(msalConfig);
 const router = createBrowserRouter([
   {

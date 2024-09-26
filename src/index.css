@@ -21,7 +21,7 @@ body {
   min-height: 100vh;
 }
 
-/* Styling for the autocomplete */
+/* Styling til autocomplete */
 .MuiAutocomplete-root {
   height: 10px;
 }
@@ -41,4 +41,58 @@ body {
 .app {
   margin: 0;
   background: #f8f9fa;
+}
+
+/* Styling til tekst med animasjon loading.*/
+@keyframes blur-focus {
+  0%,
+  100% {
+    filter: blur(6px);
+  }
+  50% {
+    filter: blur(0);
+  }
+}
+
+.animate-blur span {
+  display: inline-block;
+  animation: blur-focus 2s ease-in-out infinite;
+  filter: blur(6px);
+  transition: filter 0.8s;
+}
+
+.animate-blur span:nth-child(1) {
+  animation-delay: 0s;
+}
+.animate-blur span:nth-child(2) {
+  animation-delay: 0.25s;
+}
+.animate-blur span:nth-child(3) {
+  animation-delay: 0.5s;
+}
+.animate-blur span:nth-child(4) {
+  animation-delay: 0.75s;
+}
+.animate-blur span:nth-child(5) {
+  animation-delay: 1s;
+}
+.animate-blur span:nth-child(6) {
+  animation-delay: 1.25s;
+}
+.animate-blur span:nth-child(7) {
+  animation-delay: 1.5s;
+}
+
+/* Tilpasset letter-spacing animasjonstekst*/
+
+@media only screen and (min-width: 767px) {
+  .custom-letter-spacing {
+    letter-spacing: 3.35em;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .custom-letter-spacing {
+    letter-spacing: 2.35em;
+  }
 }
