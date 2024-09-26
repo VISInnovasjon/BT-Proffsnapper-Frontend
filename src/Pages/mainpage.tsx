@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Loading from "../Components/Loading";
 import LineChartComponent, { KeyedValues } from "../Components/LineChart";
 import { Button, Menu, MenuItem, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
@@ -112,213 +113,221 @@ const MainPage: React.FC = () => {
 
   return (
     <div className="pt-32 md:pt-24  container mx-auto text-[#1e2222] text-2vw sm:text-base md:text-lg lg:text-lg xl:text-xl ">
-      <div>
-        <KeyFigures year={yearRange[yearRange.length - 1]} />
-      </div>
-      <div className="m-2 w-full text-center px-6 mb-2">
-        <YearRangeSlider updateValue={setYearRange} />
-      </div>
-      <div className=" flex flex-col justify-evenly lg:flex-row ">
-        <div className="container flex flex-col  pl-4">
-          <h3 className="my-2 text-start font-bold">
-            {languageSet.headerMainPage}
-          </h3>
-          <p className="mb-4 whitespace-pre-wrap text-start font-medium  ">
-            {languageSet.paragraphMainPage != undefined
-              ? languageSet.paragraphMainPage.replace(/\\n/g, "\n")
-              : ""}
-          </p>
-          <div className="flex justify-start">
-            <Button
-              style={{
-                backgroundColor: "#de0505",
-
-                color: "#FAFFFB",
-                fontWeight: "bold",
-                fontFamily: "Poppins, Arial, sans-serif",
-                paddingTop: 8,
-                paddingBottom: 8,
-                paddingLeft: 16,
-                paddingRight: 16,
-              }}
-              variant="contained"
-              onClick={handleClick}
-              size={"medium"}
-            >
-              {languageSet.filter} <ArrowDropDownIcon />
-            </Button>
+      {loading ? (
+        <Loading />
+      ) : (
+        <>
+          <div>
+            <KeyFigures year={yearRange[yearRange.length - 1]} />
           </div>
-          <Menu
-            className=""
-            anchorEl={anchorEl}
-            keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-            anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "left",
-            }}
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "left",
-            }}
-            disableScrollLock // Prevents issues with scrolling
-            sx={{ zIndex: 10 }}
-          >
-            {!filters.includes("Age Group") && (
-              <MenuItem onClick={() => handleMenuItemClick("Age Group")}>
-                {languageSet.agegroup}
-              </MenuItem>
-            )}
+          <div className="m-2 w-full text-center px-6 mb-2">
+            <YearRangeSlider updateValue={setYearRange} />
+          </div>
+          <div className=" flex flex-col justify-evenly lg:flex-row ">
+            <div className="container flex flex-col  pl-4">
+              <h3 className="my-2 text-start font-bold">
+                {languageSet.headerMainPage}
+              </h3>
+              <p className="mb-4 whitespace-pre-wrap text-start font-medium  ">
+                {languageSet.paragraphMainPage != undefined
+                  ? languageSet.paragraphMainPage.replace(/\\n/g, "\n")
+                  : ""}
+              </p>
+              <div className="flex justify-start">
+                <Button
+                  style={{
+                    backgroundColor: "#de0505",
 
-            {!filters.includes("Phase") && (
-              <MenuItem onClick={() => handleMenuItemClick("Phase")}>
-                {languageSet.fase}
-              </MenuItem>
-            )}
-            {!filters.includes("Industry") && (
-              <MenuItem onClick={() => handleMenuItemClick("Industry")}>
-                {languageSet.brand}
-              </MenuItem>
-            )}
-            {!filters.includes("Sexes") && (
-              <MenuItem onClick={() => handleMenuItemClick("Sexes")}>
-                {languageSet.sex}
-              </MenuItem>
-            )}
-          </Menu>
-
-          <div className="mt-6 flex justify-start flex-col md:flex-row lg:flex-row ">
-            {filters.map((filter) => (
-              <div key={filter} className="flex items-center mb-2">
-                {filter === "Age Group" && (
-                  <FilterSelect
-                    onChange={setSelectedAgeGroups}
-                    label="Age Group"
-                    property="agegroup"
-                    url={import.meta.env.VITE_API_AGEGROUPS_URL}
-                  />
-                )}
-
-                {filter === "Phase" && (
-                  <FilterSelect
-                    onChange={setSelectedFases}
-                    label="Fases"
-                    property="fase"
-                    url={import.meta.env.VITE_API_FASES_URL}
-                  />
-                )}
-                {filter === "Industry" && (
-                  <FilterSelect
-                    onChange={setSelectedBrands}
-                    label="Brands"
-                    property="brand"
-                    url={import.meta.env.VITE_API_BRANCHNAMES_URL}
-                  />
-                )}
-                {filter === "Sexes" && (
-                  <FilterSelect
-                    onChange={setSelectedSexes}
-                    label="Sex"
-                    property="sex"
-                    url={import.meta.env.VITE_API_SEXES_URL}
-                  />
-                )}
-                <IconButton
-                  onClick={() => handleRemoveFilter(filter)}
-                  aria-label="remove filter"
+                    color: "#FAFFFB",
+                    fontWeight: "bold",
+                    fontFamily: "Poppins, Arial, sans-serif",
+                    paddingTop: 8,
+                    paddingBottom: 8,
+                    paddingLeft: 16,
+                    paddingRight: 16,
+                  }}
+                  variant="contained"
+                  onClick={handleClick}
+                  size={"medium"}
                 >
-                  <CloseIcon />
-                </IconButton>
+                  {languageSet.filter} <ArrowDropDownIcon />
+                </Button>
               </div>
-            ))}
-          </div>
-        </div>
-        <div className="flex flex-col  whitespace-nowrap md:  md:flex-row ">
-          <div className="flex justify-center  ">
-            <div className="m-2 ">
-              <ToggleButton
-                label={languageSet.toggleDrift}
-                val="DR"
-                isActive={activeButton === "option1"}
-                onClick={(e) => {
-                  handleButtonClick(
-                    "option1",
-                    e.target as EventTarget & ButtonTarget
-                  );
+              <Menu
+                className=""
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "left",
                 }}
-              />
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "left",
+                }}
+                disableScrollLock // Prevents issues with scrolling
+                sx={{ zIndex: 10 }}
+              >
+                {!filters.includes("Age Group") && (
+                  <MenuItem onClick={() => handleMenuItemClick("Age Group")}>
+                    {languageSet.agegroup}
+                  </MenuItem>
+                )}
+
+                {!filters.includes("Phase") && (
+                  <MenuItem onClick={() => handleMenuItemClick("Phase")}>
+                    {languageSet.fase}
+                  </MenuItem>
+                )}
+                {!filters.includes("Industry") && (
+                  <MenuItem onClick={() => handleMenuItemClick("Industry")}>
+                    {languageSet.brand}
+                  </MenuItem>
+                )}
+                {!filters.includes("Sexes") && (
+                  <MenuItem onClick={() => handleMenuItemClick("Sexes")}>
+                    {languageSet.sex}
+                  </MenuItem>
+                )}
+              </Menu>
+
+              <div className="mt-6 flex justify-start flex-col md:flex-row lg:flex-row ">
+                {filters.map((filter) => (
+                  <div key={filter} className="flex items-center mb-2">
+                    {filter === "Age Group" && (
+                      <FilterSelect
+                        onChange={setSelectedAgeGroups}
+                        label="Age Group"
+                        property="agegroup"
+                        url={import.meta.env.VITE_API_AGEGROUPS_URL}
+                      />
+                    )}
+
+                    {filter === "Phase" && (
+                      <FilterSelect
+                        onChange={setSelectedFases}
+                        label="Fases"
+                        property="fase"
+                        url={import.meta.env.VITE_API_FASES_URL}
+                      />
+                    )}
+                    {filter === "Industry" && (
+                      <FilterSelect
+                        onChange={setSelectedBrands}
+                        label="Brands"
+                        property="brand"
+                        url={import.meta.env.VITE_API_BRANCHNAMES_URL}
+                      />
+                    )}
+                    {filter === "Sexes" && (
+                      <FilterSelect
+                        onChange={setSelectedSexes}
+                        label="Sex"
+                        property="sex"
+                        url={import.meta.env.VITE_API_SEXES_URL}
+                      />
+                    )}
+                    <IconButton
+                      onClick={() => handleRemoveFilter(filter)}
+                      aria-label="remove filter"
+                    >
+                      <CloseIcon />
+                    </IconButton>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="m-2">
-              <ToggleButton
-                label={languageSet.toggleOmsetning}
-                val="SDI"
-                isActive={activeButton === "option2"}
-                onClick={(e) =>
-                  handleButtonClick(
-                    "option2",
-                    e.target as EventTarget & ButtonTarget
-                  )
-                }
-              />
+            <div className="flex flex-col  whitespace-nowrap md:  md:flex-row ">
+              <div className="flex justify-center  ">
+                <div className="m-2 ">
+                  <ToggleButton
+                    label={languageSet.toggleDrift}
+                    val="DR"
+                    isActive={activeButton === "option1"}
+                    onClick={(e) => {
+                      handleButtonClick(
+                        "option1",
+                        e.target as EventTarget & ButtonTarget
+                      );
+                    }}
+                  />
+                </div>
+                <div className="m-2">
+                  <ToggleButton
+                    label={languageSet.toggleOmsetning}
+                    val="SDI"
+                    isActive={activeButton === "option2"}
+                    onClick={(e) =>
+                      handleButtonClick(
+                        "option2",
+                        e.target as EventTarget & ButtonTarget
+                      )
+                    }
+                  />
+                </div>
+                <div className="m-2">
+                  <ToggleButton
+                    label={languageSet.toggleSik}
+                    val="SIK"
+                    isActive={activeButton === "option3"}
+                    onClick={(e) =>
+                      handleButtonClick(
+                        "option3",
+                        e.target as EventTarget & ButtonTarget
+                      )
+                    }
+                  />
+                </div>
+              </div>
+              <div className="flex justify-center mx-2 mt-2 mb-6  ">
+                <CodeFilter
+                  ChangeHandler={setEcoKey}
+                  ecoCodes={economicCodes}
+                  activeButton={activeButton}
+                />
+              </div>
             </div>
-            <div className="m-2">
-              <ToggleButton
-                label={languageSet.toggleSik}
-                val="SIK"
-                isActive={activeButton === "option3"}
-                onClick={(e) =>
-                  handleButtonClick(
-                    "option3",
-                    e.target as EventTarget & ButtonTarget
-                  )
-                }
-              />
+          </div>
+          <div className="mx-2">
+            <div className="w-full text-center ">
+              <div className="">
+                <LineChartComponent
+                  data={data}
+                  loading={loading}
+                  selectedAgeGroups={selectedAgeGroups}
+                  selectedFases={selectedFases}
+                  selectedBrands={selectedBrands}
+                  selectedSexes={selectedSexes}
+                  ecoKey={ecoKey}
+                  monetaryKey={monetaryKey}
+                  yearRange={yearRange}
+                  economicCodes={economicCodes}
+                />
+              </div>
+              <div className="inline-flex  sm:justify-center  ">
+                <UseRadioGroup
+                  onChange={(e) => {
+                    const target = e.target as EventTarget &
+                      Element &
+                      RadioTarget;
+                    setMonetaryKey(
+                      target.value ? target.value : target.defaultValue
+                    );
+                  }}
+                />
+              </div>
+              <div className="bg-[#f8f6f6] text-[#1e2222] mb-6">
+                <DataGridComponent
+                  ecoCode={ecoKey}
+                  year={yearRange[yearRange.length - 1]}
+                />
+              </div>
             </div>
           </div>
-          <div className="flex justify-center mx-2 mt-2 mb-6  ">
-            <CodeFilter
-              ChangeHandler={setEcoKey}
-              ecoCodes={economicCodes}
-              activeButton={activeButton}
-            />
-          </div>
-        </div>
-      </div>
-      <div className="mx-2">
-        <div className="w-full text-center ">
-          <div className="">
-            <LineChartComponent
-              data={data}
-              loading={loading}
-              selectedAgeGroups={selectedAgeGroups}
-              selectedFases={selectedFases}
-              selectedBrands={selectedBrands}
-              selectedSexes={selectedSexes}
-              ecoKey={ecoKey}
-              monetaryKey={monetaryKey}
-              yearRange={yearRange}
-              economicCodes={economicCodes}
-            />
-          </div>
-          <div className="inline-flex  sm:justify-center  ">
-            <UseRadioGroup
-              onChange={(e) => {
-                const target = e.target as EventTarget & Element & RadioTarget;
-                setMonetaryKey(
-                  target.value ? target.value : target.defaultValue
-                );
-              }}
-            />
-          </div>
-          <div className="bg-[#f8f6f6] text-[#1e2222] mb-6">
-            <DataGridComponent
-              ecoCode={ecoKey}
-              year={yearRange[yearRange.length - 1]}
-            />
-          </div>
-        </div>
-      </div>
+        </>
+      )}
     </div>
   );
 };

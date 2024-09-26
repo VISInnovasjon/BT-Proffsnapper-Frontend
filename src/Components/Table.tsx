@@ -48,7 +48,7 @@ export const DataGridComponent = ({ ecoCode, year }: gridProps) => {
       field: "Name",
       headerName: languageSet.tablecol1,
 
-      minWidth: 250,
+      minWidth: 350,
     },
     {
       field: "OrgNumber",
@@ -60,7 +60,7 @@ export const DataGridComponent = ({ ecoCode, year }: gridProps) => {
       field: "Branch",
       headerName: languageSet.tablecol3,
 
-      minWidth: 150,
+      minWidth: 200,
     },
     {
       field: "Value",
