@@ -1,10 +1,14 @@
 import React from "react";
 import loading from "../Images/LogoWhite.png";
+import backgroundImage from "../Images/backgroundimg.jpg";
 import "../index.css";
 
 const Loading: React.FC = () => {
   return (
-    <div className="fixed inset-0 flex flex-col justify-center bg-[#de0505] z-50">
+    <div
+      className="fixed inset-0 flex flex-col justify-center bg-[#de0505] z-50 bg-cover"
+      style={{ backgroundImage: `url(${backgroundImage})` }}
+    >
       <div className="">
         <svg
           width="350"
@@ -16,7 +20,7 @@ const Loading: React.FC = () => {
       </div>
 
       {/*  tekst med animasjon */}
-      <div className=" mt-0 md:mt-10  text-xs md:text-sm font-thin text-center custom-letter-spacing text-white">
+      <div className=" mt-0 md:mt-10 mx-4 text-xs md:text-sm font-thin text-center custom-letter-spacing text-white">
         <span className="animate-blur">
           <span>TENK</span>
           &nbsp;
