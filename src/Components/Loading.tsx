@@ -16,15 +16,22 @@ const Loading: React.FC = () => {
       </div>
 
       {/*  tekst med animasjon */}
-      <div className=" mt-0 md:mt-10 text-md md:text-2xl font-thin text-center custom-letter-spacing text-white">
+      <div className=" mt-0 md:mt-10  text-xs md:text-sm font-thin text-center custom-letter-spacing text-white">
         <span className="animate-blur">
-          <span>L</span>
-          <span>o</span>
-          <span>a</span>
-          <span>d</span>
-          <span>i</span>
-          <span>n</span>
-          <span>g</span>
+          <span>TENK</span>
+          &nbsp;
+          <span>STORT</span>
+          <span>. </span>
+          &nbsp;
+          <span>START </span>
+          &nbsp;
+          <span>SMÅTT</span>
+          <span>. </span>
+          &nbsp;
+          <span>LÆR</span>
+          &nbsp;
+          <span>FORT</span>
+          <span>.</span>
         </span>
       </div>
     </div>

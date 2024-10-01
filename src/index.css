@@ -44,6 +44,7 @@ body {
 }
 
 /* Styling til tekst med animasjon loading.*/
+
 @keyframes blur-focus {
   0%,
   100% {
@@ -82,17 +83,23 @@ body {
 .animate-blur span:nth-child(7) {
   animation-delay: 1.5s;
 }
+.animate-blur span:nth-child(8) {
+  animation-delay: 2s;
+}
+.animate-blur span:nth-child(9) {
+  animation-delay: 2.25s;
+}
 
 /* Tilpasset letter-spacing animasjonstekst*/
 
 @media only screen and (min-width: 767px) {
   .custom-letter-spacing {
-    letter-spacing: 3.35em;
+    letter-spacing: 0.95em;
   }
 }
 
 @media only screen and (max-width: 767px) {
   .custom-letter-spacing {
-    letter-spacing: 2.35em;
+    letter-spacing: 0.35em;
   }
 }
