@@ -20,7 +20,7 @@ const Loading: React.FC = () => {
       </div>
 
       {/*  tekst med animasjon */}
-      <div className=" mt-0 md:mt-10 mx-4 text-xs md:text-sm font-thin text-center custom-letter-spacing text-white">
+      <div className=" mt-0 md:mt-10 mx-4 text-xs md:text-sm font-thin text-center custom-letter-spacing custom-text-shadow text-white">
         <span className="animate-blur">
           <span>TENK</span>
           &nbsp;

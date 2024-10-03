@@ -57,9 +57,9 @@ body {
 
 .animate-blur span {
   display: inline-block;
-  animation: blur-focus 2s ease-in-out infinite;
+  animation: blur-focus 2.5s ease-in-out infinite;
   filter: blur(6px);
-  transition: filter 0.8s;
+  transition: filter 1.2s;
 }
 
 .animate-blur span:nth-child(1) {
@@ -102,4 +102,8 @@ body {
   .custom-letter-spacing {
     letter-spacing: 0.35em;
   }
+}
+
+.custom-text-shadow {
+  text-shadow: 1px 1px 3px rgba(2, 2, 2, 0.7);
 }
