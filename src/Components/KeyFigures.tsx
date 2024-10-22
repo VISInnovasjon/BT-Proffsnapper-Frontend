@@ -60,6 +60,12 @@ const KeyFigures: React.FC<KeyFigureProps> = (props) => {
         resultArr,
         props.year.toString()
       );
+      await fetchAndPushData(
+        import.meta.env.VITE_API_TOTALCOMPANYCOUNT_URL,
+        language,
+        resultArr,
+        props.year.toString()
+      );
       try {
         setKeyFigureData(resultArr);
       } finally {
@@ -80,13 +86,13 @@ const KeyFigures: React.FC<KeyFigureProps> = (props) => {
         {`${languageSet.keyFiguresSubHeader} ${props.year}.`}
       </h3>
       {loading && <CircularProgress />}
-      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 my-6 w-full max-w-8xl">
+      <div className="flex flex-col justify-center  lg:flex-row lg:justify-between  gap-4 my-6 w-full max-w-8xl">
         {keyFigureData.map((data, index) => (
           <div
             key={index}
-            className="bg-white py-4 rounded shadow-lg text-center"
+            className="bg-white py-4 rounded-md px-4 shadow-lg text-center"
           >
-            <h3 className="text-base md:text-lg  lg:text-xl  font-bold mb-4 marker-underline">
+            <h3 className="text-base md:text-base  lg:text-lg  font-bold mb-4 marker-underline">
               {data.text}
             </h3>
             <CountUp
