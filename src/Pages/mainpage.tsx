@@ -118,7 +118,10 @@ const MainPage: React.FC = () => {
       ) : (
         <>
           <div>
-            <KeyFigures year={yearRange[yearRange.length - 1]} />
+            <KeyFigures
+              endYear={yearRange[yearRange.length - 1]}
+              startYear={yearRange[0]}
+            />
           </div>
           <div className="m-2 w-full text-center px-6 mb-2">
             <YearRangeSlider updateValue={setYearRange} />

@@ -4,7 +4,8 @@ import { useLanguage } from "./LanguageContext";
 import { CircularProgress } from "@mui/material";
 
 type KeyFigureProps = {
-  year: number;
+  endYear: number;
+  startYear: number;
 };
 
 type KeyFigures = {
@@ -15,10 +16,12 @@ const fetchAndPushData = async (
   url: string,
   language: string,
   resultArr: KeyFigures[],
-  endYear: string
+  endYear: string,
+  startYear: string
 ) => {
   const searchParams = new URLSearchParams({
-    Year: endYear,
+    EndYear: endYear,
+    StartYear: startYear,
     Language: language,
   });
   const response = await fetch(url + "?" + searchParams.toString());
@@ -40,31 +43,36 @@ const KeyFigures: React.FC<KeyFigureProps> = (props) => {
         import.meta.env.VITE_API_COMPANYCOUNT_URL,
         language,
         resultArr,
-        props.year.toString()
+        props.endYear.toString(),
+        props.startYear.toString()
       );
       await fetchAndPushData(
         import.meta.env.VITE_API_TOTALTURNOVER_URL,
         language,
         resultArr,
-        props.year.toString()
+        props.endYear.toString(),
+        props.startYear.toString()
       );
       await fetchAndPushData(
         import.meta.env.VITE_API_WORKERCOUNT_URL,
         language,
         resultArr,
-        props.year.toString()
+        props.endYear.toString(),
+        props.startYear.toString()
       );
       await fetchAndPushData(
         import.meta.env.VITE_API_WORKYEAR_URL,
         language,
         resultArr,
-        props.year.toString()
+        props.endYear.toString(),
+        props.startYear.toString()
       );
       await fetchAndPushData(
         import.meta.env.VITE_API_TOTALCOMPANYCOUNT_URL,
         language,
         resultArr,
-        props.year.toString()
+        props.endYear.toString(),
+        props.startYear.toString()
       );
       try {
         setKeyFigureData(resultArr);
@@ -74,7 +82,7 @@ const KeyFigures: React.FC<KeyFigureProps> = (props) => {
     };
 
     fetchData();
-  }, [keyFigureData.length, props.year, language]);
+  }, [keyFigureData.length, props.endYear, props.startYear, language]);
 
   return (
     <div className="mb-10 flex flex-col items-center px-4 ">
@@ -83,7 +91,7 @@ const KeyFigures: React.FC<KeyFigureProps> = (props) => {
       </h1>
 
       <h3 className=" md:my-3 text-xl md:text-2xl lg:text-2xl font-bold tracking-wide">
-        {`${languageSet.keyFiguresSubHeader} ${props.year}.`}
+        {`${languageSet.keyFiguresSubHeader} ${props.endYear}.`}
       </h3>
       {loading && <CircularProgress />}
       <div className="flex flex-col justify-center  lg:flex-row lg:justify-between  gap-4 my-6 w-full max-w-8xl">
